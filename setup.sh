@@ -3,9 +3,12 @@
 echo -e "\n[INFO] Fetching all repo changes..."
 git pull
 
-# Install app depedencies
+# Install server depedencies
+cd ./server/
 echo -e "\n[INFO] Installing app dependencies..."
 npm install
+
+cd ..
 
 # Install client dependencies
 cd ./client/

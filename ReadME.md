@@ -9,9 +9,9 @@ This project was completed by:
 
 - Martin Shilenge (2557606)
 
-- Thabiso >Surname< (2426592)
+- Thabiso Mahlaola (2426592)
 
-- Anist >Surname< (449541)
+- Anist Mampuru (449541)
 
 For proof of Scrum Methodology as well as Additional Artifacts please check the following link:
 

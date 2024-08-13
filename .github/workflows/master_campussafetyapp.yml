@@ -70,5 +70,5 @@ jobs:
         with:
           app-name: 'CampusSafetyApp'
           slot-name: 'Production'
-          package: .
+          package: server/
           

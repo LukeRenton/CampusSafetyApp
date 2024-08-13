@@ -7,4 +7,5 @@ npm run build
 # actually start the server (localhost:5000)
 echo -e "\n[INFO] Running application..."
 cd ..
+cd ./server/
 npm start

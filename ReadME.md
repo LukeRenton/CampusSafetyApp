@@ -15,11 +15,11 @@ This project was completed by:
 
 For proof of Scrum Methodology as well as Additional Artifacts please check the following link:
 
-[Notion External Documentation -- Need link]()
+[Notion External Documentation](https://www.notion.so/Navigation-Portal-0e5c2a17d7314a41a01b237fd1160dc5)
 
 Or directly
 
-a > NOTION LINK GOES HERE <
+https://www.notion.so/Navigation-Portal-0e5c2a17d7314a41a01b237fd1160dc5
 
 For documentation on downloading and running the application locally, please read further below.
 
@@ -104,6 +104,8 @@ The application will have the following folders:
   ```
 
 ## Project Setup
+> You can also follow along to the following video for a demonstration of the project setup: [![Watch the video](Project_Setup_Demo.mp4)](Project_Setup_Demo.mp4)
+
 We have added a bash file to automate this process, but will keep the documentation of doing it manually here for future reference. For easier project setup you can use the bash script as follows:
 
 ### 1. Clone the repository from [GitHub](https://github.com/LukeRenton/CampusSafetyApp)
@@ -219,7 +221,7 @@ chmod +x deploy.sh
 5. Merge the pull request
 6. Check out your changes after it has deployed!
 
-The website is at [CampusSafetyApp.azurewebsites.net -- this link will be the link when it gets up and running]()
+The website is at [campussafetyapp.azurewebsites.net](https://campussafetyapp.azurewebsites.net/)
 
 Alternatively you can do it manually:
 
@@ -245,7 +247,7 @@ git add . && git commit -m "your commit message" && git push
 5. Merge the pull request
 6. Check out your changes after it has deployed!
 
-The website is at [CampusSafetyApp.azurewebsites.net -- this link will be the link when it gets up and running]()
+The website is at [campussafetyapp.azurewebsites.net](https://campussafetyapp.azurewebsites.net/)
 
 ## Versions
 

@@ -1,0 +1,9 @@
+.map-root {
+    height: 100%;
+}
+
+.map-container {
+    margin-top: -50px;
+    height: calc(100% + 200px);
+    /* height: 100%; */
+}

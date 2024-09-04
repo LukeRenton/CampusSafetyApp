@@ -16,7 +16,7 @@ if (machine_type == 'Windows_NT') { // This is needed for windows development
     app.use(express.static(path.join(__dirname, '../client/build')));
 }
 else{
-    app.use(express.static(path.join(__dirname, '../client/build')));
+    app.use(express.static(path.join(__dirname, 'client/build')));
 }
 
 
@@ -32,7 +32,7 @@ app.get(reactRoutes, (req, res) => {
         app.use(express.static(path.join(__dirname, '../client/build')));
     }
     else{
-        res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
     }
 });
 

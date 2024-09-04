@@ -1,0 +1,37 @@
+:root {
+    --report-button-size: 120px;
+}
+
+.report-root {
+    position: absolute;
+    left: calc(50% - 200px);
+    width: 400px;
+    height: 200px;
+    bottom: 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.report-button {
+    
+    left: calc(50% - var(--report-button-size)/2);
+    width: var(--report-button-size);
+    height: var(--report-button-size);
+
+    border-radius: 50%;
+    
+    background: var(--mainorange);
+    box-shadow: 0px -3px 5px 5px rgba(0, 0, 0, 0.2);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.report-icon {
+    width: calc(var(--report-button-size)/2);
+    height: calc(var(--report-button-size)/2);
+}

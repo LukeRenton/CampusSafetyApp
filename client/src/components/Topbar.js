@@ -13,9 +13,9 @@ import '../styles/Topbar.css'
 
 export default function Topbar() {
   return (
-    <div className='topbar-root'>
+    <section className='topbar-root'>
         <MenuButton></MenuButton>
         <EmergencyCall></EmergencyCall>
-    </div>
+    </section>
   )
 }

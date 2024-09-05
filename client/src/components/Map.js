@@ -63,8 +63,8 @@ export default function Map() {
 
 
   return (
-    <div className='map-root'>
-        <div ref={map_container} className="map-container" />
-    </div>
+    <section className='map-root'>
+        <section ref={map_container} className="map-container" />
+    </section>
   )
 }

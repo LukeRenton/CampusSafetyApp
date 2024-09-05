@@ -12,9 +12,9 @@ import call from '../icons/call.svg'
 
 export default function EmergencyCall() {
   return (
-    <div className='emergency-call-root'>
+    <button className='emergency-call-root'>
         <h2 className='emergency-call-header'>Emergency Call</h2>
         <img className='emergency-call-icon' src={call}></img>
-    </div>
+    </button>
   )
 }

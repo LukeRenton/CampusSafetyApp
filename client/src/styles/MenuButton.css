@@ -1,5 +1,5 @@
 .menu-button-root {
-    --menu-button-size: 60px;
+    --menu-button-size: 50px;
     
     z-index: 1;
     
@@ -14,6 +14,7 @@
     justify-content: center;
 
     box-shadow: 0px 3px 4px 3px rgba(0, 0, 0, 0.2);
+    border: none;
 }
 
 .menu-button-icon {

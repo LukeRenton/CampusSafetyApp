@@ -1,18 +1,27 @@
 :root {
-    --report-button-size: 120px;
+    --report-button-size: 100px;
 }
 
 .report-root {
     position: absolute;
-    left: calc(50% - 200px);
-    width: 400px;
-    height: 200px;
+    left: calc(50% - var(--report-button-size)/2);
+    width: var(--report-button-size);
+    height: var(--report-button-size);
     bottom: 20px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
+
+    background: none;
+    border: none;
+}
+
+.shown-quick-reports {
+    left: calc(50% - 200px);
+    width: 400px;
+    height: 200px;
 }
 
 .report-button {

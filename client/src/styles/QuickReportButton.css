@@ -1,0 +1,21 @@
+:root {
+    --icon-size: 25px;
+}
+
+.quick-report-button-root {
+    width: calc(var(--icon-size) + 25px);
+    height: calc(var(--icon-size) + 25px);
+    padding: 10px;
+    border-radius: var(--icon-size);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+}
+
+.quick-report-button-icon {
+    width: var(--icon-size);
+    height: var(--icon-size);
+}

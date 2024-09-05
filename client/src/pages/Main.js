@@ -11,13 +11,15 @@ import Map from '../components/Map';
 import '../styles/Main.css'
 import Navbar from '../components/Navbar';
 import Topbar from '../components/Topbar';
+import SideMenu from '../components/SideMenu';
 
 export default function Main() {
   return (
-    <div className='main-root'>
+    <main className='main-root'>
         <Navbar />
         <Topbar />
         <Map />
-    </div>
+        <SideMenu />
+    </main>
   )
 }

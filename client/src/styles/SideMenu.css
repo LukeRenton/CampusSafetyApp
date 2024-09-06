@@ -23,6 +23,13 @@
     /* justify-content: center; */
     padding-top: 50px;
 
+    transform: translateX(-380px);
+    transition: 0.3s;
+}
+
+.shown-side-menu {
+    transform: translateX(0px);
+    transition: 0.3s;
 }
 
 .side-menu-contents-top {

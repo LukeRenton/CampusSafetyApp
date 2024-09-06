@@ -11,10 +11,10 @@ import EmergencyCall from './EmergencyCall'
 import MenuButton from './MenuButton'
 import '../styles/Topbar.css'
 
-export default function Topbar() {
+export default function Topbar( props ) {
   return (
     <section className='topbar-root'>
-        <MenuButton></MenuButton>
+        <MenuButton on_click={() => {props.set_show_side_menu(true)}}></MenuButton>
         <EmergencyCall></EmergencyCall>
     </section>
   )

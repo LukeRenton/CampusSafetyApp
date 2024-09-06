@@ -19,9 +19,9 @@ import heart from '../icons/heart.svg'
 import car from '../icons/car.svg'
 import signout from '../icons/signout.svg'
 
-export default function SideMenu() {
+export default function SideMenu( props ) {
   return (
-    <section className='side-menu-root'>
+    <section className={'side-menu-root '+(props.show_side_menu ? ' shown-side-menu' : '')}>
         <section className='side-menu-contents-top'>
             <article className='side-menu-profile'>
                 <div className='side-menu-profile-image-container' style={{backgroundImage: `url(${sample_student_pic})`}}>

@@ -3,6 +3,7 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 5000;
 const SafetyResourcesRoutes = require('./routes/SafetyResourcesRoutes');
+const IncidentSRoutes = require('./routes/IncidentsRoutes');
 var os = require('os');
 
 // API route
@@ -11,7 +12,7 @@ app.get('/api', (req, res) => {
 });
 
 app.use('/resources', SafetyResourcesRoutes); // Send any /resources requests to SafetyResourcesRoutes (e.g. /resources/safety-resources will be sent to SafetyResourcesRoutes)
-
+app.use('/incidets',IncidentSRoutes );
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../client/build')));

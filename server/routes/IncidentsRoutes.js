@@ -10,7 +10,7 @@ const router = express.Router();
 const IncidentController = require('../controllers/IncidentController');
 const { route } = require('./SafetyResourcesRoutes');
 
-router.get("/incidents", async (req, res) => {
+router.get("/all-incidents", async (req, res) => {
     try {
         const AllIncidents = await IncidentController.getAllIncidents();
         res.status(200).json(AllIncidents);
@@ -21,7 +21,7 @@ router.get("/incidents", async (req, res) => {
     }
 });
 
-router.patch('/incidents/:id/status', async (req, res) => {
+router.patch('/:id/status', async (req, res) => {
     try {
         const id_value = req.params.id;
         const UpdateStatus = await IncidentController.UpdateSafetyIncidents(id_value);
@@ -32,7 +32,7 @@ router.patch('/incidents/:id/status', async (req, res) => {
     }
 });
 
-route.post('/incidents', async (req, res) => {
+route.post('/report-incidents', async (req, res) => {
     try {
         const {description, photo, latitude, longitude, building_name, timestamp} = req.body;
         const reportIncidet = await IncidentController.ReportSafetyIncidents(description, photo, latitude, longitude, building_name, timestamp);

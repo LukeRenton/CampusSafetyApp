@@ -47,3 +47,9 @@ async function ReportSafetyIncidents(description, photo, latitude, longitude, bu
         throw new Error("Server error : " + err.message);
     }
 }
+
+module.exports = {
+    getAllIncidents, 
+    UpdateSafetyIncidents,
+    ReportSafetyIncidents
+};

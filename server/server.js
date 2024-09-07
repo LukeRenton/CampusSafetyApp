@@ -5,13 +5,15 @@ const PORT = process.env.PORT || 5000;
 const SafetyResourcesRoutes = require('./routes/SafetyResourcesRoutes');
 const IncidentSRoutes = require('./routes/IncidentsRoutes');
 
+//body-parser
+app.use(express.json());
 // API route
 app.get('/api', (req, res) => {
     res.json({ message: 'Hello from the backend!' });
 });
 
 app.use('/resources', SafetyResourcesRoutes); // Send any /resources requests to SafetyResourcesRoutes (e.g. /resources/safety-resources will be sent to SafetyResourcesRoutes)
-app.use('/incidets',IncidentSRoutes );
+app.use('/incidents',IncidentSRoutes );
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../client/build')));

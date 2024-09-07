@@ -22,9 +22,10 @@ async function getAllIncidents() {
 }
 
 //Update the status of a safety incident
-async function UpdateSafetyIncidents(id) {
+async function UpdateSafetyIncidents(id_val, status) {
     try {
-        await pool.query('UPDATE status WHERE id = ?', [id]);
+        const id = Number(id_val);
+        await pool.query('UPDATE incidents SET status = ? WHERE id = ?', [status, id]);
         const [rows] = await pool.query('SELECT id, status WHERE id = ?', [id]);
         return rows;
     } catch (err) {

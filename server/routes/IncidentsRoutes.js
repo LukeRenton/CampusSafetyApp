@@ -8,7 +8,6 @@
 const express =  require('express');
 const router = express.Router();
 const IncidentController = require('../controllers/IncidentController');
-const { route } = require('./SafetyResourcesRoutes');
 
 router.get("/all-incidents", async (req, res) => {
     try {
@@ -21,10 +20,14 @@ router.get("/all-incidents", async (req, res) => {
     }
 });
 
+
+// The id should be for the status that should be updated
+// The status in body, is the updated value of status
 router.patch('/:id/status', async (req, res) => {
     try {
         const id_value = req.params.id;
-        const UpdateStatus = await IncidentController.UpdateSafetyIncidents(id_value);
+        const status = req.body;
+        const UpdateStatus = await IncidentController.UpdateSafetyIncidents(id_value, status);
         res.status(200).json(UpdateStatus);
     } catch (err) {
         console.error('Error Updating the status : ' + err.message);
@@ -32,11 +35,11 @@ router.patch('/:id/status', async (req, res) => {
     }
 });
 
-route.post('/report-incidents', async (req, res) => {
+router.post('/report-incidents', async (req, res) => {
     try {
         const {description, photo, latitude, longitude, building_name} = req.body;
-        const reportIncidet = await IncidentController.ReportSafetyIncidents(description, photo, latitude, longitude, building_name);
-        res.status(200).json(reportIncidet);
+        const reportIncident = await IncidentController.ReportSafetyIncidents(description, photo, latitude, longitude, building_name);
+        res.status(200).json(reportIncident);
     } catch (err) {
         console.error('Error Inserting data: '+ err.message);
         res.status(500).json({message: 'Server error: '+ err.message});

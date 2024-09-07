@@ -38,9 +38,9 @@ async function UpdateSafetyIncidents(id) {
 //Report a new safety incident  with location details and optional photo.
 // Assuming that this is the order of the table columns and there is a table called incidents
 
-async function ReportSafetyIncidents(description, photo, latitude, longitude, building_name, timestamp) {
+async function ReportSafetyIncidents(description, photo, latitude, longitude, building_name) {
     try {
-        await pool.query('INSERT INTO incidents(description, photo, latitude, logitude, building_name, timestamp) VALUES(?, ?, ?, ?, ?, ?)', [description, photo, latitude, longitude, building_name, timestamp]);
+        await pool.query('INSERT INTO incidents(description, photo, latitude, longitude, building_name, timestamp) VALUES(?, ?, ?, ?, ?, NOW())', [description, photo, latitude, longitude, building_name]);
         
     } catch (err) {
         console.error(err);

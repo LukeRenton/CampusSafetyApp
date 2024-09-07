@@ -34,8 +34,8 @@ router.patch('/:id/status', async (req, res) => {
 
 route.post('/report-incidents', async (req, res) => {
     try {
-        const {description, photo, latitude, longitude, building_name, timestamp} = req.body;
-        const reportIncidet = await IncidentController.ReportSafetyIncidents(description, photo, latitude, longitude, building_name, timestamp);
+        const {description, photo, latitude, longitude, building_name} = req.body;
+        const reportIncidet = await IncidentController.ReportSafetyIncidents(description, photo, latitude, longitude, building_name);
         res.status(200).json(reportIncidet);
     } catch (err) {
         console.error('Error Inserting data: '+ err.message);

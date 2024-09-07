@@ -11,7 +11,7 @@ const safetyResourcesController = require('../controllers/SafetyResourcesControl
 
 router.get("/safety-resources", async (req, res) => {
     try{
-        const safetyResources = safetyResourcesController.getAllSafetyResources();
+        const safetyResources = await safetyResourcesController.getAllSafetyResources();
         res.status(200).json(safetyResources);
     }
     catch(err){
@@ -20,15 +20,15 @@ router.get("/safety-resources", async (req, res) => {
     
 });
 
-router.get("/safety-resources/:type", async (req, res) => {
-    try{
-        const safetyResources = safetyResourcesController.getSafetyResourcesByType(req.params.type);
+router.get('/safety-resources/:type', async (req, res) => {
+    try {
+        const type = req.params.type;
+        const safetyResources = await safetyResourcesController.getSafetyResourcesByType(type);
         res.status(200).json(safetyResources);
+    } catch (err) {
+        console.error('Error fetching safety resources:', err.message);
+        res.status(500).json({ message: 'Server error: ' + err.message });
     }
-    catch(err){
-        res.status(500).json({message: err.message});
-    }
-    
 });
 
 

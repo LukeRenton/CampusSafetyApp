@@ -10,8 +10,7 @@ const pool = require("../db");
 // Retrieve all reported safety incidents, including details, statuses, and locations, etc 
 async function getAllIncidents() {
     try {
-        const [rows] = await pool.query('SELECT * FROM incidents '); //assumming the table is named incidents
-        return rows;
+        const [rows] = await pool.query('SELECT id, building_name, description, , status, timestamp FROM incidents '); 
     }
     catch(err)
     {
@@ -42,7 +41,7 @@ async function UpdateSafetyIncidents(id_val, status) {
 async function ReportSafetyIncidents(description, photo, latitude, longitude, building_name) {
     try {
         await pool.query('INSERT INTO incidents(description, photo, latitude, longitude, building_name, timestamp) VALUES(?, ?, ?, ?, ?, NOW())', [description, photo, latitude, longitude, building_name]);
-        
+        return "Data Inserted";
     } catch (err) {
         console.error(err);
         throw new Error("Server error : " + err.message);

@@ -1,0 +1,40 @@
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Align the popup at the bottom */
+    animation: slideUp 0.3s ease forwards;
+  }
+  
+  .popup-content {
+    background-color: white;
+    width: 100%;
+    height: 50vh; /* 50% of the viewport height */
+    padding: 20px;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+  
+  .popup-content p {
+    margin: 10px 0; /* Optional: Add some spacing between paragraphs */
+  }
+  
+  
+  /* Animation for popup sliding up */
+  @keyframes slideUp {
+    0% {
+    /*move the card up to half of the screen*/
+        transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  

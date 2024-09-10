@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import PopupCard from './components/PopupCard'; 
+import './styles/App.css';
 
-function App() {
+const App = () => {
+  const [popupOpen, setPopupOpen] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="phone-screen">
+      <button className="centered-button" onClick={() => setPopupOpen(true)}>
+        Show Popup
+      </button>
+
+      {/* The PopupCard will only appear when popupOpen is true */}
+      <PopupCard isOpen={popupOpen} onClose={() => setPopupOpen(false)} />
     </div>
   );
-}
+};
 
 export default App;

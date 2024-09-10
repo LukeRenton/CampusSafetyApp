@@ -2,16 +2,12 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 5000;
-const SafetyResourcesRoutes = require('./routes/SafetyResourcesRoutes');
 var os = require('os');
 
 // API route
 app.get('/api', (req, res) => {
     res.json({ message: 'Hello from the backend!' });
 });
-
-app.use('/resources', SafetyResourcesRoutes); // Send any /resources requests to SafetyResourcesRoutes (e.g. /resources/safety-resources will be sent to SafetyResourcesRoutes)
-
 
 // Serve static files from the React app
 machine_type = os.type();
@@ -20,7 +16,7 @@ if (machine_type == 'Windows_NT') { // This is needed for windows development
     app.use(express.static(path.join(__dirname, '../client/build')));
 }
 else{
-    app.use(express.static(path.join(__dirname, '../client/build')));
+    app.use(express.static(path.join(__dirname, 'client/build')));
 }
 
 
@@ -36,7 +32,7 @@ app.get(reactRoutes, (req, res) => {
         app.use(express.static(path.join(__dirname, '../client/build')));
     }
     else{
-        res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
     }
 });
 

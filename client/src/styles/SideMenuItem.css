@@ -1,0 +1,30 @@
+.side-menu-item-root {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 18px;
+    padding-right: 18px;
+
+    padding-top: 12px;
+    padding-bottom: 12px;
+    
+    gap: 0px 12px;
+
+    background: none;
+    border: none;
+}
+
+.side-menu-item-icon {
+    width: 25px;
+    height: 25px;
+}
+
+.side-menu-item-text {
+    margin: 0;
+    padding: 0;
+
+    font-size: 28px;
+    font-weight: 400;
+    font-style: normal;
+}

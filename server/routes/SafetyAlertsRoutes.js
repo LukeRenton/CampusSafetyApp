@@ -38,4 +38,6 @@ router.patch('/alerts/:alertId/status', async (req, res) => {
     }
 });
 
+
+
 module.exports = router;

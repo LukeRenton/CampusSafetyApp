@@ -2,16 +2,12 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 5000;
-const SafetyResourcesRoutes = require('./routes/SafetyResourcesRoutes');
 var os = require('os');
 
 // API route
 app.get('/api', (req, res) => {
     res.json({ message: 'Hello from the backend!' });
 });
-
-app.use('/resources', SafetyResourcesRoutes); // Send any /resources requests to SafetyResourcesRoutes (e.g. /resources/safety-resources will be sent to SafetyResourcesRoutes)
-
 
 // Serve static files from the React app
 machine_type = os.type();

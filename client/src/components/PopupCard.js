@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/PopupCard.css';
+import SchedulerideCard from './SchedulerideCard'; // Import SchedulerideCard
 
 const PopupCard = ({ isOpen, onClose }) => {
   const [isClosing, setIsClosing] = useState(false);
+  const [showScheduler, setShowScheduler] = useState(false); // State for SchedulerideCard visibility
 
   // Trigger the close animation and delay actual close
   const handleClose = () => {
@@ -33,7 +35,9 @@ const PopupCard = ({ isOpen, onClose }) => {
 
         <h1 className='Card1-Heading'>Leaving later?</h1>
         <h6 className='Card1-subheading'>Schedule a drop-off time with campus security.</h6>
-        <button className='Card1-Button' onClick={() => console.log("Schedule Button Clicked")}>Schedule</button>
+        <button className='Card1-Button' onClick={() => setShowScheduler(true)}>Schedule</button> {/* Open SchedulerideCard */}
+
+        <SchedulerideCard isOpen={showScheduler} onClose={() => setShowScheduler(false)} /> {/* Render SchedulerideCard */}
       </div>
     </div>
   );

@@ -11,6 +11,7 @@
     align-items: flex-end; /* Align to the bottom of the screen */
     color: white;
     overflow: hidden; /* Prevent the background from scrolling */
+    z-index: 1000; /* Ensure the overlay is on top of other content */
   }
   
   /* Popup Content */
@@ -24,6 +25,7 @@
     overflow-y: auto; /* Add scrolling if content exceeds available space */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     animation: slideUp 0.4s ease forwards; /* Apply slideUp animation */
+    align-items: center;
   }
   
   /* Optional slide-out for closing animation */
@@ -36,7 +38,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0;
+    margin: 2% auto;
     padding: 0;
     font-size: 6vw; /* Responsive font size */
     font-weight: 700;
@@ -48,9 +50,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0;
-    padding: 0;
     font-size: 4.5vw; /* Responsive font size */
+    margin: 5% auto;
     font-weight: 700;
     font-style: normal;
   }
@@ -60,7 +61,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 5% 10%; /* Reduce the margin to fit content better */
+    margin: 2% 10%; /* Reduce the margin to fit content better */
     padding: 0;
     font-size: 3.5vw; /* Responsive font size */
     font-weight: 400;
@@ -72,13 +73,14 @@
     width: 90%; /* Full width with padding */
     padding: 2vh 0;
     font-size: 4vw; /* Responsive font size */
-    margin: 2vh 0;
+    margin: 2vh;
     background-color: white;
     color: blue;
     border: none;
     border-radius: 10px;
     text-align: center;
     cursor: pointer;
+    align-items: center;
   }
   
   /* Keyframes */

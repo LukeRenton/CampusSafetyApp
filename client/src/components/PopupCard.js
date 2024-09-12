@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/PopupCard.css';
 import SchedulerideCard from './SchedulerideCard'; // Import SchedulerideCard
+import SelectRes from './SelectRes'; // Import SelectRes
 
 const PopupCard = ({ isOpen, onClose }) => {
   const [isClosing, setIsClosing] = useState(false);
   const [showScheduler, setShowScheduler] = useState(false); // State for SchedulerideCard visibility
+  const [showSelectRes, setShowSelectRes] = useState(false); // State for SelectRes visibility
 
   // Trigger the close animation and delay actual close
   const handleClose = () => {
@@ -18,8 +20,16 @@ const PopupCard = ({ isOpen, onClose }) => {
   useEffect(() => {
     if (!isOpen) {
       setIsClosing(false); // Reset state if popup reopens
+      setShowScheduler(false); // Reset scheduler visibility
+      setShowSelectRes(false); // Reset residence selection visibility
     }
   }, [isOpen]);
+
+  // Handle the transition from SchedulerideCard to SelectRes
+  const handleScheduleComplete = () => {
+    setShowScheduler(false); // Hide SchedulerideCard
+    setShowSelectRes(true);  // Show SelectRes
+  };
 
   if (!isOpen && !isClosing) return null;
 
@@ -37,7 +47,15 @@ const PopupCard = ({ isOpen, onClose }) => {
         <h6 className='Card1-subheading'>Schedule a drop-off time with campus security.</h6>
         <button className='Card1-Button' onClick={() => setShowScheduler(true)}>Schedule</button> {/* Open SchedulerideCard */}
 
-        <SchedulerideCard isOpen={showScheduler} onClose={() => setShowScheduler(false)} /> {/* Render SchedulerideCard */}
+        {/* Render SchedulerideCard */}
+        {showScheduler && (
+          <SchedulerideCard isOpen={showScheduler} onClose={() => setShowScheduler(false)} onSchedule={handleScheduleComplete} />
+        )}
+
+        {/* Render SelectRes */}
+        {showSelectRes && (
+          <SelectRes isOpen={showSelectRes} onClose={() => setShowSelectRes(false)} />
+        )}
       </div>
     </div>
   );

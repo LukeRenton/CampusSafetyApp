@@ -93,12 +93,14 @@
     }
   }
   
-  @keyframes slideDown {
+  @keyframes slideOut {
     0% {
-      transform: translateY(0); /* Start at normal position */
+      opacity: 1;
+      transform: translateY(0);
     }
     100% {
-      transform: translateY(100%); /* Slide out of the screen */
+      opacity: 0;
+      transform: translateY(-100%);
     }
   }
   

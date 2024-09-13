@@ -1,94 +1,82 @@
 /* SchedulerideCard Overlay */
 .scheduleride-overlay {
-    position: fixed;
+    position: relative; /* Ensure overlay covers entire screen */
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
-    align-items: flex-end; /* Align to the bottom of the screen */
-    color: white;
-    overflow: hidden; /* Prevent the background from scrolling */
-    z-index: 1000; /* Ensure the overlay is on top of other content */
-}
-
-/* SchedulerideCard Content */
-.scheduleride-content {
-    background-color: #fff; /* Background color for the card */
-    padding: 5vh 5vw; /* Responsive padding */
-    border-radius: 20px 20px 0 0;
-    width: 100%;
-    max-width: none;
-    max-height: 85vh; /* Allow content to grow, with a maximum height */
-    overflow-y: auto; /* Add scrolling if content exceeds available space */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    animation: slideUp 0.4s ease forwards; /* Apply slideUp animation */
     align-items: center;
-}
-
-/* Optional slide-out for closing animation */
-.scheduleride-content.slide-out {
-    animation: slideDown 0.4s ease forwards;
+    color: white;
+    overflow: hidden;
+    z-index: 2000;
 }
 
 /* Main Heading for SchedulerideCard */
 .scheduleride-heading {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    margin: 2% auto;
-    padding: 0;
-    font-size: 5vw; /* Responsive font size */
+    font-size: 5vw;
     font-weight: 700;
-    font-style: normal;
-    color: #333; /* Dark color for text */
+    color: #ffffff;
+    margin: auto auto;
 }
 
 /* Subheading for SchedulerideCard */
 .scheduleride-subheading {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    margin: 2% auto;
-    padding: 0;
-    font-size: 3.5vw; /* Responsive font size */
+    font-size: 4vw;
     font-weight: 400;
-    font-style: normal;
-    color: #555; /* Slightly lighter color for text */
+    color: #ffffff;
+    margin: 1rem 0;
 }
 
 /* Button for SchedulerideCard */
 .scheduleride-button {
-    width: 90%; /* Full width with padding */
-    padding: 2vh 0;
-    font-size: 4vw; /* Responsive font size */
-    margin: 2vh auto;
-    background-color: #007bff; /* Primary color for the button */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    padding: 1.5vh 0;
+    font-size: 4vw;
+    margin: 1rem auto;
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 10px;
     text-align: center;
     cursor: pointer;
+}
+
+/* Centered Time Picker */
+.time-picker {
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    margin: 1rem 0;
+    width: 100%; /* Adjust width if necessary */
+    text-align: center;
 }
 
 /* Keyframes for SchedulerideCard */
 @keyframes slideUp {
     0% {
-        transform: translateY(100%); /* Start off the screen */
+        transform: translateY(100%);
     }
     100% {
-        transform: translateY(0); /* Slide into view */
+        transform: translateY(0);
     }
 }
 
 @keyframes slideDown {
     0% {
-        transform: translateY(0); /* Start at normal position */
+        transform: translateY(0);
     }
     100% {
-        transform: translateY(100%); /* Slide out of the screen */
+        transform: translateY(100%);
     }
 }

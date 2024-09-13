@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 5000;
 const LoginRoutes = require('./routes/LoginRoutes');
 const SafetyResourcesRoutes = require('./routes/SafetyResourcesRoutes');
 const SafetyAlertsRoutes = require('./routes/SafetyAlertsRoutes');
-var os = require('os');
+var deployment = true;
 app.use(express.json());
 // API route
 app.get('/api', (req, res) => {
@@ -16,7 +16,8 @@ app.use('/resources', SafetyResourcesRoutes); // Send any /resources requests to
 app.use('/alerts', SafetyAlertsRoutes);
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../client/build')));
+var build_path = process.env.NODE_ENV === 'production' ? 'client/build' : '../client/build';
+app.use(express.static(path.join(__dirname, build_path)));
 
 
 // Handle requests to main react page
@@ -25,9 +26,10 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 reactRoutes = [
     "*"
 ]
+
 // All other GET requests not handled before will return the React app
 app.get(reactRoutes, (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+    res.sendFile(path.join(__dirname, build_path, 'index.html'));
 });
 
 app.listen(PORT, () => {

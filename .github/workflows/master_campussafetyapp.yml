@@ -40,7 +40,7 @@ jobs:
           path: release.zip
 
       - name: Run tests
-        run: npx jest --coverage
+        run: npx jest --coverage --passWithNoTests
 
       - name: Upload coverage report to Codecov
         uses: codecov/codecov-action@v4

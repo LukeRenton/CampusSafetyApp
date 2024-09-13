@@ -10,7 +10,8 @@ const pool = require("../db");
 // Retrieve all reported safety incidents, including details, statuses, and locations, etc 
 async function getAllIncidents() {
     try {
-        const [rows] = await pool.query('SELECT id, building_name, description, , status, timestamp FROM incidents '); 
+        const [rows] = await pool.query('SELECT id, building_name, description,status, timestamp FROM incidents '); 
+        return rows;
     }
     catch(err)
     {

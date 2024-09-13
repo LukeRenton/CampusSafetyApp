@@ -30,8 +30,8 @@ export default function EmergencyInfoBox({ header, content }) {
                 show_bottom_line = false;
             }
             return(
-            <li className='emergency-info-box-item'>
-                <ContactCard key={i} name={card.name} phone_num={card.phone_num} ></ContactCard>
+            <li key={i} className='emergency-info-box-item'>
+                <ContactCard name={card.name} phone_num={card.phone_num} ></ContactCard>
                 {show_bottom_line ? <div className='emergency-box-info-item-line'></div> : <></>}
             </li>
             )

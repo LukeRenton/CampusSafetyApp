@@ -118,9 +118,9 @@ export function render_notification_items() {
     // Return mapping of ReportItem objects and "new-date" cards
     return notification_array.map((notification, i) => { 
       if (notification.type === 'new-date') {
-        return <div className='notifications-menu-new-date'>{notification.date}</div>
+        return <div key={i} className='notifications-menu-new-date'>{notification.date}</div>
       } else if (notification.type === 'scroll-base') {
-        return <div className='notifications-menu-scroll-base'></div>
+        return <div key={i} className='notifications-menu-scroll-base'></div>
       } else {
         return <ReportItem key={i} type={notification.type} description={notification.description} active={notification.active} time={get_time(notification.date)} show_time={true}></ReportItem>
       }

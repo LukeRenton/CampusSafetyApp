@@ -46,8 +46,8 @@ export default function EmergencyInfoMenu( props ) {
       Mapped Emergency Boxes for each contact group with specific contacts
   */
   const render_wits_contacts = () => {
-    return emergency_contacts['wits_contacts'].map((contact_group) => {
-        return <EmergencyInfoBox header={contact_group.contact_group_name} content={contact_group.contacts}></EmergencyInfoBox> 
+    return emergency_contacts['wits_contacts'].map((contact_group, i) => {
+        return <EmergencyInfoBox key={i} header={contact_group.contact_group_name} content={contact_group.contacts}></EmergencyInfoBox> 
     })
   }
 
@@ -63,8 +63,8 @@ export default function EmergencyInfoMenu( props ) {
       Mapped Emergency Boxes for each contact group with specific contacts
   */
   const render_external_contacts = () => {
-    return emergency_contacts['external_contacts'].map((contact_group) => {
-        return <EmergencyInfoBox header={contact_group.contact_group_name} content={contact_group.contacts}></EmergencyInfoBox> 
+    return emergency_contacts['external_contacts'].map((contact_group,i) => {
+        return <EmergencyInfoBox key={i} header={contact_group.contact_group_name} content={contact_group.contacts}></EmergencyInfoBox> 
     })
   }
 

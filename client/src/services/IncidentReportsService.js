@@ -94,7 +94,7 @@ export function render_incident_report_items() {
     // Return mapping of ReportItem objects
     return reports_array.map((report, i) => { 
       if (report.type === 'scroll-base') {
-        return <div className='reports-menu-scroll-base'></div>
+        return <div key={i} className='reports-menu-scroll-base'></div>
       } else {
         if (report.active) {
           return <ReportItem key={i} type={report.type} description={report.description} active={report.active} time={get_time(report.date)} show_time={false}></ReportItem>

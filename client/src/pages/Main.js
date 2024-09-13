@@ -15,12 +15,13 @@ import SideMenu from '../components/SideMenu';
 import NotificationsMenu from '../components/NotificationsMenu';
 import IncidentReportsMenu from '../components/IncidentReportsMenu';
 import EmergencyInfoMenu from '../components/EmergencyInfoMenu';
+import FirstAidMenu from '../components/FirstAidMenu';
 
 export default function Main() {
 
   // Hook variable for showing the side menu and current (open) menu
   const [show_side_menu, set_show_side_menu] = useState(false);
-  const [current_menu, set_current_menu] = useState("emergency_info");
+  const [current_menu, set_current_menu] = useState("first_aid");
 
   /*
     Function: close_all_menus
@@ -77,6 +78,8 @@ export default function Main() {
       case "emergency_info":
         return <EmergencyInfoMenu close_menu={close_menu}></EmergencyInfoMenu>
   
+      case "first_aid":
+        return <FirstAidMenu close_menu={close_menu}></FirstAidMenu>
 
       default:
         break;
@@ -85,12 +88,12 @@ export default function Main() {
 
   return (
     <main className='main-root'>
+        {current_menu === "none" ? <></> : render_menu() }      
         <Navbar />
         <Topbar set_show_side_menu={set_show_side_menu} />
-        {/* <Map /> */}
+        <Map />
         <SideMenu show_side_menu={show_side_menu} set_current_menu={set_current_menu}/>
         {show_side_menu ? <div className='main-dark-back' onClick={close_all_menus}></div> : <></> }
-        {current_menu === "none" ? <></> : render_menu() }      
     </main>
   )
 }

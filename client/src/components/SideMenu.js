@@ -41,7 +41,7 @@ export default function SideMenu( props ) {
                 <li className='side-menu-nav-item side-menu-notifications' onClick={() => props.set_current_menu('notifications')}><SideMenuItem icon={notifications}>Notifications</SideMenuItem></li>
                 <li className='side-menu-nav-item side-menu-reports' onClick={() => props.set_current_menu('incident_reports')} ><SideMenuItem icon={reports}>Incident Reports</SideMenuItem></li>
                 <li className='side-menu-nav-item side-menu-info' onClick={() => props.set_current_menu('emergency_info')}><SideMenuItem icon={info}>Emergency Information</SideMenuItem></li>
-                <li className='side-menu-nav-item side-menu-first-aid'><SideMenuItem icon={heart}>First Aid Information</SideMenuItem></li>
+                <li className='side-menu-nav-item side-menu-first-aid'  onClick={() => props.set_current_menu('first_aid')}><SideMenuItem icon={heart}>First Aid Information</SideMenuItem></li>
                 <li className='side-menu-nav-item side-menu-walk-home'><SideMenuItem icon={car}>Walk-home assistance</SideMenuItem></li>                
             </ul>
         </section>

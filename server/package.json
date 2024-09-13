@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
     "start": "node server.js"
   },
   "keywords": [],
@@ -14,5 +15,8 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mysql2": "^3.11.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }

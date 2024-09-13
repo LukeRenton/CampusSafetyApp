@@ -18,16 +18,31 @@
     font-style: normal;
 }
 
+.emergency-info-menu-spinner-container {
+    margin-top: 20px;
+}
+
 .emergency-info-menu-content {
+    width: 100%;
     margin-top: 10px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px 0;
+    gap: 20px 0;
 }
 
 .reports-menu-scroll-base {
+    width: 100px;
+    min-height: 100px;
+    max-height: 100px;
+}
+
+.emergency-info-header-slider {
+    margin-top: 12px;
+}
+
+.emergency-info-menu-scroll-bottom {
     width: 100px;
     min-height: 100px;
     max-height: 100px;

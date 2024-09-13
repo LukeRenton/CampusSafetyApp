@@ -6,7 +6,7 @@
  * Description:
  *  Side menu holding information and other nav options
  */
-import React from 'react'
+import React, { useState } from 'react'
 import '../styles/SideMenu.css'
 import SideMenuItem from './SideMenuItem'
 
@@ -20,6 +20,8 @@ import car from '../icons/car.svg'
 import signout from '../icons/signout.svg'
 
 export default function SideMenu( props ) {
+
+  
   return (
     <section className={'side-menu-root '+(props.show_side_menu ? ' shown-side-menu' : '')}>
         <section className='side-menu-contents-top'>
@@ -36,9 +38,9 @@ export default function SideMenu( props ) {
                 </section>
             </article>
             <ul className='side-menu-navigations'>
-                <li className='side-menu-nav-item side-menu-notifications'><SideMenuItem icon={notifications}>Notifications</SideMenuItem></li>
-                <li className='side-menu-nav-item side-menu-reports'><SideMenuItem icon={reports}>Incident Reports</SideMenuItem></li>
-                <li className='side-menu-nav-item side-menu-info'><SideMenuItem icon={info}>Emergency Information</SideMenuItem></li>
+                <li className='side-menu-nav-item side-menu-notifications' onClick={() => props.set_current_menu('notifications')}><SideMenuItem icon={notifications}>Notifications</SideMenuItem></li>
+                <li className='side-menu-nav-item side-menu-reports' onClick={() => props.set_current_menu('incident_reports')} ><SideMenuItem icon={reports}>Incident Reports</SideMenuItem></li>
+                <li className='side-menu-nav-item side-menu-info' onClick={() => props.set_current_menu('emergency_info')}><SideMenuItem icon={info}>Emergency Information</SideMenuItem></li>
                 <li className='side-menu-nav-item side-menu-first-aid'><SideMenuItem icon={heart}>First Aid Information</SideMenuItem></li>
                 <li className='side-menu-nav-item side-menu-walk-home'><SideMenuItem icon={car}>Walk-home assistance</SideMenuItem></li>                
             </ul>

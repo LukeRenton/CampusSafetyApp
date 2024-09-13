@@ -1,0 +1,34 @@
+.emergency-info-menu-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.emergency-info-menu-subheading {
+    margin: 0;
+    padding: 0;
+    width: 80%;
+
+    text-align: center;
+
+    color: var(--subtext);
+    font-size: 18px;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.emergency-info-menu-content {
+    margin-top: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px 0;
+}
+
+.reports-menu-scroll-base {
+    width: 100px;
+    min-height: 100px;
+    max-height: 100px;
+}

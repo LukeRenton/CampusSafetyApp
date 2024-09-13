@@ -9,16 +9,8 @@
 import React, { useState } from 'react'
 import '../styles/Navbar.css'
 import QuickReportButton from './QuickReportButton'
-import colours from '../common/Colours'
-
-import medical from '../icons/medical.svg'
-import fire from '../icons/fire.svg'
-import weather from '../icons/weather.svg'
-import natural from '../icons/natural.svg'
-import security from '../icons/security.svg'
-
 import exclamation from '../icons/exclamation.svg'
-
+import report_types from '../common/ReportTypes'
 
 
 export default function Navbar() {
@@ -26,32 +18,12 @@ export default function Navbar() {
   const [show_quickreports, set_show_quickreports] = useState(false);
 
   // Array of report types for easy rendering
-  const report_types = [
-    {
-      type: 'medical',
-      colour: colours['medical_blue'],
-      icon: medical
-    },
-    {
-      type: 'fire',
-      colour: colours['fire_red'],
-      icon: fire
-    },
-    {
-      type: 'weather',
-      colour: colours['weather_gray'],
-      icon: weather
-    },
-    {
-      type: 'natural',
-      colour: colours['natural_green'],
-      icon: natural
-    },
-    {
-      type: 'security',
-      colour: colours['safety_orange'],
-      icon: security
-    }
+  const report_types_data = [
+    report_types['fire'],
+    report_types['medical'],
+    report_types['natural'],
+    report_types['security'],
+    report_types['weather'],
   ]
 
   /* 
@@ -66,7 +38,7 @@ export default function Navbar() {
       Mapped component list of items with QuickReportButton components
   */
   const render_quick_report_buttons = () => {
-    return report_types.map((report) => {
+    return report_types_data.map((report) => {
       return (
         <li key={report.type} className={'navbar-report-button-item '+( show_quickreports ? `shown-navbar-button-${report.type}` : '')}>
           <QuickReportButton type={report.type} colour={report.colour}>{report.icon}</QuickReportButton>

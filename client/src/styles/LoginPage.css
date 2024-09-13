@@ -1,0 +1,84 @@
+/* General Layout */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f8ff; /* Light blue background */
+  }
+  
+  .login-icon img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+  }
+  
+  /* Input Styling */
+  .input-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    background-color: #fff;
+    border: 1px solid #007bff; /* Blue border */
+    border-radius: 5px;
+    padding: 10px;
+    width: 280px;
+  }
+  
+  .input-icon {
+    width: 24px;
+    height: 24px;
+    fill: #007bff; /* Blue for the SVG icons */
+    margin-right: 10px;
+  }
+  
+  .login-input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .login-input::placeholder {
+    color: #888;
+  }
+  
+  /* Button Styling */
+  .login-button {
+    width: 300px;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .login-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  /* SOS Triangle */
+  .sos-triangle {
+    width: 0;
+    height: 0;
+    border-left: 40px solid transparent; /* Adjust size */
+    border-right: 40px solid transparent; /* Adjust size */
+    border-bottom: 60px solid red; /* Adjust size */
+    margin-top: 20px;
+    position: relative; /* Ensure the position of the span is relative to this container */
+  }
+  
+  .sos-triangle #text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); /* Center both horizontally and vertically */
+    font-size: 18px; /* Adjust font size */
+    color: white;
+    text-align: center; /* Ensure text is centered */
+  }
+  

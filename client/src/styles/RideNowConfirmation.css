@@ -1,0 +1,59 @@
+.ride-now-confirmation-overlay {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+  }
+  
+  .ride-now-confirmation-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    animation: fadeInSlideUp 0.4s ease-out forwards; /* Slide-in and fade effect */
+  }
+  
+  .confirmation-heading {
+    font-size: 2rem;
+    color: #007bff;
+    margin-bottom: 1rem;
+  }
+  
+  .confirmation-subheading {
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
+  @keyframes fadeInSlideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideOut {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(100%);
+      visibility: hidden;
+    }
+  }
+  
+  .popup-content slide-out {
+    animation: slideOut 0.4s ease-out forwards;
+  }
+  

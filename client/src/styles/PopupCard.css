@@ -25,12 +25,13 @@
     overflow-y: auto; /* Add scrolling if content exceeds available space */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     animation: slideUp 0.4s ease forwards; /* Apply slideUp animation */
+    transition: transform 0.4s ease, opacity 0.4s ease;
     align-items: center;
   }
   
-  /* Optional slide-out for closing animation */
   .popup-content.slide-out {
-    animation: slideDown 0.4s ease forwards;
+    transform: translateY(150%);
+    opacity: 0;
   }
   
   /* Responsive Main Heading */
@@ -100,7 +101,8 @@
     }
     100% {
       opacity: 0;
-      transform: translateY(-100%);
+      transform: translateY(100%);
+      visibility: hidden;
     }
   }
   

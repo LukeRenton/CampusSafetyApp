@@ -23,9 +23,6 @@ const LoginPage = () => {
           <input type="password" className="login-input" placeholder="Password" />
         </div>
         <button className="login-button">Login</button>
-        <div className="sos-triangle">
-          <span id="text">SOS</span>
-        </div>
       </div>
     </div>
   );

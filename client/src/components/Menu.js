@@ -33,12 +33,12 @@ export default function Menu({ close, menu_header, children }) {
         set_show_menu(false);
         setTimeout(() => {
             close();
-        },800)
+        },200)
     }
 
     return (
     <>
-        <div className='menu-background' onClick={() => handle_close_menu()}></div>
+        <div className={'menu-background '+(show_menu ? 'menu-background-shown' : 'menu-background-hidden')} onClick={() => handle_close_menu()}></div>
         <section className={'menu-root ' + (show_menu ? 'menu-root-shown' : '')}>
             <header className='menu-top-header'>
                 <nav className='menu-top-nav'>

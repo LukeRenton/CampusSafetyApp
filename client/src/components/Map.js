@@ -12,10 +12,14 @@ import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import '../styles/Map.css'
 import token from '../tokens/mapbox_token';
+import { createGeoJSONCircle } from '../services/MapService';
+import MapboxCircle from 'mapbox-gl-circle';
+import { render_report_areas } from '../services/MapService';
 
 
 
 export default function Map() {
+    
     // Token retrieval
     mapboxgl.accessToken = token;
 
@@ -30,6 +34,7 @@ export default function Map() {
                                                             });
     geolocate_control.on('geolocate', () => {
         console.log('geo occurred');
+        // map.current.flyTo({pitch: 60});
     })
     const [lng, setLng] = useState(25);
     const [lat, setLat] = useState(-30);
@@ -42,25 +47,23 @@ export default function Map() {
             container: map_container.current,
             style: 'mapbox://styles/mapbox/streets-v12',
             center: [lng, lat],
-            zoom: zoom
+            zoom: zoom,
+            pitch: 60,
+            bearing: 0,
         });
         map.current.on('move', () => {
             setLng(map.current.getCenter().lng.toFixed(4));
             setLat(map.current.getCenter().lat.toFixed(4));
             setZoom(map.current.getZoom().toFixed(2));
         });
-
+        
         map.current.addControl(geolocate_control);
-
+        
         map.current.on('load', () => {
             geolocate_control.trigger();
+            render_report_areas(map);
         });
-        
-        // return () => {
-        //     map.current.remove();
-        // };
     });
-
 
   return (
     <section className='map-root'>

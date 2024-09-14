@@ -16,33 +16,43 @@ import security from '../icons/security.svg'
 const report_types = {
     'medical': {
         type: 'medical',
-        header: 'Health Emergency Alert',
+        header: 'Health Emergency',
         colour: colours['medical_blue'],
-        icon: medical
+        icon: medical,
+        report_causes: ["Emergency services to be notified", "People in the area to be notified", "Your profile to be displayed for emergency reasons"],
+        radius: 0.01
     },
     'fire': {
         type: 'fire',
-        header: 'Fire Emergency Alert',
+        header: 'Fire Emergency',
         colour: colours['fire_red'],
-        icon: fire
+        icon: fire,
+        report_causes: ["Fire services to be notified", "People in the area to be notified", "A wide scale evacuation alert"],
+        radius: 0.05,
     },
     'weather': {
         type: 'weather',
-        header: 'Weather Emergency Alert',
+        header: 'Weather Emergency',
         colour: colours['weather_gray'],
-        icon: weather
+        icon: weather,
+        report_causes: ["People in the area to be notified", "A wide scale emergency alert"],
+        radius: 0.02
     },
     'natural': {
         type: 'natural',
-        header: 'Natural Disaster Emergency Alert',
+        header: 'Natural Disaster Emergency',
         colour: colours['natural_green'],
-        icon: natural
+        icon: natural,
+        report_causes: ["Emergency services to be notified", "People in the area to be notified", "A wide scale evacuation alert"],
+        radius: 0.1
     },
     'security': {
         type: 'security',
-        header: 'Security Emergency Alert',
+        header: 'Security Emergency',
         colour: colours['safety_orange'],
-        icon: security
+        icon: security,
+        report_causes: ["Campus Safety services to be notified", "People in the area to be notified", "A wide scale safety alert"],
+        radius: 0.02
     }
 }
 

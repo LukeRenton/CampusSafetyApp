@@ -8,67 +8,7 @@
  */
 import { get_time, compare_dates, get_date_header } from '../services/DateTimeService'
 import ReportItem from '../components/ReportItem';
-
-/*
-    Function: get_notifications
-
-    Description:
-      Fetches notifications from backend
-
-    Parameters: N/A
-
-    Returns:
-      Array of notifications
-*/
-function get_notifications() {
-  // ToDo: implement actual fetch for notifications
-  const sample_items = [
-    {
-      type: 'medical',
-      description: 'Near the Wits Science Stadium',
-      active: true,
-      date: new Date(2024,8,13,10,0,0,0)
-    },
-    {
-      type: 'natural',
-      description: 'near the Wits Science Stadium',
-      active: true,
-      date: new Date(2024,8,12,10,0,0,0)
-    },
-    {
-      type: 'fire',
-      description: 'Near the FNB Building. Please evacuate the area immediately!',
-      active: true,
-      date: new Date(2024,7,8,8,47,0,0)
-    },
-    {
-      type: 'fire',
-      description: 'Near the FNB Building. Please evacuate the area immediately!',
-      active: true,
-      date: new Date(2024,7,8,8,47,0,0)
-    },
-    {
-      type: 'fire',
-      description: 'Near the FNB Building. Please evacuate the area immediately!',
-      active: true,
-      date: new Date(2024,7,8,8,47,0,0)
-    },
-    {
-      type: 'fire',
-      description: 'Near the FNB Building. Please evacuate the area immediately!',
-      active: true,
-      date: new Date(2024,7,8,8,47,0,0)
-    },
-    {
-      type: 'fire',
-      description: 'Near the FNB Building. Please evacuate the area immediately!',
-      active: true,
-      date: new Date(2024,7,8,8,47,0,0)
-    }
-  ]
-
-  return sample_items;
-}
+import { get_all_reports } from './GeneralReportService';
 
 /*
     Function: render_notification_items
@@ -83,7 +23,7 @@ function get_notifications() {
       Mapping of HTML objects
 */
 export function render_notification_items() {
-  var notification_array = get_notifications();
+  var notification_array = get_all_reports();
 
   // Handle notifications
   if (notification_array.length > 0) {

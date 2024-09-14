@@ -20,7 +20,7 @@ export default function ReportItem({ type, description, time, show_time, active 
         </div>
         <section className='report-item-info'>
           <article className='report-item-header'>
-            <h2 className='report-item-heading'>{report_types[type].header}</h2>
+            <h2 className='report-item-heading'>{report_types[type].header} Alert</h2>
             {show_time ? <h4 className='report-item-time'>{time}</h4> : <></>}
           </article>
           <h3 className='report-item-description'>{description}</h3>

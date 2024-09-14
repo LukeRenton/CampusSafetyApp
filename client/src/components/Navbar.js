@@ -11,20 +11,12 @@ import '../styles/Navbar.css'
 import QuickReportButton from './QuickReportButton'
 import exclamation from '../icons/exclamation.svg'
 import report_types from '../common/ReportTypes'
+import arrow from '../icons/arrow_white.svg'
 
 
-export default function Navbar() {
+export default function Navbar({ report_types_data, open_detailed_report_menu, set_confirmation_menu }) {
 
   const [show_quickreports, set_show_quickreports] = useState(false);
-
-  // Array of report types for easy rendering
-  const report_types_data = [
-    report_types['fire'],
-    report_types['medical'],
-    report_types['natural'],
-    report_types['security'],
-    report_types['weather'],
-  ]
 
   /* 
     Function: render_quick_report_buttons
@@ -40,7 +32,7 @@ export default function Navbar() {
   const render_quick_report_buttons = () => {
     return report_types_data.map((report) => {
       return (
-        <li key={report.type} className={'navbar-report-button-item '+( show_quickreports ? `shown-navbar-button-${report.type}` : '')}>
+        <li key={report.type} onClick={() => set_confirmation_menu(report)} className={'navbar-report-button-item '+( show_quickreports ? `shown-navbar-button-${report.type}` : '')}>
           <QuickReportButton type={report.type} colour={report.colour}>{report.icon}</QuickReportButton>
         </li>
       )
@@ -57,20 +49,24 @@ export default function Navbar() {
 
     Returns: N/A
   */
-  const handle_report_show = () => {
-    set_show_quickreports(!show_quickreports);
+  const handle_show_detailed_report_menu = () => {
+    set_show_quickreports(false);
+    open_detailed_report_menu();
   }
 
   return (
-    <nav className='navbar-root'>
-        <ul className='navbar-report-buttons'>
-          {render_quick_report_buttons()}
-        </ul>
-        <button className={'navbar-report-button'} onClick={handle_report_show}>
-          <section className='navbar-report-button-inner'>
-              <img className='navbar-report-icon' src={exclamation}></img>
-          </section>
-        </button>
-    </nav>
+    <>
+      {show_quickreports ? <div className='navbar-back' onClick={() => set_show_quickreports(false)}></div> : <></>}
+      <nav className='navbar-root'>
+          <ul className='navbar-report-buttons'>
+            {render_quick_report_buttons()}
+          </ul>
+          <button className={'navbar-report-button'} onClick={!show_quickreports ? () => set_show_quickreports(true) : () => handle_show_detailed_report_menu()}>
+            <section className='navbar-report-button-inner'>
+                {show_quickreports ? <img className='navbar-report-icon arrow-icon' src={arrow}></img> : <img className='navbar-report-icon' src={exclamation}></img>}
+            </section>
+          </button>
+      </nav>
+    </>
   )
 }

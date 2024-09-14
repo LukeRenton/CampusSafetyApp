@@ -8,17 +8,26 @@
 }
 
 .slider-option {
-    width: 150px;
+    width: 125px;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 6;
+
+    margin: 0;
+    padding: 0;
+
+    text-align: center;
+
+    font-size: 14px;
+    font-weight: 300;
+    font-style: normal;
 }
 
 .slider-selected {
     margin-top: 3.5px;
     margin-left: 5px;
-    width: 140px;
+    width: 115px;
     height: 38px;
     position: fixed;
     background: var(--mainred);
@@ -33,7 +42,7 @@
 }
 
 .slider-selected-right {
-    transform: translateX(150px);
+    transform: translateX(125px);
     transition: 0.3s;
 }
 

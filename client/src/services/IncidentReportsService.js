@@ -8,69 +8,8 @@
  */
 import { get_time, compare_dates, get_date_header } from '../services/DateTimeService'
 import ReportItem from '../components/ReportItem';
-
-/*
-    Function: get_reports
-
-    Description:
-      Fetches reports from backend
-
-    Parameters: N/A
-
-    Returns:
-      Array of reports
-*/
-function get_reports() {
-    // ToDo: implement actual fetch for notifications
-    const sample_items = [
-      {
-        type: 'medical',
-        description: 'Near the Wits Science Stadium',
-        active: true,
-        date: new Date(2024,8,13,10,0,0,0)
-      },
-      {
-        type: 'natural',
-        description: 'near the Wits Science Stadium',
-        active: true,
-        date: new Date(2024,8,12,10,0,0,0)
-      },
-      {
-        type: 'fire',
-        description: 'Near the FNB Building. Please evacuate the area immediately!',
-        active: true,
-        date: new Date(2024,7,8,8,47,0,0)
-      },
-      {
-        type: 'fire',
-        description: 'Near the FNB Building. Please evacuate the area immediately!',
-        active: true,
-        date: new Date(2024,7,8,8,47,0,0)
-      },
-      {
-        type: 'fire',
-        description: 'Near the FNB Building. Please evacuate the area immediately!',
-        active: true,
-        date: new Date(2024,7,8,8,47,0,0)
-      },
-      {
-        type: 'fire',
-        description: 'Near the FNB Building. Please evacuate the area immediately!',
-        active: true,
-        date: new Date(2024,7,8,8,47,0,0)
-      },
-      {
-        type: 'fire',
-        description: 'Near the FNB Building. Please evacuate the area immediately!',
-        active: true,
-        date: new Date(2024,7,8,8,47,0,0)
-      }
-    ]
+import { get_all_reports } from './GeneralReportService';
   
-    return sample_items;
-}
-  
-
 /*
     Function: render_incident_report_items
 
@@ -84,7 +23,7 @@ function get_reports() {
       Mapping of HTML objects
 */
 export function render_incident_report_items() {
-  var reports_array = get_reports();
+  var reports_array = get_all_reports();
 
   // Handle notifications
   if (reports_array.length > 0) {

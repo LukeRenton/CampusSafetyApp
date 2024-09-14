@@ -18,14 +18,26 @@ import IncidentReportsMenu from '../components/IncidentReportsMenu';
 import EmergencyInfoMenu from '../components/EmergencyInfoMenu';
 import FirstAidMenu from '../components/FirstAidMenu';
 import MedicalProfileMenu from '../components/MedicalProfileMenu';
+import DetailedReport from '../components/DetailedReport';
+import report_types from '../common/ReportTypes';
+import ReportConfirmation from '../components/ReportConfirmation';
 
 export default function Main() {
 
+  // Array of report types for easy rendering
+  const report_types_data = [
+    report_types['medical'],
+    report_types['fire'],
+    report_types['natural'],
+    report_types['security'],
+    report_types['weather'],
+  ]
+
   // Hook variable for showing the side menu and current (open) menu
   const [show_side_menu, set_show_side_menu] = useState(false);
-  const [current_menu, set_current_menu] = useState("medical_profile");
-  
+  const [current_menu, set_current_menu] = useState("none");
   const [user_profile, set_user_profile] = useState(get_blank_profile());
+  const [confirmation_menu, set_confirmation_menu] = useState(null);
   
   useEffect(() => {
     const fetched_profile = get_profile();
@@ -63,6 +75,20 @@ export default function Main() {
     }
 
   /*
+    Function: close_confirmation
+
+    Description:
+      Closes the currently open confirmation menu
+
+    Parameters: N/A
+
+    Returns: N/A
+  */
+    const close_confirmation = () => {
+      set_confirmation_menu(null);
+    }
+
+  /*
     Function: render_menu
 
     Description:
@@ -93,6 +119,10 @@ export default function Main() {
       case "medical_profile":
         return <MedicalProfileMenu close_menu={close_menu} profile={user_profile}></MedicalProfileMenu>
 
+      case "detailed_report":
+        return <DetailedReport report_types_data={report_types_data} close_menu={close_menu} profile={user_profile} set_confirmation_menu={set_confirmation_menu}></DetailedReport>
+  
+
       default:
         break;
     }
@@ -100,8 +130,9 @@ export default function Main() {
 
   return (
     <main className='main-root'>
+        {confirmation_menu === null ? <></> : <ReportConfirmation report_type={confirmation_menu} close_menu={close_confirmation}></ReportConfirmation>}
         {current_menu === "none" ? <></> : render_menu() }      
-        <Navbar />
+        <Navbar report_types_data={report_types_data} open_detailed_report_menu={() => set_current_menu("detailed_report")} set_confirmation_menu={set_confirmation_menu}/>
         <Topbar set_show_side_menu={set_show_side_menu} />
         <Map />
         <SideMenu show_side_menu={show_side_menu} set_current_menu={set_current_menu} profile={user_profile}/>

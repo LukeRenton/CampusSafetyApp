@@ -49,31 +49,36 @@ export default function FirstAidGuide({ guide_name, icon, icon_size, close, step
     }
 
   return (
-    <section className='first-aid-guide-root'>
-        <section className='first-aid-guide-top'>
-            <img className='first-aid-guide-icon' src={icon} style={{width: `${icon_size}px`, height: `${icon_size}px`}}></img>
-            <h2 className='first-aid-guide-name'>{guide_name}</h2>
-            <div className='first-aid-close' onClick={close}>
-                <img className='first-aid-close-icon' src={cross}></img>
-            </div>
-        </section>
-        <section className='first-aid-guide-content'>
-            <section className='first-aid-guide-card-container'>
-                <article className='first-aid-guide-card'>
-                    <section className='first-aid-guide-inner'>
-                        <section className='first-aid-guide-upper'>
-                            <h3 className='first-aid-guide-card-header'>{steps[shown_step].header}</h3>
-                            <p className='first-aid-guide-card-description'>{steps[shown_step].description}</p>
+      <>
+      <div className='first-aid-guide-back' onClick={close}></div>
+        <section className='first-aid-guide-root'>
+            <section className='first-aid-guide-top'>
+                <img className='first-aid-guide-icon' src={icon} style={{width: `${icon_size}px`, height: `${icon_size}px`}}></img>
+                <h2 className='first-aid-guide-name'>{guide_name}</h2>
+                <div className='first-aid-close' onClick={close}>
+                    <img className='first-aid-close-icon' src={cross}></img>
+                </div>
+            </section>
+            <section className='first-aid-guide-content'>
+                <section className='first-aid-guide-card-container'>
+                    <article className='first-aid-guide-card'>
+                        <section className='first-aid-guide-inner'>
+                            <section className='first-aid-guide-upper'>
+                                <h3 className='first-aid-guide-card-header'>{steps[shown_step].header}</h3>
+                                <ul className='first-aid-guide-card-description'>
+                                    {steps[shown_step].description.map((step) => <li className='first-aid-guide-card-description-item'>{step}</li>)}
+                                </ul>
+                            </section>
+                            <p className='first-aid-guide-card-footer'>{`Step ${shown_step+1}`}</p>
                         </section>
-                        <p className='first-aid-guide-card-footer'>{`Step ${shown_step+1}`}</p>
-                    </section>
-                </article>
-            </section>
-            <section className='first-aid-guide-buttons'>
-                <button className='first-aid-guide-button' onClick={handle_prev_step}>Previous Step</button>
-                <button className='first-aid-guide-button' onClick={handle_next_step}>Next Step</button>
+                    </article>
+                </section>
+                <section className='first-aid-guide-buttons'>
+                    <button className={'first-aid-guide-button '+(shown_step === 0 ? 'first-aid-guide-button-disabled' : 'first-aid-guide-button-enabled')} onClick={handle_prev_step}>Previous Step</button>
+                    <button className={'first-aid-guide-button '+(shown_step === steps.length-1 ? 'first-aid-guide-button-disabled' : 'first-aid-guide-button-enabled')} onClick={handle_next_step}>Next Step</button>
+                </section>
             </section>
         </section>
-    </section>
+    </>
   )
 }

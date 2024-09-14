@@ -14,12 +14,12 @@ import medical from '../icons/medical.svg'
 import cpr from '../icons/cpr.svg'
 import unconcious from '../icons/unconcious.svg'
 import FirstAidGuide from './FirstAidGuide'
-import general_health_assistance from '../common/FirstAid'
+import first_aid_guides from '../common/FirstAid'
 
 
 export default function FirstAidMenu( props ) {
 
-    const [current_first_aid_guide, set_current_first_aid_guide] = useState("general_health_assistance");
+    const [current_first_aid_guide, set_current_first_aid_guide] = useState("none");
 
     /* 
       Function: close
@@ -52,7 +52,13 @@ export default function FirstAidMenu( props ) {
                 return <></>
             
             case "general_health_assistance":
-                return <FirstAidGuide guide_name={'General health assistance'} icon={medical} icon_size={35} close={close} steps={general_health_assistance.steps}></FirstAidGuide>
+                return <FirstAidGuide guide_name={'General health assistance'} icon={first_aid_guides['general_health_assistance'].icon} icon_size={35} close={close} steps={first_aid_guides['general_health_assistance'].steps}></FirstAidGuide>
+        
+            case "cpr":
+                return <FirstAidGuide guide_name={'CPR'} icon={first_aid_guides['cpr'].icon} icon_size={35} close={close} steps={first_aid_guides['cpr'].steps}></FirstAidGuide>
+
+            case "unconcious":
+                return <FirstAidGuide guide_name={'Unconcious Patient'} icon={first_aid_guides['unconcious'].icon} icon_size={35} close={close} steps={first_aid_guides['unconcious'].steps}></FirstAidGuide>
         
             default:
                 break;

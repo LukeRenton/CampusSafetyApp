@@ -19,20 +19,16 @@ import heart from '../icons/heart.svg'
 import car from '../icons/car.svg'
 import signout from '../icons/signout.svg'
 
-export default function SideMenu( props ) {
-
-  
+export default function SideMenu( props ) {  
   return (
     <section className={'side-menu-root '+(props.show_side_menu ? ' shown-side-menu' : '')}>
         <section className='side-menu-contents-top'>
             <article className='side-menu-profile'>
-                <div className='side-menu-profile-image-container' style={{backgroundImage: `url(${sample_student_pic})`}}>
-                    {/* <img className='side-menu-profile-image' src={sample_student_pic}></img> */}
-                </div>
-                <section className='side-menu-profile-info'>
+                <div className='side-menu-profile-image-container' style={{backgroundImage: `url(${sample_student_pic})`}}></div>
+                <section className='side-menu-profile-info' onClick={() => props.set_current_menu('medical_profile')}>
                     <section className='side-menu-profile-name-num'>
-                        <h1 className='side-menu-profile-name'>Mary Anne Jane</h1>
-                        <h2 className='side-menu-profile-student-num'>2009812</h2>
+                        <h1 className='side-menu-profile-name'>{props.profile.first_names} {props.profile.last_name}</h1>
+                        <h2 className='side-menu-profile-student-num'>{props.profile.student_staff_num}</h2>
                     </section>
                     <button className='side-menu-view-profile'>View Medical Profile</button>
                 </section>

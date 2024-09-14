@@ -6,9 +6,10 @@
  * Description:
  *  Main page component to host items to be displayed on the main page (home page) of the app
  */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Map from '../components/Map';
 import '../styles/Main.css'
+import { get_profile, get_blank_profile } from '../services/ProfileService'
 import Navbar from '../components/Navbar';
 import Topbar from '../components/Topbar';
 import SideMenu from '../components/SideMenu';
@@ -16,13 +17,21 @@ import NotificationsMenu from '../components/NotificationsMenu';
 import IncidentReportsMenu from '../components/IncidentReportsMenu';
 import EmergencyInfoMenu from '../components/EmergencyInfoMenu';
 import FirstAidMenu from '../components/FirstAidMenu';
+import MedicalProfileMenu from '../components/MedicalProfileMenu';
 
 export default function Main() {
 
   // Hook variable for showing the side menu and current (open) menu
   const [show_side_menu, set_show_side_menu] = useState(false);
-  const [current_menu, set_current_menu] = useState("first_aid");
-
+  const [current_menu, set_current_menu] = useState("medical_profile");
+  
+  const [user_profile, set_user_profile] = useState(get_blank_profile());
+  
+  useEffect(() => {
+    const fetched_profile = get_profile();
+    set_user_profile(fetched_profile);
+  },[])
+  
   /*
     Function: close_all_menus
 
@@ -81,6 +90,9 @@ export default function Main() {
       case "first_aid":
         return <FirstAidMenu close_menu={close_menu}></FirstAidMenu>
 
+      case "medical_profile":
+        return <MedicalProfileMenu close_menu={close_menu} profile={user_profile}></MedicalProfileMenu>
+
       default:
         break;
     }
@@ -92,7 +104,7 @@ export default function Main() {
         <Navbar />
         <Topbar set_show_side_menu={set_show_side_menu} />
         <Map />
-        <SideMenu show_side_menu={show_side_menu} set_current_menu={set_current_menu}/>
+        <SideMenu show_side_menu={show_side_menu} set_current_menu={set_current_menu} profile={user_profile}/>
         {show_side_menu ? <div className='main-dark-back' onClick={close_all_menus}></div> : <></> }
     </main>
   )

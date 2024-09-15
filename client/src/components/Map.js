@@ -24,19 +24,40 @@ export default function Map() {
     const map_container = useRef(null);
     const map = useRef(null);
 
-
-
     const [lng, setLng] = useState(25);
     const [lat, setLat] = useState(-30);
-    const [zoom, setZoom] = useState(15);
+
+    const [user_lng, set_user_lng] = useState(0);
+    const [user_lat, set_user_lat] = useState(0);
+
 
     const [show_marker_popup, set_show_marker_popup] = useState(null);
 
+    /*
+        Function: handle_marker_popup
+
+        Description:
+            Shows the marker popup information when a marker is pressed
+
+        Parameters:
+            report: The report for which the popup is being shown
+
+        Returns: N/A
+    */
     const handle_marker_popup = (report) => {
-        console.log("popup for marker!");
         set_show_marker_popup(report);
     }
 
+    /*
+        Function: handle_movement
+
+        Description:
+            Handles when movement occurs on the map
+        
+        Parameters: N/A
+
+        Returns: N/A
+    */
     const handle_movement = () => {
         setLng(map.current.getCenter().lng.toFixed(4));
         setLat(map.current.getCenter().lat.toFixed(4));
@@ -44,8 +65,10 @@ export default function Map() {
     
     // On component load, add the map and add required parts
     useEffect(() => {
-        if (map.current) return;
+        if (map.current) return; // Ensure only 1 map object from mapbox is made
         create_map(map, map_container, handle_movement, handle_marker_popup);
+
+        
     });
 
   return (

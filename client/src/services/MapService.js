@@ -1,3 +1,12 @@
+/**
+ * File: MapService.js
+ * 
+ * Author: Mitchell
+ * 
+ * Description:
+ *  Service for map creation and interaction
+ */
+
 import MapboxCircle from 'mapbox-gl-circle';
 import report_types from '../common/ReportTypes';
 import { get_all_reports } from './GeneralReportService';
@@ -10,17 +19,30 @@ import marker from '../icons/medical_marker.svg'
 var map;
 var map_container;
 
+/*
+  Function: create_map
+
+  Description:
+    Creates the mapbox object with original settings
+
+  Parameters:
+    map_in: map object to be used from mapbox
+    map_container_in: map container to be used from mapbox 
+    map_movement_handler: handler to be called when movement occurs on the map
+    marker_popup_handler: handler to be called when marker popup must be shown
+
+  Returns: N/A
+
+*/
 export function create_map(map_in, map_container_in, map_movement_handler, marker_popup_handler) {
-  // const map_container = useRef(null);
-  // const map = useRef(null);
-  // Token retrieval
   map = map_in;
   map_container = map_container_in;
   
+  // Token retrieval
   mapboxgl.accessToken = token;
 
-  // Defining map information from Mapbox API
   
+  // Defining map information from Mapbox API
   const geolocate_control = new mapboxgl.GeolocateControl({positionOptions: {
                                                                   enableHighAccuracy: true
                                                               },
@@ -31,7 +53,6 @@ export function create_map(map_in, map_container_in, map_movement_handler, marke
 
   geolocate_control.on('geolocate', () => {
       console.log('geo occurred');
-      // map.current.setMinPitch(0);
   })
 
   const bounds = [
@@ -52,8 +73,8 @@ export function create_map(map_in, map_container_in, map_movement_handler, marke
           
   map.current.on('load', () => {
       geolocate_control.trigger();
-      render_report_areas(map, marker_popup_handler);
-      render_wits_boundary(map);
+      render_report_areas(marker_popup_handler);
+      render_wits_boundary();
       map.current.flyTo({
           center: [28.030228, -26.190955],
           zoom: 18.38,
@@ -61,11 +82,25 @@ export function create_map(map_in, map_container_in, map_movement_handler, marke
           bearing: 173.60
       });
       map.current.on('move', map_movement_handler); 
-  });
-
-  
+  }); 
 }
 
+/*
+  Function: createGeoJSONCircle
+
+  Description:
+    Creates a circle to be displayed on the map
+
+  Parameters:
+    center: center of circle
+    radiusInKm: radius of circle
+    points: approximated points (automated to 64)
+
+  Returns:
+    geoJSON object
+
+  Reference: https://stackoverflow.com/questions/37599561/drawing-a-circle-with-the-radius-in-miles-meters-with-mapbox-gl-js/39006388#39006388
+*/
 function createGeoJSONCircle(center, radiusInKm, points) {
     if(!points) points = 64;
 
@@ -105,7 +140,18 @@ function createGeoJSONCircle(center, radiusInKm, points) {
     };
 };
 
-export function render_wits_boundary(map) {
+
+/*
+  Function: render_wits_boundary
+
+  Description:
+    Renders a black line around Wits to show bordered area
+
+  Parameters: N/A
+
+  Returns: N/A
+*/
+function render_wits_boundary() {
     map.current.addSource('maine', {
         type: 'geojson',
         data: {
@@ -179,6 +225,18 @@ export function render_wits_boundary(map) {
       });
 }
 
+/*
+  Function: handle_marker_click
+
+  Description:
+    Handles when a marker is clicked on the map to zoom to marker and show popup
+
+  Parameters:
+    report: report for which marker information should be shown
+    marker_popup_handler: handler to show popup for marker
+  
+  Returns: N/A
+*/
 function handle_marker_click(report, marker_popup_handler) {
   const coords = report.location;
   map.current.flyTo({
@@ -186,15 +244,27 @@ function handle_marker_click(report, marker_popup_handler) {
     zoom: 18.80
   })
   marker_popup_handler(report);
-
-  console.log(report);
 }
 
-export function render_report_areas(map, marker_popup_handler) {
+/*
+  Function: render_report_areas
+
+  Description:
+    Renders all ACTIVE reports as areas to map
+
+  Parameters:
+    marker_popup_handler: handler to show popup when marker for a report is clicked on map
+  
+  Returns: N/A
+*/
+function render_report_areas(marker_popup_handler) {
+
+  console.log(marker_popup_handler);
 
     const all_reports = get_all_reports();
 
     all_reports.forEach((report,i) => {
+      if (report.active) {
         map.current.addSource("polygon"+String(i), createGeoJSONCircle([report.location.lng, report.location.lat], report_types[report.type].radius));
         map.current.addLayer({
             "id": "polygon"+String(i),
@@ -231,20 +301,52 @@ export function render_report_areas(map, marker_popup_handler) {
         el.addEventListener('click', () => {handle_marker_click(report, marker_popup_handler)});
         
         new mapboxgl.Marker(el).setLngLat([report.location.lng, report.location.lat]).addTo(map.current);
+      }
     })
-
-    
-
-
-    // var myCircle2 = new MapboxCircle({lat: all_reports[1].location.lat+1, lng: all_reports[1].location.lng}, 6000, {
-    //     fillColor: report_types[all_reports[1].type].colour,
-    // }).addTo(map.current)
-
 }
 
+/*
+  Function: move_map_to
+
+  Description:
+    Moves the map to a specific location
+
+  Parameters:
+    coord: the coordinate to move the map to
+  
+  Returns: N/A
+*/
 export function move_map_to(coord) {
   map.current.flyTo({
     center: coord,
     zoom: 18.80
   })
+}
+
+
+/*
+  Function: get_user_coords
+
+  Description:
+    Gets the user map coordinates
+  
+  Parameters: N/A
+
+  Returns:
+    User coordinates in json object
+*/
+export function get_user_coords() {
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(position => {
+        return {
+          lng: position.coords.longitude,
+          lat: position.coords.latitude,
+          error: null
+        }
+    })
+  } else {
+      return {
+        error: 'unable to get location: locator disabled'
+      }
+  }
 }

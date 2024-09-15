@@ -1,3 +1,12 @@
+/**
+ * File: MarkerPopup.js
+ * 
+ * Author: Mitchell
+ * 
+ * Description:
+ *  Component to display popup for a marker
+ */
+
 import React from 'react'
 import '../styles/MarkerPopup.css'
 import report_types from '../common/ReportTypes'

@@ -1,6 +1,70 @@
 import MapboxCircle from 'mapbox-gl-circle';
 import report_types from '../common/ReportTypes';
 import { get_all_reports } from './GeneralReportService';
+import mapboxgl from 'mapbox-gl';
+import token from '../tokens/mapbox_token';
+import { useRef } from 'react';
+import marker from '../icons/medical_marker.svg'
+
+
+var map;
+var map_container;
+
+export function create_map(map_in, map_container_in, map_movement_handler, marker_popup_handler) {
+  // const map_container = useRef(null);
+  // const map = useRef(null);
+  // Token retrieval
+  map = map_in;
+  map_container = map_container_in;
+  
+  mapboxgl.accessToken = token;
+
+  // Defining map information from Mapbox API
+  
+  const geolocate_control = new mapboxgl.GeolocateControl({positionOptions: {
+                                                                  enableHighAccuracy: true
+                                                              },
+                                                          trackUserLocation: true,
+                                                          showUserHeading: true,
+                                                          showAccuracyCircle: false
+                                                          });
+
+  geolocate_control.on('geolocate', () => {
+      console.log('geo occurred');
+      // map.current.setMinPitch(0);
+  })
+
+  const bounds = [
+    [28.020809, -26.194245],
+    [28.031961, -26.183341]
+  ]
+
+  map.current = new mapboxgl.Map({
+    container: map_container.current,
+    // style: 'mapbox://styles/mapbox/streets-v12',
+    style: 'mapbox://styles/mitchellneilsonwits/cm12lbun601g101pj7kh63w7f',
+    // center: [lng, lat],
+    // zoom: zoom,
+    maxBounds: bounds
+});
+
+  map.current.addControl(geolocate_control);
+          
+  map.current.on('load', () => {
+      geolocate_control.trigger();
+      render_report_areas(map, marker_popup_handler);
+      render_wits_boundary(map);
+      map.current.flyTo({
+          center: [28.030228, -26.190955],
+          zoom: 18.38,
+          pitch: 60,
+          bearing: 173.60
+      });
+      map.current.on('move', map_movement_handler); 
+  });
+
+  
+}
 
 function createGeoJSONCircle(center, radiusInKm, points) {
     if(!points) points = 64;
@@ -115,7 +179,18 @@ export function render_wits_boundary(map) {
       });
 }
 
-export function render_report_areas(map) {
+function handle_marker_click(report, marker_popup_handler) {
+  const coords = report.location;
+  map.current.flyTo({
+    center: [coords.lng, coords.lat],
+    zoom: 18.80
+  })
+  marker_popup_handler(report);
+
+  console.log(report);
+}
+
+export function render_report_areas(map, marker_popup_handler) {
 
     const all_reports = get_all_reports();
 
@@ -141,9 +216,21 @@ export function render_report_areas(map) {
                 'line-width': 1
             }
         });
-
-
         
+        const el = document.createElement('div');
+        el.className = 'marker';
+        el.style.backgroundImage = `url(${report_types[report.type].marker})`;
+        el.style.paddingBottom = `45px`;
+        el.style.backgroundRepeat = 'no-repeat';
+        el.style.width = `${report_types[report.type].icon_size}px`;
+        el.style.height = `${report_types[report.type].icon_size}px`;
+        el.style.backgroundSize = '100%';
+        el.style.display = 'block';
+        el.style.border = 'none';
+        el.style.cursor = 'pointer';
+        el.addEventListener('click', () => {handle_marker_click(report, marker_popup_handler)});
+        
+        new mapboxgl.Marker(el).setLngLat([report.location.lng, report.location.lat]).addTo(map.current);
     })
 
     
@@ -153,4 +240,11 @@ export function render_report_areas(map) {
     //     fillColor: report_types[all_reports[1].type].colour,
     // }).addTo(map.current)
 
+}
+
+export function move_map_to(coord) {
+  map.current.flyTo({
+    center: coord,
+    zoom: 18.80
+  })
 }

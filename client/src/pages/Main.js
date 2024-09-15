@@ -105,10 +105,10 @@ export default function Main() {
         return <></>
 
       case "notifications":
-        return <NotificationsMenu close_menu={close_menu}></NotificationsMenu> 
+        return <NotificationsMenu close_all_menus={close_all_menus} close_menu={close_menu}></NotificationsMenu> 
 
       case "incident_reports":
-        return <IncidentReportsMenu close_menu={close_menu}></IncidentReportsMenu>
+        return <IncidentReportsMenu close_all_menus={close_all_menus} close_menu={close_menu}></IncidentReportsMenu>
 
       case "emergency_info":
         return <EmergencyInfoMenu close_menu={close_menu}></EmergencyInfoMenu>

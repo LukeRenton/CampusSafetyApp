@@ -22,7 +22,7 @@ import { get_all_reports } from './GeneralReportService';
     Returns:
       Mapping of HTML objects
 */
-export function render_incident_report_items() {
+export function render_incident_report_items(close_all_menus_handler) {
   var reports_array = get_all_reports();
 
   // Handle notifications
@@ -36,7 +36,7 @@ export function render_incident_report_items() {
         return <div key={i} className='reports-menu-scroll-base'></div>
       } else {
         if (report.active) {
-          return <ReportItem key={i} type={report.type} description={report.description} active={report.active} time={get_time(report.date)} show_time={false}></ReportItem>
+          return <ReportItem key={i} location={report.location} close_all_menus_handler={close_all_menus_handler} type={report.type} description={report.description} active={report.active} time={get_time(report.date)} show_time={false}></ReportItem>
         }
       }
     });

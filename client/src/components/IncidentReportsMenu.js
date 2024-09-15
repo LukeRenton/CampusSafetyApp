@@ -18,7 +18,7 @@ export default function IncidentReportsMenu( props ) {
         <section className='incidents-reports-menu-container'>
             <h2 className='incidents-reports-menu-subheading'>These reports are still active. Please remain vigilant.</h2>
           <section className='incidents-reports-menu-content'>
-            {render_incident_report_items()}
+            {render_incident_report_items(props.close_all_menus)}
           </section>
         </section>
     </Menu>

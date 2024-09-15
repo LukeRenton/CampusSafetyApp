@@ -22,7 +22,7 @@ import { get_all_reports } from './GeneralReportService';
     Returns:
       Mapping of HTML objects
 */
-export function render_notification_items() {
+export function render_notification_items(close_all_menus_handler) {
   var notification_array = get_all_reports();
 
   // Handle notifications
@@ -62,7 +62,7 @@ export function render_notification_items() {
       } else if (notification.type === 'scroll-base') {
         return <div key={i} className='notifications-menu-scroll-base'></div>
       } else {
-        return <ReportItem key={i} type={notification.type} description={notification.description} active={notification.active} time={get_time(notification.date)} show_time={true}></ReportItem>
+        return <ReportItem key={i} location={notification.location} type={notification.type} description={notification.description} active={notification.active} time={get_time(notification.date)} show_time={true} close_all_menus_handler={close_all_menus_handler}></ReportItem>
       }
     });
 

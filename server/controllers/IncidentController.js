@@ -26,7 +26,7 @@ async function UpdateSafetyIncidents(id_val, status) {
     try {
         const id = Number(id_val);
         await pool.query('UPDATE incidents SET status = ? WHERE id = ?', [status, id]);
-        const [rows] = await pool.query('SELECT id, status WHERE id = ?', [id]);
+        const [rows] = await pool.query('SELECT id, status FROM incidents WHERE id = ?', [id]);
         return rows;
     } catch (err) {
         console.error(err);

@@ -1,7 +1,3 @@
-/* File: __tests__/IncidentController.test.js
-    Type: Testing
-    Description: Unit  Testin the incident Controller
-*/
 const { getAllIncidents, UpdateSafetyIncidents, ReportSafetyIncidents } = require('../controllers/IncidentController');
 const pool = require('../db');
 
@@ -9,6 +5,17 @@ const pool = require('../db');
 jest.mock('../db');
 
 describe('IncidentController', () => {
+    let consoleErrorSpy;
+
+    beforeAll(() => {
+        // Suppress console.error globally in all tests
+        consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    });
+
+    afterAll(() => {
+        // Restore console.error after all tests
+        consoleErrorSpy.mockRestore();
+    });
 
     beforeEach(() => {
         jest.resetAllMocks();
@@ -89,5 +96,4 @@ describe('IncidentController', () => {
         // Act & Assert
         await expect(ReportSafetyIncidents('Fire', 'photo.jpg', 40.7128, -74.0060, 'Building A')).rejects.toThrow(`Server error : ${errorMessage}`);
     });
-
 });

@@ -1,17 +1,8 @@
-/* File: InicidentRoutes.js
-    Type: Testing
-    Description: Integration testing the APIs
-    
-*/
-
-
 const request = require('supertest');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-// const multer = require('multer');
-// const { Pool } = require('pg'); 
-const IncidentRoutes = require('../routes/IncidentSRoutes');
+const IncidentRoutes = require('../routes/IncidentsRoutes');
 const IncidentController = require('../controllers/IncidentController');
 
 // Setup the Express app with the routes
@@ -25,8 +16,11 @@ const pool = require('../db');
 jest.mock('../controllers/IncidentController');
 
 describe('Incident Routes Integration Tests', () => {
+  let consoleErrorSpy;
+
   beforeAll(async () => {
-    // Set up database schema and seed data if needed
+    // Suppress console.error during tests
+    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
     await pool.query('CREATE TABLE IF NOT EXISTS incidents (id SERIAL PRIMARY KEY, description TEXT, photo TEXT, latitude FLOAT, longitude FLOAT, building_name TEXT, timestamp TIMESTAMP)');
   });
 
@@ -36,7 +30,8 @@ describe('Incident Routes Integration Tests', () => {
   });
 
   afterAll(async () => {
-    // Drop tables and close the database connection
+    // Restore console.error and clean up database
+    consoleErrorSpy.mockRestore();
     await pool.query('DROP TABLE incidents');
     await pool.end();
   });
@@ -73,10 +68,9 @@ describe('Incident Routes Integration Tests', () => {
 
   test('POST /incidents/report-incidents should upload photo and create a new incident', async () => {
     // Arrange
-    const mockPhotoUrl = 'https://example.com/photo.jpg';
+    const mockPhotoUrl = 'https://campussafety.com/photo.jpg';
     const mockIncident = {
       description: 'Test incident',
-      photo: mockPhotoUrl,
       latitude: 123.45,
       longitude: 67.89,
       building_name: 'Test Building'
@@ -94,7 +88,10 @@ describe('Incident Routes Integration Tests', () => {
     const response = await request(app)
       .post('/incidents/report-incidents')
       .attach('photo', Buffer.from('test image data'), 'test-image.jpg') // Simulates file upload
-      .send(mockIncident);
+      .field('description', mockIncident.description)
+      .field('latitude', mockIncident.latitude)
+      .field('longitude', mockIncident.longitude)
+      .field('building_name', mockIncident.building_name);
 
     // Assert
     expect(response.status).toBe(200);

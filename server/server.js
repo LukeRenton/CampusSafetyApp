@@ -21,9 +21,7 @@ app.use('/alerts', SafetyAlertsRoutes);
 app.use('/incidents',IncidentSRoutes );
 
 // Serve static files from the React app
-var build_path = process.env.NODE_ENV === 'production' ? 'client/build' : '../client/build';
-app.use(express.static(path.join(__dirname, build_path)));
-
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 // Handle requests to main react page
 // NOTE: THIS ALL THE CODE BELOW HAS TO BE AT THE END OF THE FILE
@@ -31,12 +29,11 @@ app.use(express.static(path.join(__dirname, build_path)));
 reactRoutes = [
     "*"
 ]
-
 // All other GET requests not handled before will return the React app
 app.get(reactRoutes, (req, res) => {
-    res.sendFile(path.join(__dirname, build_path, 'index.html'));
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
 app.listen(PORT, () => {
-    console.log(`Server running on port http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });

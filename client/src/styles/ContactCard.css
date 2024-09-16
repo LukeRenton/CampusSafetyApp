@@ -1,0 +1,77 @@
+.contact-card-root {
+    margin-top: 10px;
+    min-height: 52px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-card-content {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.contact-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px 0px;
+    width: 100%;
+}
+
+.contact-card-name {
+    margin: 0;
+    padding: 0;
+
+    color: #646464;
+
+    font-size: 14px;
+    font-weight: 400;
+    font-style: normal;
+
+}
+
+.contact-card-phone-num {
+    margin: 0;
+    padding: 0;
+
+    /* color: #646464; */
+
+    font-size: 14px;
+    font-weight: 500;
+    font-style: normal;   
+}
+
+.contact-card-call-button {
+    width: 100px;
+    height: 30px;
+    background: var(--mainred);
+    border: none;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0 4px;
+}
+
+.contact-card-call-button-text {
+    margin: 0;
+    padding: 0;
+    padding-left: 10px;
+
+    color: white;
+
+    font-size: 13px;
+    font-weight: 500;
+    font-style: normal;  
+}
+
+.contact-card-call-button-icon {
+    width: 20px;
+    height: 20px;
+}

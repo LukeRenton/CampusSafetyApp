@@ -1,0 +1,37 @@
+.emergency-info-box-root {
+    width: calc(100% - 2px);
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.301);
+    border-radius: 20px;
+}
+
+.emergency-info-box-inner {
+    width: calc(100% - 30px);
+    height: calc(100% - 20px);
+
+    padding-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 10px;
+}
+
+.emergency-info-box-header {
+    margin: 0;
+    padding: 0;
+
+    font-size: 18px;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.emergency-info-box-items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.emergency-box-info-item-line {
+    width: 98%;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.233);
+}

@@ -1,0 +1,26 @@
+/* Full-screen black screen to simulate a phone */
+.phone-screen {
+    background-color: black;
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    justify-content: center; /* Horizontally center the button */
+    align-items: center; /* Vertically center the button */
+  }
+  
+  /* Button styling to make it stand out */
+  .centered-button {
+    padding: 15px 30px;
+    background-color: white;
+    color: black;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+  }
+  
+  /* Button hover effect */
+  .centered-button:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+  }

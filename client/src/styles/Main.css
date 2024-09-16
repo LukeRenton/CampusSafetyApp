@@ -1,0 +1,23 @@
+.main-root {
+    height: 100%;
+}
+
+.main-dark-back {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100dvh;
+    width: 100dvw;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.4);
+    animation: loadin 0.2s linear;
+}
+
+@keyframes loadin {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

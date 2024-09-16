@@ -60,7 +60,7 @@ describe('IncidentController', () => {
         // Assert
         expect(result).toEqual(mockUpdatedIncident);
         expect(pool.query).toHaveBeenCalledWith('UPDATE incidents SET status = ? WHERE id = ?', [newStatus, id]);
-        expect(pool.query).toHaveBeenCalledWith('SELECT id, status WHERE id = ?', [id]);
+        expect(pool.query).toHaveBeenCalledWith('SELECT id, status FROM incidents WHERE id = ?', [id]);
     });
 
     test('UpdateSafetyIncidents should handle errors', async () => {

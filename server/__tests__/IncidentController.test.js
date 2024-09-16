@@ -1,6 +1,6 @@
 /* File: __tests__/IncidentController.test.js
     Type: Testing
-    Description: Testin the incident Controller
+    Description: Unit  Testin the incident Controller
 */
 const { getAllIncidents, UpdateSafetyIncidents, ReportSafetyIncidents } = require('../controllers/IncidentController');
 const pool = require('../db');

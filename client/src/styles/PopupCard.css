@@ -85,8 +85,8 @@
     padding: 2vh 0;
     font-size: 4vw; /* Responsive font size */
     margin: 2vh;
-    background-color: white;
-    color: var(--medicalblue);
+    background-color: var(--medicalblue);
+    color: white;
     border: none;
     border-radius: 10px;
     text-align: center;

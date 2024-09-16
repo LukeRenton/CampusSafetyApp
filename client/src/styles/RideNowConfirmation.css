@@ -21,7 +21,7 @@
   
   .confirmation-heading {
     font-size: 2rem;
-    color: #007bff;
+    color: var(--medicalblue);
     margin-bottom: 1rem;
   }
   

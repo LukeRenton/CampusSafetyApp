@@ -20,7 +20,7 @@
     align-items: center;
     font-size: 5vw;
     font-weight: 700;
-    color: #ffffff;
+    color: black;
     margin: auto auto;
 }
 
@@ -31,7 +31,7 @@
     align-items: center;
     font-size: 4vw;
     font-weight: 400;
-    color: #ffffff;
+    color: black;
     margin: 1rem 0;
 }
 
@@ -44,7 +44,7 @@
     padding: 1.5vh 0;
     font-size: 4vw;
     margin: 1rem auto;
-    background-color: #007bff;
+    background-color: var(--medicalblue);
     color: white;
     border: none;
     border-radius: 10px;

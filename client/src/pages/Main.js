@@ -22,6 +22,7 @@ import DetailedReport from '../components/DetailedReport';
 import report_types from '../common/ReportTypes';
 import ReportConfirmation from '../components/ReportConfirmation';
 import PopupCard from '../components/PopupCard';
+import Notification from '../components/Notification';
 
 export default function Main() {
 
@@ -133,6 +134,7 @@ export default function Main() {
 
   return (
     <main className='main-root'>
+        {/* <Notification></Notification> */}
         {confirmation_menu === null ? <></> : <ReportConfirmation report_type={confirmation_menu} close_menu={close_confirmation}></ReportConfirmation>}
         {current_menu === "none" ? <></> : render_menu() }      
         <Navbar report_types_data={report_types_data} open_detailed_report_menu={() => set_current_menu("detailed_report")} set_confirmation_menu={set_confirmation_menu}/>

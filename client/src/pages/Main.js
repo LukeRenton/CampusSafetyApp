@@ -21,6 +21,7 @@ import MedicalProfileMenu from '../components/MedicalProfileMenu';
 import DetailedReport from '../components/DetailedReport';
 import report_types from '../common/ReportTypes';
 import ReportConfirmation from '../components/ReportConfirmation';
+import PopupCard from '../components/PopupCard';
 
 export default function Main() {
 
@@ -122,6 +123,8 @@ export default function Main() {
       case "detailed_report":
         return <DetailedReport report_types_data={report_types_data} close_menu={close_menu} profile={user_profile} set_confirmation_menu={set_confirmation_menu}></DetailedReport>
   
+      case "walk_home":
+        return <PopupCard isOpen={true} onClose={close_menu}> <p>Walk-home assistance information goes here.</p> </PopupCard>
 
       default:
         break;

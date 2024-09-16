@@ -290,7 +290,7 @@ function render_report_areas(marker_popup_handler) {
         el.style.paddingBottom = `45px`;
         el.style.backgroundRepeat = 'no-repeat';
         el.style.width = `${report_types[report.type].icon_size}px`;
-        el.style.height = `${report_types[report.type].icon_size}px`;
+        el.style.height = `${report_types[report.type].icon_size + 45}px`;
         el.style.backgroundSize = '100%';
         el.style.display = 'block';
         el.style.border = 'none';

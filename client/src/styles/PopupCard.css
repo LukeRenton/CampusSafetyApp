@@ -1,0 +1,113 @@
+/* Popup Overlay */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Align to the bottom of the screen */
+    color: white;
+    overflow: hidden; /* Prevent the background from scrolling */
+    z-index: 1000; /* Ensure the overlay is on top of other content */
+  }
+  
+  /* Popup Content */
+  .popup-content {
+    background: var(--medicalblue);
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    /* padding: 5vh 5vw;  Responsive padding */
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-width: none;
+    max-height: 85vh; /* Allow content to grow, with a maximum height */
+    overflow-y: auto; /* Add scrolling if content exceeds available space */
+    box-shadow: 0 4px 6px rgba(56, 20, 20, 0.1);
+    /* animation: slideUp 0.4s ease forwards; */
+    /* transition: transform 0.4s ease, opacity 0.4s ease; */
+    align-items: center;
+    height: fit-content;
+
+    transform: translateY(1000px);
+    transition: 0.4s;
+
+  }
+
+  .popup-content-show {
+    transform: translateY(0);
+    transition: 0.4s;
+  }
+  
+  
+  
+  /* Responsive Main Heading */
+  #Main-Heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2% auto;
+    padding: 0;
+    font-size: 6vw; /* Responsive font size */
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  /* Card1 Heading */
+  .Card1-Heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4.5vw; /* Responsive font size */
+    margin: 5% auto;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  /* Card1 Subheading */
+  .Card1-subheading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2% 10%; /* Reduce the margin to fit content better */
+    padding: 0;
+    font-size: 3.5vw; /* Responsive font size */
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  /* Card1 Button */
+  .Card1-Button {
+    width: 90%; /* Full width with padding */
+    padding: 2vh 0;
+    font-size: 4vw; /* Responsive font size */
+    margin: 2vh;
+    background-color: white;
+    color: var(--medicalblue);
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    align-items: center;
+  }
+  
+  .slide-out {
+    transform: translateY(400px);
+    /* animation: slideUp 0.4s ease reverse; */
+    /* transition: 0.4s; */
+  }
+
+  .popup-container {
+    width: 100%;
+    height: calc(100% - 15px);
+    background: white;
+
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+
+    padding-top: 15px;
+
+  }

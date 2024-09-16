@@ -1,0 +1,88 @@
+
+/* SelectRes Content */
+.selectres-content {
+  background-color: blue;
+  padding: 5vh 5vw; /* Responsive padding */
+  border-radius: 20px; /* Rounded corners for all corners */
+  width: auto;
+  max-width: 90vw; /* Adjust maximum width to fit better */
+  max-height: 85vh; /* Allow content to grow, with a maximum height */
+  overflow-y: auto; /* Add scrolling if content exceeds available space */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.4s ease forwards; /* Apply slideUp animation */
+  text-align: center; /* Center the text */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Dropdown Styling */
+.selectres-dropdown {
+  width: 100%; /* Full width of the content container */
+  padding: 1.5vh 0; /* Adjust padding for dropdown */
+  font-size: 4vw; /* Responsive font size */
+  border-radius: 10px;
+  border: none;
+  text-align: center;
+  max-height: 10%; /* Fixed height for dropdown */
+  overflow-y: auto; /* Enable vertical scrolling */
+  margin: 2vh auto;
+  box-sizing: border-box; /* Ensure padding and borders are included in the width and height */
+}
+
+/* Option Styling */
+.selectres-dropdown option {
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+/* Button Styling */
+.selectres-button {
+  width: 80%; /* Full width with padding */
+  padding: 1.5vh 0;
+  font-size: 4vw; /* Responsive font size */
+  margin: 2vh auto; /* Margin for spacing */
+  background-color: #007bff; /* Primary color for the button */
+  color: white;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Responsive Fix for Small Screens */
+@media screen and (max-width: 768px) {
+  .selectres-dropdown {
+    width: 80%; /* Adjust width for smaller screens */
+    font-size: 5vw; /* Slightly larger font for readability */
+  }
+
+  .selectres-content {
+    padding: 3vh 3vw; /* Smaller padding on small screens */
+  }
+
+  .selectres-button {
+    font-size: 5vw; /* Slightly larger font for readability */
+  }
+}
+
+/* Keyframes for SelectRes */
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%); /* Start off the screen */
+  }
+  100% {
+    transform: translateY(0); /* Slide into view */
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(0); /* Start at normal position */
+  }
+  100% {
+    transform: translateY(100%); /* Slide out of the screen */
+  }
+}

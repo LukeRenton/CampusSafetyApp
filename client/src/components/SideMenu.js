@@ -19,7 +19,21 @@ import heart from '../icons/heart.svg'
 import car from '../icons/car.svg'
 import signout from '../icons/signout.svg'
 
-export default function SideMenu( props ) {  
+//component imports
+import PopupCard from "../components/PopupCard.js"
+
+
+
+export default function SideMenu( props ) {
+    // State to manage the popup
+    const [isPopupOpen, setPopupOpen] = useState(false);
+
+    // Function to handle the walk home button click
+    const handleWalkHomeClick = () => {
+        setPopupOpen(true); // Open the popup
+      };
+
+
   return (
     <section className={'side-menu-root '+(props.show_side_menu ? ' shown-side-menu' : '')}>
         <section className='side-menu-contents-top'>
@@ -38,7 +52,7 @@ export default function SideMenu( props ) {
                 <li className='side-menu-nav-item side-menu-reports' onClick={() => props.set_current_menu('incident_reports')} ><SideMenuItem icon={reports}>Incident Reports</SideMenuItem></li>
                 <li className='side-menu-nav-item side-menu-info' onClick={() => props.set_current_menu('emergency_info')}><SideMenuItem icon={info}>Emergency Information</SideMenuItem></li>
                 <li className='side-menu-nav-item side-menu-first-aid'  onClick={() => props.set_current_menu('first_aid')}><SideMenuItem icon={heart}>First Aid Information</SideMenuItem></li>
-                <li className='side-menu-nav-item side-menu-walk-home'><SideMenuItem icon={car}>Walk-home assistance</SideMenuItem></li>                
+                <li className='side-menu-nav-item side-menu-walk-home' onClick={() => props.set_current_menu('walk_home')}><SideMenuItem icon={car}>Walk-home assistance</SideMenuItem></li>                
             </ul>
         </section>
         <section className='side-menu-contents-bottom'>

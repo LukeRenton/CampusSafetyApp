@@ -4,7 +4,7 @@
 }
 
 .first-aid-option-inner {
-    width: calc(100% - 30px); 
+    width: calc(100%); 
     height: calc(100% - 10px);
 
     padding-top: 5px;

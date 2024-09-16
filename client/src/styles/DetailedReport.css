@@ -1,0 +1,127 @@
+.detailed-report-root {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 5;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;   
+
+    transform: translateY(900px);
+    transition: 0.5s;
+}
+
+.detailed-report-shown {
+    transform: translateY(0px);
+    transition: 0.5s;
+}
+
+.detailed-report-content {
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+
+    width: calc(100% - 40px);
+    height: calc(95% - 20px);
+    max-width: 600px;
+    max-height: 800px;
+    background: #F1EFFA;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.detailed-report-top {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.detailed-report-close, .detailed-report-blank-div {
+    width: 22px;
+    height: 22px;
+}
+
+.detailed-report-header {
+    margin: 0;
+    padding: 0;
+
+    font-size: 22px;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.detailed-report-sub-header {
+    margin: 0;
+    padding: 0;
+
+    margin-top: 12px;
+    margin-bottom: 12px;
+
+    color: var(--subtext);
+
+    font-size: 18px;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.detailed-report-types {
+    width: 100%;
+}
+
+.detailed-report-types {
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px 0px;
+
+    height: 100%;
+    overflow-y: auto;
+}
+
+.detailed-report-type-item {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.detailed-report-scroll-bottom {
+    width: 100px;
+    min-height: 100px;
+    max-height: 100px;
+}
+
+.detailed-report-back {
+    position: absolute;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.25);
+}
+
+
+.detailed-report-back-shown {
+    opacity: 1;
+}
+
+.detailed-report-back-hidden {
+    opacity: 0;
+    transition: 0.2s;
+}

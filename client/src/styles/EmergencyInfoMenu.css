@@ -1,0 +1,50 @@
+.emergency-info-menu-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.emergency-info-menu-subheading {
+    margin: 0;
+    padding: 0;
+    width: 80%;
+    margin-top: 12px;
+
+    text-align: center;
+
+    color: var(--subtext);
+    font-size: 16px;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.emergency-info-menu-spinner-container {
+    margin-top: 20px;
+}
+
+.emergency-info-menu-content {
+    width: 100%;
+    margin-top: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px 0;
+}
+
+.reports-menu-scroll-base {
+    width: 100px;
+    min-height: 100px;
+    max-height: 100px;
+}
+
+.emergency-info-header-slider {
+    margin-top: 12px;
+}
+
+.emergency-info-menu-scroll-bottom {
+    width: 100px;
+    min-height: 100px;
+    max-height: 100px;
+}

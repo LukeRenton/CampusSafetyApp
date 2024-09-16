@@ -1,3 +1,9 @@
+/*
+LoginController.js
+Type: Controller
+Description: Provides the API backend logic for user login.
+*/
+
 const pool = require('../db');
 
 // Function to validate user login

@@ -1,0 +1,13 @@
+.topbar-root {
+    width: calc(100% - 20px);
+    height: 80px;
+    position: absolute;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-left: 10px;
+    padding-right: 10px;
+}

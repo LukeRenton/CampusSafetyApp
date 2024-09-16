@@ -1,31 +1,11 @@
-const dotenv = require('dotenv');
-dotenv.config();
-const mysql = require('mysql2');
-
-// Create a connection pool to the MySQL database
-// const pool = mysql.createPool({
-//     host: process.env.MYSQL_HOST,
-//     user: process.env.MYSQL_USER,
-//     password: process.env.MYSQL_PASSWORD,
-//     database: process.env.MYSQL_DATABASE
+/*
+SafetyAlertsController.js
+Type: controller
+Description: Provides the API backend logic for the Safety Alerts information.
+*/
 
 
-// }).promise();
-
-
-// SSL configuration
-const sslConfig = {
-    rejectUnauthorized: true // You might need to adjust this based on your SSL requirements
-};
-
-const pool = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    port: process.env.DB_PORT,
-    ssl: process.env.DB_SSL === 'true' ? sslConfig : null // Apply SSL config only if DB_SSL is set to true
-}).promise();
+const pool = require("../db");
 
 async function insertAlert(message, status, affected_area, timestamp) {
     try {

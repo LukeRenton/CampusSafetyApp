@@ -1,0 +1,10 @@
+.map-root {
+    height: 100%;
+    overflow-y: hidden;
+
+}
+
+.map-container {
+    margin-top: -150px;
+    height: calc(100% + 200px);
+}

@@ -8,9 +8,9 @@ on:
     branches:
       - master
   pull_request:
+    types: [closed]
     branches:
       - master
-  workflow_dispatch:
 
 jobs:
   build:
@@ -38,6 +38,16 @@ jobs:
         with:
           name: node-app
           path: release.zip
+
+      - name: Run tests
+        run: |
+          cd server
+          npx jest --coverage --passWithNoTests
+
+      - name: Upload coverage report to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   deploy:
     runs-on: ubuntu-latest

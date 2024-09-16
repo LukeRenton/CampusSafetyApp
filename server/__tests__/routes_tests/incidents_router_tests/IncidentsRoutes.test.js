@@ -2,18 +2,17 @@ const request = require('supertest');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const IncidentRoutes = require('../routes/IncidentsRoutes');
-const IncidentController = require('../controllers/IncidentController');
+const IncidentRoutes = require('../../../routes/IncidentsRoutes');
+const IncidentController = require('../../../controllers/IncidentController');
 
 // Setup the Express app with the routes
 app.use(bodyParser.json());
 app.use('/incidents', IncidentRoutes);
 
-jest.mock('../db'); // Adjust path to your database module
-const pool = require('../db');
-
+jest.mock('../../../db'); // Adjust path to your database module
+const pool = require('../../../db');
 // Mock the IncidentController methods
-jest.mock('../controllers/IncidentController');
+jest.mock('../../../controllers/IncidentController');
 
 describe('Incident Routes Integration Tests', () => {
   let consoleErrorSpy;

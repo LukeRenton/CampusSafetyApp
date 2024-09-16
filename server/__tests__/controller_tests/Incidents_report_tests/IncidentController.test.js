@@ -1,8 +1,8 @@
-const { getAllIncidents, UpdateSafetyIncidents, ReportSafetyIncidents } = require('../controllers/IncidentController');
-const pool = require('../db');
+const { getAllIncidents, UpdateSafetyIncidents, ReportSafetyIncidents } = require('../../../controllers/IncidentController');
+const pool = require('../../../db');
 
 // Mock the pool.query method
-jest.mock('../db');
+jest.mock('../../../db');
 
 describe('IncidentController', () => {
     let consoleErrorSpy;

@@ -9,12 +9,8 @@
  */
 
 import React, { useRef, useEffect, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
 import '../styles/Map.css'
-import token from '../tokens/mapbox_token';
-import { create_map, createGeoJSONCircle, render_wits_boundary } from '../services/MapService';
-import MapboxCircle from 'mapbox-gl-circle';
-import { render_report_areas } from '../services/MapService';
+import { create_map } from '../services/MapService';
 import MarkerPopup from './MarkerPopup';
 
 
@@ -23,14 +19,10 @@ export default function Map() {
     
     const map_container = useRef(null);
     const map = useRef(null);
-
     const [lng, setLng] = useState(25);
     const [lat, setLat] = useState(-30);
-
     const [user_lng, set_user_lng] = useState(0);
     const [user_lat, set_user_lat] = useState(0);
-
-
     const [show_marker_popup, set_show_marker_popup] = useState(null);
 
     /*
@@ -67,8 +59,6 @@ export default function Map() {
     useEffect(() => {
         if (map.current) return; // Ensure only 1 map object from mapbox is made
         create_map(map, map_container, handle_movement, handle_marker_popup);
-
-        
     });
 
   return (

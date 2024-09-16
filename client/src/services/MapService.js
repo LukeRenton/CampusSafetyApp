@@ -7,13 +7,10 @@
  *  Service for map creation and interaction
  */
 
-import MapboxCircle from 'mapbox-gl-circle';
 import report_types from '../common/ReportTypes';
 import { get_all_reports } from './GeneralReportService';
 import mapboxgl from 'mapbox-gl';
 import token from '../tokens/mapbox_token';
-import { useRef } from 'react';
-import marker from '../icons/medical_marker.svg'
 
 
 var map;

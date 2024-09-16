@@ -36,7 +36,6 @@ router.patch('/:id/status', async (req, res) => {
     try {
         const id_value = req.params.id;
         const {status} = req.body;
-        console.log(status);
         const UpdateStatus = await IncidentController.UpdateSafetyIncidents(id_value, status);
         res.status(200).json(UpdateStatus);
     } catch (err) {

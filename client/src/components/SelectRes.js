@@ -32,9 +32,11 @@ const SelectRes = ({ isOpen, onClose }) => {
             <h6 className="Card1-subheading">Choose your residence from the list</h6>
 
             <select className="selectres-dropdown" onChange={handleSelect}>
-              <option value="residence1">Residence 1</option>
-              <option value="residence2">Residence 2</option>
-              <option value="residence3">Residence 3</option>
+              <option value="residence1">Noswal Hall</option>
+              <option value="residence2">Ernest Oppenheimer Hall</option>
+              <option value="residence3">Knockando Hall</option>
+              <option value="residence4">Girton Hall</option>
+              <option value="residence5">Reith Hall</option>
             </select>
 
             <button className="selectres-button" onClick={handleGoClick}>Go</button>

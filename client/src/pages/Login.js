@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ReactComponent as Logo } from '../icons/Logo.svg';
 import '../styles/LoginPage.css';
+import { useNavigate } from 'react-router-dom';
 
 const SignInPage = () => {
   //state to manage the visibility of the password
@@ -11,6 +12,9 @@ const SignInPage = () => {
   const [password, setPassword] = useState('');
   //state to manage the visibility of the login form
   const [show_login, set_show_login] = useState(false);
+
+  //setting navigate 
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -23,7 +27,7 @@ const SignInPage = () => {
   const handleLogin = async () => {
     // API request to the backend
     try {
-      const response = await fetch('/login', { //add this onece we have merged with the backend
+      const response = await fetch('/users/login', { //add this onece we have merged with the backend
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -36,6 +40,8 @@ const SignInPage = () => {
 
       if (response.status === 200) {
         console.log('Login successful!');
+        // Redirect to the next page
+        navigate('/main');
       } else if (response.status === 401) {
         console.log('Invalid credentials');
       } else {

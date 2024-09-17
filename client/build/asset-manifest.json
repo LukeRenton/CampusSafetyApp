@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.412c57a8.css",
-    "main.js": "/static/js/main.b64d6d4c.js",
+    "main.css": "/static/css/main.46835a1f.css",
+    "main.js": "/static/js/main.1d81130c.js",
     "static/js/453.419a5d54.chunk.js": "/static/js/453.419a5d54.chunk.js",
-    "static/media/logo.jpeg": "/static/media/logo.c5a40bac04d89b4be73e.jpeg",
     "static/media/sample_student_pic.png": "/static/media/sample_student_pic.82e1c231daa0b4cc504b.png",
+    "static/media/Logo.svg": "/static/media/Logo.ac4f435bcbe48d19ef049e03422be3c0.svg",
     "static/media/car.svg": "/static/media/car.ddec9f0d23650a3c543a78de3ae5868e.svg",
     "static/media/weather_marker.svg": "/static/media/weather_marker.384efc223798b8dddb052f70a57b0326.svg",
     "static/media/weather.svg": "/static/media/weather.2782cdaff7a7aac05161e975bad0c24d.svg",
@@ -37,12 +37,12 @@
     "static/media/exclamation.svg": "/static/media/exclamation.d1e06f128502a1bc821f52cdb5f63892.svg",
     "static/media/medical.svg": "/static/media/medical.57fa76d3602df619557ef76bee78fbb6.svg",
     "static/media/search.svg": "/static/media/search.582e6fdae2c59f4e7b41bc2c538877cd.svg",
-    "main.412c57a8.css.map": "/static/css/main.412c57a8.css.map",
-    "main.b64d6d4c.js.map": "/static/js/main.b64d6d4c.js.map",
+    "main.46835a1f.css.map": "/static/css/main.46835a1f.css.map",
+    "main.1d81130c.js.map": "/static/js/main.1d81130c.js.map",
     "453.419a5d54.chunk.js.map": "/static/js/453.419a5d54.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.412c57a8.css",
-    "static/js/main.b64d6d4c.js"
+    "static/css/main.46835a1f.css",
+    "static/js/main.1d81130c.js"
   ]
 }

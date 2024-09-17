@@ -23,10 +23,10 @@ export default function ContactCard({ name, phone_num }) {
                     {phone_num}
                 </h3>
             </section>
-            <button className='contact-card-call-button'>
+            <a href={`tel: ${phone_num}`} className='contact-card-call-button'>
                 <p className='contact-card-call-button-text'>Call</p>
                 <img className='contact-card-call-button-icon' src={call}></img>
-            </button>
+            </a>
         </section>
     </article>
   )

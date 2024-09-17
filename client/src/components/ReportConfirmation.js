@@ -10,6 +10,7 @@ import React, { useEffect, useState } from 'react'
 import '../styles/ReportConfirmation.css'
 import ReportCard from './ReportCard'
 import AutoCountdown from './AutoCountdown'
+import { make_alert_report } from '../services/AlertReportsService'
 
 export default function ReportConfirmation({ report_type, close_menu }) {
 
@@ -39,6 +40,7 @@ export default function ReportConfirmation({ report_type, close_menu }) {
     */
     const handle_yes = () => {
         // ToDo: handle report submission
+        make_alert_report(report_type.type)
         close_menu();
     }
 

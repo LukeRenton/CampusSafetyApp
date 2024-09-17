@@ -25,6 +25,7 @@
     flex-direction: column;
     align-items: center;
     gap: 10px 0;
+    width: 100%;
 }
 
 .reports-menu-scroll-base {

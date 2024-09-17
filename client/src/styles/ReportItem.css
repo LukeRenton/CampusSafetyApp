@@ -7,7 +7,7 @@
 
 .report-item-contents {
     width: calc(100% - 20px);
-    height: calc(100% - 20px);
+    height: calc(100%);
     padding: 10px;
     
     background: white;

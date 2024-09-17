@@ -17,6 +17,25 @@ const pool = require('../../../db');
 
 describe('SafetyResourcesController', () => {
 
+    let consoleErrorSpy;
+
+    beforeAll(async () => {
+        consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    });
+
+    beforeEach(() => {
+        jest.clearAllMocks(); // Reset mocks before each test
+    });
+
+    afterEach(() => {
+        consoleErrorSpy.mockClear(); // Clear mock to avoid residual effect in other tests
+    });
+
+    afterAll(async () => {
+        // Restore console.error and clean up database
+        consoleErrorSpy.mockRestore();
+    });
+
     describe('GET /resources/safety-resources', () => {
         it('should return all safety resources', async () => {
             // Mock the database response

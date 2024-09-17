@@ -18,6 +18,7 @@ import info from '../icons/info.svg'
 import heart from '../icons/heart.svg'
 import car from '../icons/car.svg'
 import signout from '../icons/signout.svg'
+import fire_extinguisher from '../icons/fire_extinguisher.svg'
 
 //component imports
 import PopupCard from "../components/PopupCard.js"
@@ -52,6 +53,7 @@ export default function SideMenu( props ) {
                 <li className='side-menu-nav-item side-menu-reports' onClick={() => props.set_current_menu('incident_reports')} ><SideMenuItem icon={reports}>Incident Reports</SideMenuItem></li>
                 <li className='side-menu-nav-item side-menu-info' onClick={() => props.set_current_menu('emergency_info')}><SideMenuItem icon={info}>Emergency Information</SideMenuItem></li>
                 <li className='side-menu-nav-item side-menu-first-aid'  onClick={() => props.set_current_menu('first_aid')}><SideMenuItem icon={heart}>First Aid Information</SideMenuItem></li>
+                <li className='side-menu-nav-item side-menu-first-aid'  onClick={() => props.set_current_menu('safety_resources')}><SideMenuItem icon={fire_extinguisher}>Safety Resources</SideMenuItem></li>
                 <li className='side-menu-nav-item side-menu-walk-home' onClick={() => props.set_current_menu('walk_home')}><SideMenuItem icon={car}>Walk-home assistance</SideMenuItem></li>                
             </ul>
         </section>

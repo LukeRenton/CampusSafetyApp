@@ -9,6 +9,7 @@
 import { get_time, compare_dates, get_date_header } from '../services/DateTimeService'
 import ReportItem from '../components/ReportItem';
 import { get_all_reports } from './GeneralReportService';
+import { get_user_coords } from './MapService';
   
 /*
     Function: render_incident_report_items
@@ -22,8 +23,9 @@ import { get_all_reports } from './GeneralReportService';
     Returns:
       Mapping of HTML objects
 */
-export function render_incident_report_items(close_all_menus_handler) {
-  var reports_array = get_all_reports();
+export function render_incident_report_items(reports_array_in, close_all_menus_handler) {
+  // var reports_array = get_all_reports();
+  var reports_array = [...reports_array_in];
 
   // Handle notifications
   if (reports_array.length > 0) {
@@ -44,5 +46,54 @@ export function render_incident_report_items(close_all_menus_handler) {
   } else {
     // Handle no notifications
     return <p className='reports-menu-no-reports'>No reports currently active.</p>
+  }
+}
+
+
+export async function make_report(type, image, description) {
+
+  try {
+
+    // if ("geolocation" in navigator) {
+      // console.log("here!!");
+      // navigator.geolocation.getCurrentPosition(async (position) => {
+        const position = {
+          coords: {
+            latitude:  -26.191,
+            longitude: 28.0302
+          }
+        }
+        console.log(image); 
+        
+        const res = await fetch('/incidents/report-incidents', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            description: description,
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            type: type,
+            file: image
+          })
+    
+        }).then((res) => res.json());
+    
+        if (res.ok) {
+          console.log(res);
+        }
+
+        
+      // })
+    // } else {
+        // return {
+          // error: 'unable to get location: locator disabled'
+        // }
+    // }
+    
+  } catch (err) {
+    // Error handling!
+    console.log(err);
   }
 }

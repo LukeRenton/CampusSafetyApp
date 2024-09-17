@@ -10,12 +10,13 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import '../styles/Map.css'
-import { create_map } from '../services/MapService';
+import { create_map, render_report_areas } from '../services/MapService';
 import MarkerPopup from './MarkerPopup';
+import { render_incident_report_items } from '../services/IncidentReportsService';
 
 
 
-export default function Map() {
+export default function Map( { incident_reports } ) {
     
     const map_container = useRef(null);
     const map = useRef(null);
@@ -58,7 +59,11 @@ export default function Map() {
     // On component load, add the map and add required parts
     useEffect(() => {
         if (map.current) return; // Ensure only 1 map object from mapbox is made
-        create_map(map, map_container, handle_movement, handle_marker_popup);
+        console.log("inside map.js");
+        console.log(incident_reports);
+
+        create_map(map, map_container, handle_movement, handle_marker_popup, incident_reports);
+        // render_report_areas(handle_marker_popup, incident_reports);
     });
 
   return (

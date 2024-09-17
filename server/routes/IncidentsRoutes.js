@@ -12,8 +12,6 @@ const multer = require('multer');
 const { initializeApp } = require("firebase/app");
 const { getStorage, ref, getDownloadURL, uploadBytesResumable }  = require("firebase/storage");
 const { firebaseConfig } = require("../firebase");
-
-
 initializeApp(firebaseConfig);
 const storage = getStorage();
 const upload = multer({ storage: multer.memoryStorage() });
@@ -35,8 +33,8 @@ router.get("/all-incidents", async (req, res) => {
 router.patch('/:id/status', async (req, res) => {
     try {
         const id_value = req.params.id;
-        const {status} = req.body;
-        const UpdateStatus = await IncidentController.UpdateSafetyIncidents(id_value, status);
+        const {active} = req.body;
+        const UpdateStatus = await IncidentController.UpdateSafetyIncidents(id_value, active);
         res.status(200).json(UpdateStatus);
     } catch (err) {
         console.error('Error Updating the status : ' + err.message);
@@ -48,19 +46,27 @@ router.patch('/:id/status', async (req, res) => {
 router.post('/report-incidents',upload.single('photo'), async (req, res) => {
     try {
 
-        const storageRef = ref(storage, `files/${req.file.originalname}`);
+        console.log("posting new incident");
+        console.log(req)
+        console.log(file)
 
-        const metadata = {
-            contentType: req.file.mimetype,
-        };
-        const snapshot = await uploadBytesResumable(storageRef, req.file.buffer, metadata);
+        const storageRef = ref(storage, `files/${req.file.name}`);
+
+        // const metadata = {
+        //     contentType: req.file.mimetype,
+        // };
+        // const snapshot = await uploadBytesResumable(storageRef, req.file.buffer, metadata);
+        const snapshot = await uploadBytesResumable(storageRef, req.file);
+
         //by using uploadBytesResumable we can control the progress of uploading like pause, resume, cancel
 
         // Grab the public url
         const photo = await getDownloadURL(snapshot.ref);
-        
-        const {description, latitude, longitude, building_name} = req.body;
-        const reportIncident = await IncidentController.ReportSafetyIncidents(description,photo, latitude, longitude, building_name);
+
+        console.log(photo);
+
+        const {description, latitude, longitude, type} = req.body;
+        const reportIncident = await IncidentController.ReportSafetyIncidents(description,photo, latitude, longitude, type);
         res.status(200).json(reportIncident);
     } catch (err) {
         console.error('Error Inserting data: '+ err.message);

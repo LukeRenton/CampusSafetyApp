@@ -1,0 +1,243 @@
+.make-detailed-report-root {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.137);
+    z-index: 6;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.make-detailed-report-container {
+    width: calc(90% - 30px);
+    max-width: 400px;
+    /* min-height: calc(400px - 50px); */
+    /* max-height: 600px; */
+    height: 90%;
+
+    background: white;
+
+    border-radius: 15px;
+
+    padding: 15px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.make-detailed-report-header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 5px;
+    padding-right: 5px;
+
+    border-radius: 12px;
+
+    margin-bottom: 10px;
+
+}
+
+.make-detailed-report-icon {
+    width: 35px;
+    height: 35px;
+}
+
+.make-detailed-report-empty-div {
+    width: 35px;
+    height: 35px;
+}
+
+.make-detailed-report-heading {
+    margin: 0;
+    padding: 0;
+
+    color: white;
+
+    font-size: 22px;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.make-detailed-report {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow-y: auto;
+}
+
+.make-detailed-report-subheading {
+    margin: 0;
+
+    margin-top: 12px;
+
+    padding: 0;
+
+    font-size: 22px;
+    font-weight: 400;
+    font-style: normal; 
+}
+
+.make-detailed-report-picture {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.make-detailed-report-picture-heading {
+    margin: 0;
+    margin-top: 12px;
+    padding: 0;
+
+    color: var(--subtext);
+
+    font-size: 18px;
+    font-weight: 400;
+    font-style: normal; 
+}
+
+.make-detailed-report-upload-picture {
+    width: 100%;
+    /* height: 400px; */
+    aspect-ratio: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    object-fit: cover;
+}
+
+input[type="file"] {
+    /* display: none; */
+    /* visibility: hidden; */
+    opacity: 0;
+}
+
+.make-detailed-report-upload-picture-input-container {
+    width: 100%;
+    height: 100%;
+    background-size: 100px 100px;
+    background-repeat: no-repeat;
+    background-position: calc(50%) calc(50%);
+    opacity: 0.5;
+}
+
+.make-detailed-report-upload-picture-input {
+    width: 100%;
+    height: 100%;
+}
+
+.make-detailed-report-upload-picture {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    object-fit: cover;
+    background: rgba(128, 128, 128, 0.322);
+    background-position: 50% 50%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.make-detailed-report-upload-picture-default {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.make-detailed-report-upload-picture-camera {
+    width: 40px;
+    height: 40px;
+}
+
+.make-detailed-report-upload-picture-default-text {
+    margin: 0;
+    padding: 0;
+
+    color: var(--subtext);
+
+    font-size: 18px;
+    font-weight: 400;
+    font-style: normal; 
+}
+
+.make-detailed-report-description {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.make-detailed-report-description-heading {
+    margin: 0;
+    margin-top: 12px;
+    padding: 0;
+
+    color: var(--subtext);
+
+    font-size: 18px;
+    font-weight: 400;
+    font-style: normal; 
+}
+
+.make-detailed-report-description-input {
+    width: 100%;
+    min-height: 100px;
+    text-align: left;
+}
+
+.make-detailed-report-description-input {
+    border: 1px solid var(--subtext);
+
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.make-detailed-report-buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+    gap: 15px 0px;
+}
+
+.make-detailed-report-button-submit {
+    border: none;
+    border-radius: 12px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    color: white;
+
+    font-size: 20px;
+    font-weight: 400;
+    font-style: normal; 
+}
+
+.make-detailed-report-button-cancel {
+    border: none;
+    border-radius: 12px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    color: white;
+    background: rgb(175, 175, 175);
+
+    font-size: 20px;
+    font-weight: 400;
+    font-style: normal; 
+}

@@ -13,7 +13,7 @@ import cross from '../icons/cross_black.svg'
 import ReportCard from './ReportCard'
 import ReportConfirmation from './ReportConfirmation';
 
-export default function DetailedReport( { report_types_data, close_menu, report, set_confirmation_menu } ) {
+export default function DetailedReport( { report_types_data, close_menu, report, set_detailed_report_menu } ) {
 
     const [show_menu, set_show_menu] = useState(false);
 
@@ -51,7 +51,7 @@ export default function DetailedReport( { report_types_data, close_menu, report,
               <h3 className='detailed-report-sub-header'>What type of incident are you reporting?</h3>
               <ul className='detailed-report-types'>
                   {report_types_data.map((report_type) => {
-                    return <li className='detailed-report-type-item' onClick={() => set_confirmation_menu(report_type)}><ReportCard report_type={report_type}></ReportCard></li>
+                    return <li className='detailed-report-type-item' onClick={() => set_detailed_report_menu(report_type)}><ReportCard report_type={report_type}></ReportCard></li>
                   })}
                   <div className='detailed-report-scroll-bottom'></div>
               </ul>

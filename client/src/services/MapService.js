@@ -31,7 +31,7 @@ var map_container;
   Returns: N/A
 
 */
-export function create_map(map_in, map_container_in, map_movement_handler, marker_popup_handler) {
+export function create_map(map_in, map_container_in, map_movement_handler, marker_popup_handler, incident_reports) {
   map = map_in;
   map_container = map_container_in;
   
@@ -70,7 +70,7 @@ export function create_map(map_in, map_container_in, map_movement_handler, marke
           
   map.current.on('load', () => {
       geolocate_control.trigger();
-      render_report_areas(marker_popup_handler);
+      render_report_areas(marker_popup_handler, incident_reports);
       render_wits_boundary();
       map.current.flyTo({
           center: [28.030228, -26.190955],
@@ -254,11 +254,12 @@ function handle_marker_click(report, marker_popup_handler) {
   
   Returns: N/A
 */
-function render_report_areas(marker_popup_handler) {
+export function render_report_areas(marker_popup_handler, all_reports) {
 
-  console.log(marker_popup_handler);
+  console.log("rendering areas");
+  console.log(all_reports);
 
-    const all_reports = get_all_reports();
+    // const all_reports = get_all_reports();
 
     all_reports.forEach((report,i) => {
       if (report.active) {
@@ -334,7 +335,9 @@ export function move_map_to(coord) {
 */
 export function get_user_coords() {
   if ("geolocation" in navigator) {
+    console.log("here!!");
     navigator.geolocation.getCurrentPosition(position => {
+      console.log(position);
         return {
           lng: position.coords.longitude,
           lat: position.coords.latitude,

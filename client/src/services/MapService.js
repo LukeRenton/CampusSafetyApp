@@ -12,7 +12,6 @@ import { get_all_reports } from './GeneralReportService';
 import mapboxgl from 'mapbox-gl';
 import token from '../tokens/mapbox_token';
 
-
 var map;
 var map_container;
 
@@ -50,6 +49,12 @@ export function create_map(map_in, map_container_in, map_movement_handler, marke
 
   geolocate_control.on('geolocate', () => {
       console.log('geo occurred');
+      map.current.flyTo({
+        center: [28.030228, -26.190955],
+        zoom: 18.38,
+        pitch: 60,
+        bearing: 173.60
+      });
   })
 
   const bounds = [
@@ -61,8 +66,6 @@ export function create_map(map_in, map_container_in, map_movement_handler, marke
     container: map_container.current,
     // style: 'mapbox://styles/mapbox/streets-v12',
     style: 'mapbox://styles/mitchellneilsonwits/cm12lbun601g101pj7kh63w7f',
-    // center: [lng, lat],
-    // zoom: zoom,
     maxBounds: bounds
 });
 
@@ -334,19 +337,35 @@ export function move_map_to(coord) {
     User coordinates in json object
 */
 export function get_user_coords() {
-  if ("geolocation" in navigator) {
-    console.log("here!!");
-    navigator.geolocation.getCurrentPosition(position => {
-      console.log(position);
-        return {
-          lng: position.coords.longitude,
-          lat: position.coords.latitude,
-          error: null
-        }
-    })
-  } else {
-      return {
-        error: 'unable to get location: locator disabled'
-      }
-  }
+  // if ("geolocation" in navigator) {
+  //   console.log("here!!");
+  //   navigator.geolocation.getCurrentPosition(position => {
+  //     console.log(position);
+  //       return {
+  //         lng: position.coords.longitude,
+  //         lat: position.coords.latitude,
+  //         error: null
+  //       }
+  //   })
+  // } else {
+  //     return {
+  //       error: 'unable to get location: locator disabled'
+  //     }
+  // }
+  return user_coords;
+}
+
+
+
+
+const user_coords = {
+  lng: 0,
+  lat: 0
+}
+
+export function set_user_coords(lng, lat) {
+  user_coords.lat = lat;
+  user_coords.lng = lng;
+
+  console.log(user_coords);
 }

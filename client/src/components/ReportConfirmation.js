@@ -12,7 +12,7 @@ import ReportCard from './ReportCard'
 import AutoCountdown from './AutoCountdown'
 import { make_alert_report } from '../services/AlertReportsService'
 
-export default function ReportConfirmation({ report_type, close_menu }) {
+export default function ReportConfirmation({ report_type,  close_all_menus, close_menu }) {
 
     /*
       Function: handle_countdown_finish
@@ -41,7 +41,7 @@ export default function ReportConfirmation({ report_type, close_menu }) {
     const handle_yes = () => {
         // ToDo: handle report submission
         make_alert_report(report_type.type)
-        close_menu();
+        close_all_menus();
     }
 
     /*

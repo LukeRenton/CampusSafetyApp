@@ -14,9 +14,9 @@ import report_types from '../common/ReportTypes'
 import arrow from '../icons/arrow_white.svg'
 
 
-export default function Navbar({ report_types_data, open_detailed_report_menu, set_confirmation_menu }) {
+export default function Navbar({ show_quickreports, set_show_quickreports, report_types_data, open_detailed_report_menu, set_confirmation_menu }) {
 
-  const [show_quickreports, set_show_quickreports] = useState(false);
+  // const [show_quickreports, set_show_quickreports] = useState(false);
 
   /* 
     Function: render_quick_report_buttons

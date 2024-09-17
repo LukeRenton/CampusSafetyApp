@@ -4,7 +4,7 @@ import camera from '../icons/camera.svg'
 import { make_report } from '../services/IncidentReportsService';
 import { fetch_all_reports } from '../services/GeneralReportService';
 
-export default function MakeDetailedReport( { report_type, close_menu } ) {
+export default function MakeDetailedReport( { report_type, close_menu, close_all_menus } ) {
 
     const [image_upload, set_image_upload] = useState(null);
 
@@ -17,7 +17,7 @@ export default function MakeDetailedReport( { report_type, close_menu } ) {
         console.log(image_upload);
         const new_image = image_upload;
         make_report(report_type.type, new_image, description);
-
+        close_all_menus();
     }
 
   return (

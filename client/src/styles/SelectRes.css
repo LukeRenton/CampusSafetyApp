@@ -1,7 +1,7 @@
 
 /* SelectRes Content */
 .selectres-content {
-  background-color: blue;
+  background-color: white;
   padding: 5vh 5vw; /* Responsive padding */
   border-radius: 20px; /* Rounded corners for all corners */
   width: auto;
@@ -41,7 +41,7 @@
   padding: 1.5vh 0;
   font-size: 4vw; /* Responsive font size */
   margin: 2vh auto; /* Margin for spacing */
-  background-color: #007bff; /* Primary color for the button */
+  background-color: var(--medicalblue); /* Primary color for the button */
   color: white;
   border: none;
   border-radius: 10px;

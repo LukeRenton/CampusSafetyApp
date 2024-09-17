@@ -47,6 +47,17 @@ async function fetchAlerts() {
     }
 }
 
+async function deleteAlerts() {
+    try {
+        // Select all rows from the alerts table
+        await pool.query("DELETE FROM safetyalerts");
+        
+        return {message: "Deleted all alerts"};
+    } catch (error) {
+        console.error('Error fetching alerts:', error);
+    }
+}
+
 async function updateAlertStatus(alertId, newStatus) {
     try {
         const [result] = await pool.query(
@@ -80,7 +91,8 @@ async function updateAlertStatus(alertId, newStatus) {
 module.exports = {
     insertAlert,
     fetchAlerts,
-    updateAlertStatus
+    updateAlertStatus,
+    deleteAlerts
   };
   
 

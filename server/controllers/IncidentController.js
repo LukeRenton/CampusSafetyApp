@@ -64,8 +64,21 @@ async function ReportSafetyIncidents(description, photo, latitude, longitude, ty
     }
 }
 
+// Delete all reported safety incidents
+async function deleteAllIncidents() {
+    try {
+        await pool.query('DELETE FROM incidents');
+
+        return {message: "Deleted all incident reports"};
+    } catch (err) {
+        console.error(err);
+        throw new Error("Server error : " + err.message);
+    }
+}
+
 module.exports = {
     getAllIncidents, 
     UpdateSafetyIncidents,
-    ReportSafetyIncidents
+    ReportSafetyIncidents,
+    deleteAllIncidents
 };

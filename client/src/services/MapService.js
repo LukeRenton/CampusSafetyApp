@@ -49,12 +49,12 @@ export function create_map(map_in, map_container_in, map_movement_handler, marke
 
   geolocate_control.on('geolocate', () => {
       console.log('geo occurred');
-      map.current.flyTo({
-        center: [28.030228, -26.190955],
-        zoom: 18.38,
-        pitch: 60,
-        bearing: 173.60
-      });
+      // map.current.flyTo({
+      //   center: [28.030228, -26.190955],
+      //   zoom: 18.38,
+      //   pitch: 60,
+      //   bearing: 173.60
+      // });
   })
 
   const bounds = [
@@ -66,7 +66,7 @@ export function create_map(map_in, map_container_in, map_movement_handler, marke
     container: map_container.current,
     // style: 'mapbox://styles/mapbox/streets-v12',
     style: 'mapbox://styles/mitchellneilsonwits/cm12lbun601g101pj7kh63w7f',
-    maxBounds: bounds
+    // maxBounds: bounds  
 });
 
   map.current.addControl(geolocate_control);
@@ -260,12 +260,13 @@ function handle_marker_click(report, marker_popup_handler) {
 export function render_report_areas(marker_popup_handler, all_reports) {
 
   console.log("rendering areas");
-  console.log(all_reports);
+  // console.log(all_reports);
 
     // const all_reports = get_all_reports();
 
     all_reports.forEach((report,i) => {
       if (report.active) {
+        console.log(report);
         map.current.addSource("polygon"+String(i), createGeoJSONCircle([report.location.lng, report.location.lat], report_types[report.type].radius));
         map.current.addLayer({
             "id": "polygon"+String(i),
@@ -277,16 +278,16 @@ export function render_report_areas(marker_popup_handler, all_reports) {
                 "fill-opacity": 0.5,
             }
         });
-        map.current.addLayer({
-            "id": "outline"+String(i),
-            "type": "line",
-            "source": "polygon"+String(i),
-            "layout": {},
-            "paint": {
-                'line-color': '#000',
-                'line-width': 1
-            }
-        });
+        // map.current.addLayer({
+        //     "id": "outline"+String(i),
+        //     "type": "line",
+        //     "source": "polygon"+String(i),
+        //     "layout": {},
+        //     "paint": {
+        //         'line-color': '#000',
+        //         'line-width': 1
+        //     }
+        // });
         
         const el = document.createElement('div');
         el.className = 'marker';

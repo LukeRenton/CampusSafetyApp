@@ -185,6 +185,7 @@ export default function Main() {
 
       case "safety_resources":
         return <SafetyResourcesMenu close_menu={close_menu}></SafetyResourcesMenu>
+        
       default:
         break;
     }

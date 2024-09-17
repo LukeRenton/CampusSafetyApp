@@ -47,16 +47,15 @@ router.post('/report-incidents',upload.single('photo'), async (req, res) => {
     try {
 
         console.log("posting new incident");
-        console.log(req)
-        console.log(file)
+        console.log(req);
 
         const storageRef = ref(storage, `files/${req.file.name}`);
 
-        // const metadata = {
-        //     contentType: req.file.mimetype,
-        // };
-        // const snapshot = await uploadBytesResumable(storageRef, req.file.buffer, metadata);
-        const snapshot = await uploadBytesResumable(storageRef, req.file);
+        const metadata = {
+            contentType: req.file.mimetype,
+        };
+        const snapshot = await uploadBytesResumable(storageRef, req.file.buffer, metadata);
+        // const snapshot = await uploadBytesResumable(storageRef, req.file);
 
         //by using uploadBytesResumable we can control the progress of uploading like pause, resume, cancel
 
@@ -73,5 +72,18 @@ router.post('/report-incidents',upload.single('photo'), async (req, res) => {
         res.status(500).json({message: 'Server error: '+ err.message});
     }
 });
+
+
+// Deletes all incidents from table
+router.delete("/all-incidents", async (req, res) => {
+    try {
+        const response = await IncidentController.deleteAllIncidents();
+        res.status(200).json(response);
+    } catch (err) {
+        console.error('Error deleting all the Incident Reports: ' + err.message);
+        res.status(500).json({message: err.message});
+    }
+});
+
 
 module.exports = router;

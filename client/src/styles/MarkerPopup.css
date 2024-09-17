@@ -86,7 +86,7 @@
 }
 
 .marker-popup-header {
-    width: calc(100% - 20px);
+    width: calc(100%);
 
     display: flex;
     flex-direction: row;
@@ -134,7 +134,7 @@
     padding-left: 10px;
 
     margin-top: 5px;
-    width: calc(100% - 10px);
+    width: calc(100%);
 
     font-size: 18px;
     font-weight: 300;
@@ -143,3 +143,48 @@
     border-left: 1px solid var(--subtext);
 }
 
+
+.marker-popup-photo {
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.marker-popup-photo-header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.marker-popup-photo-icon-container {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.marker-popup-photo-icon {
+    width: 20px;
+    height: 20px;
+    opacity: 0.75;
+}
+
+.markup-popup-photo-image {
+    width: 100%;
+    aspect-ratio: 2;
+    background-repeat: no-repeat;
+
+    background-size: 100%;
+    background-position: 50% 50%;
+
+    object-fit: cover;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}

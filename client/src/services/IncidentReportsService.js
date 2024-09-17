@@ -50,27 +50,33 @@ export function render_incident_report_items(reports_array_in, close_all_menus_h
 }
 
 
-export async function make_report(type, image, description) {
+export async function make_report(type, image, description) {  
 
   try {    
-    const position = get_user_coords();
     
-    console.log(image);
-    
-    const res = await fetch('/incidents/report-incidents', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        description: description,
-        latitude: position.lat,
-        longitude: position.lng,
-        type: type,
-        file: image
-      })
 
-    }).then((res) => res.json());
+    const position = get_user_coords();
+
+    console.log(image);
+
+    var formdata = new FormData();
+    formdata.append("description", description);
+    formdata.append("latitude", position.lat);
+    formdata.append("longitude", position.lng);
+    formdata.append("type", type);
+    formdata.append("photo", image, image.name);
+    
+    console.log(formdata);
+
+    var requestOptions = {
+      method: 'POST',
+      body: formdata,
+      redirect: 'follow'
+    };
+
+    console.log('making report');
+    
+    const res = await fetch('/incidents/report-incidents', requestOptions).then((res) => res.json());
 
     if (res.ok) {
       console.log(res);

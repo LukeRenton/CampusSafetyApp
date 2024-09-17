@@ -17,6 +17,7 @@
     "react-bootstrap": "^2.10.4",
     "react-datetime": "^3.2.0",
     "react-dom": "^18.3.1",
+    "react-push-notification": "^1.5.4",
     "react-router-dom": "^6.26.1",
     "react-scripts": "5.0.1",
     "react-time-picker": "^7.0.0",

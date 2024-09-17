@@ -52,45 +52,30 @@ export function render_incident_report_items(reports_array_in, close_all_menus_h
 
 export async function make_report(type, image, description) {
 
-  try {
-
-    // if ("geolocation" in navigator) {
-      // console.log("here!!");
-      // navigator.geolocation.getCurrentPosition(async (position) => {
-        const position = {
-          coords: {
-            latitude:  -26.191,
-            longitude: 28.0302
-          }
-        }
-        console.log(image); 
-        
-        const res = await fetch('/incidents/report-incidents', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            description: description,
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-            type: type,
-            file: image
-          })
+  try {    
+    const position = get_user_coords();
     
-        }).then((res) => res.json());
+    console.log(image);
     
-        if (res.ok) {
-          console.log(res);
-        }
+    const res = await fetch('/incidents/report-incidents', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        description: description,
+        latitude: position.lat,
+        longitude: position.lng,
+        type: type,
+        file: image
+      })
 
-        
-      // })
-    // } else {
-        // return {
-          // error: 'unable to get location: locator disabled'
-        // }
-    // }
+    }).then((res) => res.json());
+
+    if (res.ok) {
+      console.log(res);
+    }
+
     
   } catch (err) {
     // Error handling!

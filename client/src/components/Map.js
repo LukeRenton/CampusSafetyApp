@@ -10,7 +10,7 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import '../styles/Map.css'
-import { create_map, render_report_areas } from '../services/MapService';
+import { create_map, render_report_areas, set_user_coords } from '../services/MapService';
 import MarkerPopup from './MarkerPopup';
 import { render_incident_report_items } from '../services/IncidentReportsService';
 
@@ -64,6 +64,14 @@ export default function Map( { incident_reports } ) {
 
         create_map(map, map_container, handle_movement, handle_marker_popup, incident_reports);
         // render_report_areas(handle_marker_popup, incident_reports);
+
+        // Watch user's position
+        const options = {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0,
+          };
+        const reference = navigator.geolocation.watchPosition((res) => set_user_coords(res.coords.longitude, res.coords.latitude), (err) => {console.log(err)}, options);
     });
 
   return (

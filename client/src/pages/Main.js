@@ -26,6 +26,9 @@ import Notification from '../components/Notification';
 import SafetyResourcesMenu from '../components/SafetyResourcesMenu';
 import MakeDetailedReport from '../components/MakeDetailedReport';
 import { fetch_all_reports, get_all_reports } from '../services/GeneralReportService';
+import addNotification from 'react-push-notification'; 
+
+import logo from '../icons/call.svg'
 
 export default function Main() {
 
@@ -46,6 +49,43 @@ export default function Main() {
   const [detailed_report_menu, set_detailed_report_menu] = useState(null);
 
   const [reports, set_reports] = useState(null);
+  
+
+  const [show_quickreports, set_show_quickreports] = useState(false);
+
+
+  const [hasNotified, setHasNotified] = useState(false); // State to track if notification is sent
+
+
+  useEffect(() => {
+    // Create an EventSource connection to listen to server-sent events
+    const eventSource = new EventSource('/alerts/pushalerts');
+
+    eventSource.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      //const message = JSON.parse(data.message);
+      if (!hasNotified) {
+
+        console.log(data.message);
+        // Trigger the notification using react-push-notification
+        const desc = data.message.desc;
+        addNotification({
+          title: 'Campus Safety',
+          message: desc,
+          duration: 5000,
+          icon: logo,
+          native: true,
+        });
+        setHasNotified(true);
+      }
+    };
+
+    // Cleanup on unmount
+    return () => {
+      eventSource.close();
+    };
+  }, [hasNotified]);
+
 
   
   useEffect(() => {
@@ -56,7 +96,6 @@ export default function Main() {
     incident_reports.then(
       (incident_reports) => set_reports(incident_reports)
     )
-    
   },[])
   
   /*
@@ -73,6 +112,9 @@ export default function Main() {
   const close_all_menus = () => {
     set_current_menu("none");
     set_show_side_menu(false);
+    set_detailed_report_menu(null);
+    set_confirmation_menu(null);
+    set_show_quickreports(false);
   }
 
   /*
@@ -164,9 +206,9 @@ export default function Main() {
     if ((confirmation_menu === null) && (detailed_report_menu === null)) {
       return <></>
     } else if (confirmation_menu) {
-      return <ReportConfirmation report_type={confirmation_menu} close_menu={close_confirmation}></ReportConfirmation>
+      return <ReportConfirmation report_type={confirmation_menu} close_all_menus={close_all_menus} close_menu={close_confirmation}></ReportConfirmation>
     } else if (detailed_report_menu) {
-      return <MakeDetailedReport  report_type={detailed_report_menu} close_menu={close_confirmation}></MakeDetailedReport>
+      return <MakeDetailedReport  report_type={detailed_report_menu} close_all_menus={close_all_menus} close_menu={close_confirmation}></MakeDetailedReport>
     }
   }
 
@@ -175,7 +217,7 @@ export default function Main() {
         {/* <Notification></Notification> */}
         {render_report_menu()}
         {current_menu === "none" ? <></> : render_menu() }      
-        <Navbar report_types_data={report_types_data} open_detailed_report_menu={() => set_current_menu("detailed_report")}  set_confirmation_menu={update_confirmation_menu}/>
+        <Navbar show_quickreports={show_quickreports} set_show_quickreports={set_show_quickreports} report_types_data={report_types_data} open_detailed_report_menu={() => set_current_menu("detailed_report")}  set_confirmation_menu={update_confirmation_menu}/>
         <Topbar set_show_side_menu={set_show_side_menu} />
         {reports === null ? <></> : <Map incident_reports={reports}/>}
         <SideMenu show_side_menu={show_side_menu} set_current_menu={set_current_menu} profile={user_profile}/>

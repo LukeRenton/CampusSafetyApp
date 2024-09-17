@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "react-push-notification": "^1.5.4"
+  }
+}

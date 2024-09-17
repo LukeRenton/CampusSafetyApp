@@ -3,6 +3,8 @@ const router = express.Router();
 const loginController = require('../controllers/LoginController');
 
 router.post('/login', async (req, res) => {
+    console.log('Login request received');
+    console.log(req.body);
     try {
         const { username, password } = req.body;
         const isValid = await loginController.validateUserLogin(username, password);
@@ -12,6 +14,7 @@ router.post('/login', async (req, res) => {
             res.status(401).json({ message: 'Invalid credentials' });
         }
     } catch (error) {
+        console.log('Error during login:', error);
         res.status(500).json({ error: 'Server error: ' + error.message });
     }
 });

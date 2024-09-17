@@ -23,6 +23,9 @@ import report_types from '../common/ReportTypes';
 import ReportConfirmation from '../components/ReportConfirmation';
 import PopupCard from '../components/PopupCard';
 import Notification from '../components/Notification';
+import SafetyResourcesMenu from '../components/SafetyResourcesMenu';
+import MakeDetailedReport from '../components/MakeDetailedReport';
+import { fetch_all_reports, get_all_reports } from '../services/GeneralReportService';
 
 export default function Main() {
 
@@ -40,10 +43,20 @@ export default function Main() {
   const [current_menu, set_current_menu] = useState("none");
   const [user_profile, set_user_profile] = useState(get_blank_profile());
   const [confirmation_menu, set_confirmation_menu] = useState(null);
+  const [detailed_report_menu, set_detailed_report_menu] = useState(null);
+
+  const [reports, set_reports] = useState(null);
+
   
   useEffect(() => {
     const fetched_profile = get_profile();
     set_user_profile(fetched_profile);
+
+    const incident_reports = fetch_all_reports();
+    incident_reports.then(
+      (incident_reports) => set_reports(incident_reports)
+    )
+    
   },[])
   
   /*
@@ -88,6 +101,7 @@ export default function Main() {
   */
     const close_confirmation = () => {
       set_confirmation_menu(null);
+      set_detailed_report_menu(null);
     }
 
   /*
@@ -107,10 +121,10 @@ export default function Main() {
         return <></>
 
       case "notifications":
-        return <NotificationsMenu close_all_menus={close_all_menus} close_menu={close_menu}></NotificationsMenu> 
+        return <NotificationsMenu reports={reports} close_all_menus={close_all_menus} close_menu={close_menu}></NotificationsMenu> 
 
       case "incident_reports":
-        return <IncidentReportsMenu close_all_menus={close_all_menus} close_menu={close_menu}></IncidentReportsMenu>
+        return <IncidentReportsMenu reports={reports} close_all_menus={close_all_menus} close_menu={close_menu}></IncidentReportsMenu>
 
       case "emergency_info":
         return <EmergencyInfoMenu close_menu={close_menu}></EmergencyInfoMenu>
@@ -122,24 +136,48 @@ export default function Main() {
         return <MedicalProfileMenu close_menu={close_menu} profile={user_profile}></MedicalProfileMenu>
 
       case "detailed_report":
-        return <DetailedReport report_types_data={report_types_data} close_menu={close_menu} profile={user_profile} set_confirmation_menu={set_confirmation_menu}></DetailedReport>
+        return <DetailedReport set_detailed_report_menu={update_detailed_report_menu} report_types_data={report_types_data} close_menu={close_menu} profile={user_profile}></DetailedReport>
   
       case "walk_home":
         return <PopupCard isOpen={true} onClose={close_menu}> <p>Walk-home assistance information goes here.</p> </PopupCard>
 
+      case "safety_resources":
+        return <SafetyResourcesMenu close_menu={close_menu}></SafetyResourcesMenu>
       default:
         break;
+    }
+  }
+
+
+  const update_confirmation_menu = (report) => {
+    set_confirmation_menu(report);
+    set_detailed_report_menu(null);
+  }
+
+
+  const update_detailed_report_menu = (report) => {
+    set_confirmation_menu(null);
+    set_detailed_report_menu(report);
+  }
+
+  const render_report_menu = () => {
+    if ((confirmation_menu === null) && (detailed_report_menu === null)) {
+      return <></>
+    } else if (confirmation_menu) {
+      return <ReportConfirmation report_type={confirmation_menu} close_menu={close_confirmation}></ReportConfirmation>
+    } else if (detailed_report_menu) {
+      return <MakeDetailedReport  report_type={detailed_report_menu} close_menu={close_confirmation}></MakeDetailedReport>
     }
   }
 
   return (
     <main className='main-root'>
         {/* <Notification></Notification> */}
-        {confirmation_menu === null ? <></> : <ReportConfirmation report_type={confirmation_menu} close_menu={close_confirmation}></ReportConfirmation>}
+        {render_report_menu()}
         {current_menu === "none" ? <></> : render_menu() }      
-        <Navbar report_types_data={report_types_data} open_detailed_report_menu={() => set_current_menu("detailed_report")} set_confirmation_menu={set_confirmation_menu}/>
+        <Navbar report_types_data={report_types_data} open_detailed_report_menu={() => set_current_menu("detailed_report")}  set_confirmation_menu={update_confirmation_menu}/>
         <Topbar set_show_side_menu={set_show_side_menu} />
-        <Map />
+        {reports === null ? <></> : <Map incident_reports={reports}/>}
         <SideMenu show_side_menu={show_side_menu} set_current_menu={set_current_menu} profile={user_profile}/>
         {show_side_menu ? <div className='main-dark-back' onClick={close_all_menus}></div> : <></> }
     </main>

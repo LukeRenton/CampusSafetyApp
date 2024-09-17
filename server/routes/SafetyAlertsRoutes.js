@@ -17,8 +17,8 @@ router.get('/alerts', async (req, res) => {
 // POST endpoint to create a new alert
 router.post('/alerts', async (req, res) => {
     try {
-        const incident = req.body;
-        await insertAlert(incident.message, incident.status, incident.affected_area, incident.timestamp);
+        const { type, active, longitude, latitude, date } = req.body;
+        await insertAlert(type, active, longitude, latitude, date);
         res.status(200).json({ message: 'Alert created successfully' });
     } catch (error) {
         res.status(500).json({ error: 'Failed to create alert' });
@@ -26,15 +26,16 @@ router.post('/alerts', async (req, res) => {
 });
 
 // PATCH endpoint to update the status of an alert
-router.patch('/alerts/:alertId/status', async (req, res) => {
+router.patch('/alerts/:alertId/active', async (req, res) => {
     const { alertId } = req.params;
-    const { status } = req.body;
+    const { active } = req.body;
 
     try {
-        await updateAlertStatus(parseInt(alertId), status);
-        res.status(200).json({ message: 'Alert status updated successfully' });
+        // Ensure 'active' is passed as a boolean (true or false)
+        await updateAlertStatus(parseInt(alertId), active === true);
+        res.status(200).json({ message: 'Alert active status updated successfully' });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to update alert status' });
+        res.status(500).json({ error: 'Failed to update alert active status' });
     }
 });
 

@@ -25,7 +25,8 @@ export default function NotificationsMenu( props ) {
     Returns: N/A
   */
   const render_notifications = () => {
-    return render_notification_items(props.close_all_menus);
+    console.log(props.reports)
+    return render_notification_items(props.reports, props.close_all_menus);
   }
 
   return (

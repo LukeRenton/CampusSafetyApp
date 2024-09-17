@@ -22,8 +22,10 @@ import { get_all_reports } from './GeneralReportService';
     Returns:
       Mapping of HTML objects
 */
-export function render_notification_items(close_all_menus_handler) {
-  var notification_array = get_all_reports();
+export function render_notification_items(notification_array_in, close_all_menus_handler) {
+  // var notification_array = get_all_reports();
+  var notification_array = [...notification_array_in];
+  console.log(notification_array);
 
   // Handle notifications
   if (notification_array.length > 0) {
@@ -36,10 +38,13 @@ export function render_notification_items(close_all_menus_handler) {
     notification_array.splice(0, 0, {type: 'new-date', date: prev_date})
     // -- continuously go through the list of notifications and add new dates if they are found
     var notification_number = 0;
+
+    
     while (notification_number < notification_array.length) {
+      console.log(`Read notification array[${notification_number}]`)
       const notification = notification_array[notification_number];
 
-      if (!(notification.type === 'new-date')) {
+      if (!(notification.type === 'new-date') && !(notification.type === 'scroll-base')) {
         const new_date = get_date_header(notification.date);
         if (new_date !== prev_date) {
           notification_array.splice(notification_number, 0, {type: 'new-date', date: new_date})

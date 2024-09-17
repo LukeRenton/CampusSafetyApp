@@ -7,6 +7,7 @@ const SafetyResourcesRoutes = require('./routes/SafetyResourcesRoutes');
 const SafetyAlertsRoutes = require('./routes/SafetyAlertsRoutes');
 const IncidentSRoutes = require('./routes/IncidentsRoutes');
 
+app.use(express.json());
 // API route
 app.get('/api', (req, res) => {
     res.json({ message: 'Hello from the backend!' });
@@ -18,6 +19,7 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 app.use('/users', LoginRoutes);
 app.use('/resources', SafetyResourcesRoutes); // Send any /resources requests to SafetyResourcesRoutes (e.g. /resources/safety-resources will be sent to SafetyResourcesRoutes)
 app.use('/alerts', SafetyAlertsRoutes);
+app.use('/incidents',IncidentSRoutes);
 app.use('/incidents',IncidentSRoutes);
 
 // Handle requests to main react page

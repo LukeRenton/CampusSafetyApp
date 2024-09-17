@@ -1,3 +1,86 @@
+import report_types from "../common/ReportTypes";
+
+export async function fetch_all_reports() {
+  // Fetch goes here
+  
+  
+  try {
+    const incident_reports = []
+
+
+    const res = await fetch('/incidents/all-incidents', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((res) => res.json())
+    .then((report_list) => {
+      
+
+      report_list.forEach((report) => {
+
+        if (["medical", "fire", "natural", "security", "weather"].includes(report.type)) {
+          incident_reports.push({
+            type: report.type,
+            description: report.description,
+            active: report.active === 1,
+            date: new Date(report.date.year,report.date.month,report.date.day,report.date.time.hour,report.date.time.minute,0,0),
+            location: {
+              lng: report.longitude,
+              lat: report.latitude
+            }
+          })
+        }
+      })
+
+    });
+
+    const res2 = await fetch('/alerts/alerts', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((res) => res.json())
+    .then((report_list) => {
+      console.log(report_list)
+      
+
+      report_list.forEach((report) => {
+
+        if (["medical", "fire", "natural", "security", "weather"].includes(report.type)) {
+          incident_reports.push({
+            type: report.type,
+            description: report_types[report.type].header + " Alert !",
+            active: report.active === 1,
+            date: new Date(report.date.year,report.date.month,report.date.day,report.date.time.hour,report.date.time.minute,0,0),
+            location: {
+              lng: report.longitude,
+              lat: report.latitude
+            }
+          })
+        }
+      })
+
+    });
+    
+    
+    return incident_reports;
+    // console.log(res);
+    // return res;
+
+    // if (res.ok) {
+
+      
+
+    //   return res;
+    // }
+  } catch (err) {
+    // Error handling!
+    console.log(err);
+  }
+}
+
+
 /*
 Function: get_all_reports
 

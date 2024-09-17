@@ -2,6 +2,10 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 5000;
+const LoginRoutes = require('./routes/LoginRoutes');
+const SafetyResourcesRoutes = require('./routes/SafetyResourcesRoutes');
+const SafetyAlertsRoutes = require('./routes/SafetyAlertsRoutes');
+const IncidentSRoutes = require('./routes/IncidentsRoutes');
 
 // API route
 app.get('/api', (req, res) => {

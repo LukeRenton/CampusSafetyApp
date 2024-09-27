@@ -10,7 +10,21 @@ describe('Full User Journey', () => {
         const reportTypes = ['medical', 'fire', 'natural', 'security', 'weather'];
         cy.report(reportTypes);
 
+
+        // **Test Each Incident**
+        cy.incident();
+
+
+        // **Test Walk Home Assist**
+        cy.walkHomeAssist();
+        cy.wait(5000);
+        cy.get('.main-dark-back').click();
+        cy.walkHomeAssistSchedule();
+        cy.wait(5000);
+        cy.get('.main-dark-back').click();
+
+        // **Test logout**
+        cy.logout();
         
-         
       });
 });

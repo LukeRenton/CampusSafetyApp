@@ -6,6 +6,7 @@ const LoginRoutes = require('./routes/LoginRoutes');
 const SafetyResourcesRoutes = require('./routes/SafetyResourcesRoutes');
 const SafetyAlertsRoutes = require('./routes/SafetyAlertsRoutes');
 const IncidentSRoutes = require('./routes/IncidentsRoutes');
+const UserContactsRoutes = require('./routes/UserContactsRoutes');
 
 app.use(express.json());
 // API route
@@ -21,6 +22,7 @@ app.use('/resources', SafetyResourcesRoutes); // Send any /resources requests to
 app.use('/alerts', SafetyAlertsRoutes);
 app.use('/incidents',IncidentSRoutes);
 app.use('/incidents',IncidentSRoutes);
+app.use('/contacts',UserContactsRoutes);
 
 // Handle requests to main react page
 // NOTE: THIS ALL THE CODE BELOW HAS TO BE AT THE END OF THE FILE

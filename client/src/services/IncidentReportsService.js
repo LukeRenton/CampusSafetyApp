@@ -64,8 +64,13 @@ export async function make_report(type, image, description) {
     formdata.append("latitude", position.lat);
     formdata.append("longitude", position.lng);
     formdata.append("type", type);
-    formdata.append("photo", image, image.name);
-    
+    if (image) {
+      formdata.append("photo", image, image.name);
+    } else {
+      formdata.append("photo", null);
+    }
+
+
     console.log(formdata);
 
     var requestOptions = {

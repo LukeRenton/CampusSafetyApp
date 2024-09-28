@@ -50,9 +50,13 @@ export default function MarkerPopup({ report, close }) {
                     </div>
                     <h1 className='marker-popup-main-header'>Photo</h1>
                   </section>
-                  <div className='markup-popup-photo-image'  style={{backgroundImage: `${loading_image ? `` : `url(${report.photo})`}`}}>
+                  {report.photo ?
+                  (<div className='markup-popup-photo-image'  style={{backgroundImage: `${loading_image ? `` : `url(${report.photo})`}`}}>
                     {loading_image === true ? <Spinner size={40} report_type={report.type}></Spinner> : <></>}
-                  </div>
+                  </div>)
+                  :
+                  <></>
+                  }
                 </section>
                 :
                 <></>

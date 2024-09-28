@@ -104,7 +104,7 @@ export default function EmergencyInfoMenu( props ) {
         <div className='emergency-info-header-slider'>
           <Slider click_event={handle_slider_click} left_option={'Wits Contacts'} right_option={'External Contacts'} ></Slider>
         </div>
-        { loading_contacts ? <section className='emergency-info-menu-spinner-container'><Spinner size={80} /></section> : render_contacts()}
+        { loading_contacts ? <section className='emergency-info-menu-spinner-container'><Spinner size={80} report_type={'fire'} /></section> : render_contacts()}
       </section>
     </Menu>
   )

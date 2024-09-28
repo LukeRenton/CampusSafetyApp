@@ -14,9 +14,9 @@ export default function MakeDetailedReport( { report_type, close_menu, close_all
         // console.log(URL.createObjectURL(image_upload));
 
         console.log("making report");
-        console.log(image_upload);
-        const new_image = image_upload;
-        make_report(report_type.type, new_image, description);
+        
+        
+        make_report(report_type.type, image_upload, description);
         close_all_menus();
     }
 

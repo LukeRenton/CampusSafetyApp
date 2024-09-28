@@ -3,7 +3,7 @@ import '../styles/SafetyResourcesMenu.css'
 import safety_resources from '../common/SafetyResources'
 import Menu from './Menu'
 import SafetyResource from './SafetyResource'
-import search from '../icons/search.svg'
+import search_icon from '../icons/search.svg'
 
 export default function SafetyResourcesMenu( { close_menu } ) {
 
@@ -29,7 +29,7 @@ export default function SafetyResourcesMenu( { close_menu } ) {
       <section className='safety-resources-menu-container'>
         <section className='safety-resources-menu-subcountainer'>
             <section className='safety-resources-menu-search-container'>
-                <img className='safety-resources-menu-search-icon' src={search}></img>
+                <img className='safety-resources-menu-search-icon' src={search_icon}></img>
                 <input className='safety-resources-menu-search' placeholder='Search for a safety resource' value={search} onChange={(e) => set_search(e.target.value)}></input>
             </section>
         </section>

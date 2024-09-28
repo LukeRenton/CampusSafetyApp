@@ -45,25 +45,29 @@ router.patch('/:id/status', async (req, res) => {
 // Uploads the photo to firebase storage and get the url (the url of the image is inserted into mysql database)
 router.post('/report-incidents',upload.single('photo'), async (req, res) => {
     try {
+        let photo;
 
-        console.log("posting new incident");
-        console.log(req)
-        console.log(file)
+        if (req.file) {
+            console.log("posting new incident");
+            console.log(req);
 
-        const storageRef = ref(storage, `files/${req.file.name}`);
+            const storageRef = ref(storage, `files/${req.file.name}`);
 
-        // const metadata = {
-        //     contentType: req.file.mimetype,
-        // };
-        // const snapshot = await uploadBytesResumable(storageRef, req.file.buffer, metadata);
-        const snapshot = await uploadBytesResumable(storageRef, req.file);
+            const metadata = {
+                contentType: req.file.mimetype,
+            };
+            const snapshot = await uploadBytesResumable(storageRef, req.file.buffer, metadata);
+            // const snapshot = await uploadBytesResumable(storageRef, req.file);
 
-        //by using uploadBytesResumable we can control the progress of uploading like pause, resume, cancel
+            //by using uploadBytesResumable we can control the progress of uploading like pause, resume, cancel
 
-        // Grab the public url
-        const photo = await getDownloadURL(snapshot.ref);
+            // Grab the public url
+            photo = await getDownloadURL(snapshot.ref);
 
-        console.log(photo);
+            console.log(photo);
+        } else {
+            photo = "";
+        }
 
         const {description, latitude, longitude, type} = req.body;
         const reportIncident = await IncidentController.ReportSafetyIncidents(description,photo, latitude, longitude, type);
@@ -73,5 +77,18 @@ router.post('/report-incidents',upload.single('photo'), async (req, res) => {
         res.status(500).json({message: 'Server error: '+ err.message});
     }
 });
+
+
+// Deletes all incidents from table
+router.delete("/all-incidents", async (req, res) => {
+    try {
+        const response = await IncidentController.deleteAllIncidents();
+        res.status(200).json(response);
+    } catch (err) {
+        console.error('Error deleting all the Incident Reports: ' + err.message);
+        res.status(500).json({message: err.message});
+    }
+});
+
 
 module.exports = router;

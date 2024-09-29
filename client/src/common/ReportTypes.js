@@ -18,6 +18,13 @@ import weather_marker from '../icons/weather_marker.svg'
 import natural_marker from '../icons/natural_marker.svg'
 import security_marker from '../icons/security_marker.svg'
 
+import spinner_red from '../lotties/spinner_red.json'
+import spinner_blue from '../lotties/spinner_blue.json'
+import spinner_gray from '../lotties/spinner_gray.json'
+import spinner_green from '../lotties/spinner_green.json'
+import spinner_orange from '../lotties/spinner_orange.json'
+
+
 
 const report_types = {
     'medical': {
@@ -28,7 +35,8 @@ const report_types = {
         icon_size: 45,
         marker: medical_marker,
         report_causes: ["Emergency services to be notified", "People in the area to be notified", "Your profile to be displayed for emergency reasons"],
-        radius: 0.01
+        radius: 0.01,
+        spinner: spinner_blue
     },
     'fire': {
         type: 'fire',
@@ -39,6 +47,7 @@ const report_types = {
         marker: fire_marker,
         report_causes: ["Fire services to be notified", "People in the area to be notified", "A wide scale evacuation alert"],
         radius: 0.05,
+        spinner: spinner_red
     },
     'weather': {
         type: 'weather',
@@ -48,7 +57,8 @@ const report_types = {
         icon_size: 60,
         marker: weather_marker,
         report_causes: ["People in the area to be notified", "A wide scale emergency alert"],
-        radius: 0.02
+        radius: 0.02,
+        spinner: spinner_gray
     },
     'natural': {
         type: 'natural',
@@ -58,7 +68,8 @@ const report_types = {
         icon_size: 70,
         marker: natural_marker,
         report_causes: ["Emergency services to be notified", "People in the area to be notified", "A wide scale evacuation alert"],
-        radius: 0.1
+        radius: 0.1,
+        spinner: spinner_green
     },
     'security': {
         type: 'security',
@@ -68,7 +79,8 @@ const report_types = {
         icon_size: 60,
         marker: security_marker,
         report_causes: ["Campus Safety services to be notified", "People in the area to be notified", "A wide scale safety alert"],
-        radius: 0.02
+        radius: 0.02,
+        spinner: spinner_orange
     }
 }
 

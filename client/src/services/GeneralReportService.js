@@ -26,9 +26,10 @@ export async function fetch_all_reports() {
             active: report.active === 1,
             date: new Date(report.date.year,report.date.month,report.date.day,report.date.time.hour,report.date.time.minute,0,0),
             location: {
-              lng: report.longitude,
-              lat: report.latitude
-            }
+              lng: parseFloat(report.longitude),
+              lat: parseFloat(report.latitude)
+            },
+            photo: report.photo
           })
         }
       })
@@ -50,13 +51,14 @@ export async function fetch_all_reports() {
         if (["medical", "fire", "natural", "security", "weather"].includes(report.type)) {
           incident_reports.push({
             type: report.type,
-            description: report_types[report.type].header + " Alert !",
+            description: report_types[report.type].header + " Alert",
             active: report.active === 1,
             date: new Date(report.date.year,report.date.month,report.date.day,report.date.time.hour,report.date.time.minute,0,0),
             location: {
-              lng: report.longitude,
-              lat: report.latitude
-            }
+              lng: parseFloat(report.longitude),
+              lat: parseFloat(report.latitude)
+            },
+            photo: null
           })
         }
       })

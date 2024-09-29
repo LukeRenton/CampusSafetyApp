@@ -52,7 +52,6 @@ async function UpdateSafetyIncidents(id_val, active) {
 }
 
 //Report a new safety incident  with location details and optional photo.
-// Assuming that this is the order of the table columns and there is a table called incidents
 
 async function ReportSafetyIncidents(description, photo, latitude, longitude, type, building_name) {
     try {
@@ -64,8 +63,21 @@ async function ReportSafetyIncidents(description, photo, latitude, longitude, ty
     }
 }
 
+// Delete all reported safety incidents
+async function deleteAllIncidents() {
+    try {
+        await pool.query('DELETE FROM incidents');
+
+        return {message: "Deleted all incident reports"};
+    } catch (err) {
+        console.error(err);
+        throw new Error("Server error : " + err.message);
+    }
+}
+
 module.exports = {
     getAllIncidents, 
     UpdateSafetyIncidents,
-    ReportSafetyIncidents
+    ReportSafetyIncidents,
+    deleteAllIncidents
 };

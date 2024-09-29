@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { insertAlert, fetchAlerts, updateAlertStatus } = require('../controllers/SafetyAlertsController');
+const { insertAlert, fetchAlerts, updateAlertStatus, deleteAlerts } = require('../controllers/SafetyAlertsController');
 
 
 // Store connected clients
@@ -81,6 +81,16 @@ router.patch('/alerts/:alertId/active', async (req, res) => {
 });
 
 
+// DELETE endpoint to delete all alerts
+router.delete('/alerts', async (req, res) => {
+    try {
+        const response = await deleteAlerts();
+        res.status(200).json(response);
+        //console.log(alerts);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch alerts' });
+    }
+});
 
 
 

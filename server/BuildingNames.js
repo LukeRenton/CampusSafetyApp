@@ -1,9 +1,9 @@
 const buildingCoordinates = {
-    "Wits Dig Fields": [-26.186108662845843, 28.02409717129717],
+    "Dig Fields": [-26.186108662845843, 28.02409717129717],
     "Olives and Plates Wits Club": [-26.1855596536305, 28.02580864060737],
-    "Wits Sturrock Park": [-26.193149117691586, 28.02114660117094],
+    "Sturrock Park": [-26.193149117691586, 28.02114660117094],
     "Wits First Year Parking": [-26.185759196050444, 28.026829087395125],
-    "Wits Barnato Hall": [-26.186898634974394, 28.025020541197684],
+    "Barnato Hall": [-26.186898634974394, 28.025020541197684],
     "West Campus Village": [-26.187236948061074, 28.02391692959288],
     "Convocation Dining Hall": [-26.186967858452032, 28.024174757251995],
     "DJ Du Plessis Centre": [-26.18820617388234, 28.024187980261132],
@@ -27,7 +27,7 @@ const buildingCoordinates = {
     "Wits Science Stadium": [-26.190584216480556, 28.02535451194505],
     "Wits CCDU": [-26.190873883643892, 28.026798367612137],
     "Wits GoldFields Laboratories": [-26.191260928357778, 28.025996875383083],
-    "Wits Flower Hall": [-26.19167912164283, 28.02593674056332],
+    "Flower Hall": [-26.19167912164283, 28.02593674056332],
     "Wits CLTD": [-26.19207102131111, 28.02574355335392],
     "The Chamber of Mines Building": [-26.191498201903258, 28.027004191554344],
     "Origins Centre": [-26.19265452180591, 28.028512262617774],
@@ -94,17 +94,9 @@ function getCoordinates(buildingName) {
             longitude: coordinates[1]
         };
     } else {
-        return "Building not found try using full name or abbreviated"; // or you can return a message indicating the building was not found
+        return "Building not found "; 
     }
 }
 
-// const result = getCoordinates("Wits Great Hall");
-
-// if (typeof result === "object") {
-//     console.log("Coordinates:", result);
-// } else if (typeof result === "string") {
-//     console.log(result); // Log the error message if the building is not found
-// }
-
-module.exports = getCoordinates;
+module.exports = getCoordinates;;
 

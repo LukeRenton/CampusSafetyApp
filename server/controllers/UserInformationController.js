@@ -7,7 +7,7 @@ const pool = require("../db");
 
 async function getAllUserInfo() {
     try {
-        const [rows] = await pool.query('SELECT * FROM incidents');
+        const [rows] = await pool.query('SELECT * FROM userinformation');
 
         return rows;
     } catch (err) {
@@ -16,9 +16,9 @@ async function getAllUserInfo() {
     }
 }
 
-async function InsertUserInfo(firstnames, lastnames, student_number, gender, date_of_birth, allergies,firstcontact_id, secondcontact_id ) {
+async function InsertUserInfo(firstnames, lastnames, student_number, gender, date_of_birth, allergies ) {
     try {
-        await pool.query('INSERT INTO students(FirstNames, LastNames, StudentNumber, Gender, DateOfBirth, Allergies, FirstContactId, SecondContactId) VALUES(?, ?, ?, ?, ?, ?, ?, ?)', [firstnames, lastnames, student_number, gender, date_of_birth, allergies,firstcontact_id, secondcontact_id ]);
+        await pool.query('INSERT INTO userinformation(FirstNames, LastNames, StudentNumber, Gender, DateOfBirth, Allergies) VALUES(?, ?, ?, ?, ?, ?)', [firstnames, lastnames, student_number, gender, date_of_birth, allergies ]);
         return "Data Inserted";
     } catch (err) {
         console.error(err);

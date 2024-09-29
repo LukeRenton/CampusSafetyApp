@@ -22,10 +22,9 @@ app.use('/users', LoginRoutes);
 app.use('/resources', SafetyResourcesRoutes); // Send any /resources requests to SafetyResourcesRoutes (e.g. /resources/safety-resources will be sent to SafetyResourcesRoutes)
 app.use('/alerts', SafetyAlertsRoutes);
 app.use('/incidents',IncidentSRoutes);
-app.use('/incidents',IncidentSRoutes);
 app.use('/contacts',UserContactsRoutes);
 app.use('/emergencycontacts',EmergencyContactsRoutes);
-app.use('/userdetails',UserInformationRoutes);
+app.use('/users',UserInformationRoutes);
 
 // Handle requests to main react page
 // NOTE: THIS ALL THE CODE BELOW HAS TO BE AT THE END OF THE FILE

@@ -16,6 +16,51 @@ initializeApp(firebaseConfig);
 const storage = getStorage();
 const upload = multer({ storage: multer.memoryStorage() });
 
+function formatDate(isoString) {
+    const date = new Date(isoString);
+    return {
+    day: date.getUTCDate(),
+    month: date.getUTCMonth() + 1, // Months are zero-based, so add 1
+    year: date.getUTCFullYear(),
+    time: {
+        hour: date.getUTCHours(),
+        minute: date.getUTCMinutes()
+    }
+    };
+}
+
+// Store connected clients
+let clients = [];
+
+// SSE endpoint for client connection
+router.get('/pushalerts', (req, res) => {
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+
+    // Add client to the clients array
+    clients.push(res);
+
+    console.log('Client connected');
+
+    // Remove client when connection is closed
+    req.on('close', () => {
+        console.log('Client disconnected');
+        clients = clients.filter(client => client !== res);
+        res.end();
+    });
+});
+
+// Function to send notification to all connected clients
+const notifyClients = (message) => {
+    console.log(clients);
+    console.log(message);
+
+    clients.forEach((client) => {
+        client.write(`data: ${JSON.stringify({ message })}\n\n`);
+    });
+};
+
 router.get("/all-incidents", async (req, res) => {
     try {
         const AllIncidents = await IncidentController.getAllIncidents();
@@ -71,6 +116,20 @@ router.post('/report-incidents',upload.single('photo'), async (req, res) => {
 
         const {description, latitude, longitude, type} = req.body;
         const reportIncident = await IncidentController.ReportSafetyIncidents(description,photo, latitude, longitude, type);
+
+        const newRecordMessage = {
+            type: type,
+            active: true,
+            description: description,
+            longitude: longitude,
+            latitude: latitude,
+            photo: photo,
+            date: formatDate(new Date())
+        };
+    
+        // Notify all connected clients
+        notifyClients(newRecordMessage);
+
         res.status(200).json(reportIncident);
     } catch (err) {
         console.error('Error Inserting data: '+ err.message);

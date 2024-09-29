@@ -29,6 +29,7 @@ import { fetch_all_reports, get_all_reports } from '../services/GeneralReportSer
 import addNotification from 'react-push-notification'; 
 
 import logo from '../icons/call.svg'
+import create_new_alert_from_notification from '../services/PushNotificationService';
 
 export default function Main() {
 
@@ -60,9 +61,10 @@ export default function Main() {
 
   useEffect(() => {
     // Create an EventSource connection to listen to server-sent events
-    const eventSource = new EventSource('/alerts/pushalerts');
+    const eventSource_alerts = new EventSource('/alerts/pushalerts');
+    const eventSource_incidents = new EventSource('/incidents/pushalerts');
 
-    eventSource.onmessage = (event) => {
+    eventSource_alerts.onmessage = (event) => {
       const data = JSON.parse(event.data);
       console.log(data);
       //const message = JSON.parse(data.message);
@@ -87,12 +89,51 @@ export default function Main() {
         }, 8000)
 
         set_new_notification(data.message);
+        
+        const new_alert = create_new_alert_from_notification(data.message);
+
+        const incident_reports = fetch_all_reports();
+        incident_reports.then(
+          (incident_reports) => set_reports(incident_reports)
+        )
+      }
+    };
+
+    eventSource_incidents.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      console.log(data);
+      //const message = JSON.parse(data.message);
+      if (!hasNotified) {
+
+        console.log(data.message);
+        // Trigger the notification using react-push-notification
+        const type = data.message.type;
+        const description = data.message.description;
+        addNotification({
+          title: 'Campus Safety',
+          message: report_types[type].header + ": " + description,
+          duration: 5000,
+          icon: report_types[type].icon,
+          native: true,
+        });
+
+        setHasNotified(true);
+        setTimeout(() => {
+          setHasNotified(false);
+        }, 8000)
+
+        set_new_notification(data.message);
+
+        const incident_reports = fetch_all_reports();
+        incident_reports.then(
+          (incident_reports) => set_reports(incident_reports)
+        )
       }
     };
 
     // Cleanup on unmount
     return () => {
-      eventSource.close();
+      eventSource_alerts.close();
     };
   }, [hasNotified]);
 

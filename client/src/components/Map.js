@@ -89,15 +89,12 @@ export default function Map( { incident_reports, new_notification, set_new_notif
             const new_alert = create_new_alert_from_notification(new_notification);
             set_show_notification(new_alert);
             add_new_report_area(handle_marker_popup, new_alert);
-            setTimeout(() => {
-                close_notification();
-            }, 8000)
         }
     },[new_notification])
 
     const go_to = () => {
-        handle_marker_click(show_notification, handle_marker_popup);
         close_notification();
+        handle_marker_click(show_notification, handle_marker_popup);
     }
 
   return (

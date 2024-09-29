@@ -82,5 +82,12 @@
 .notificaiton-icon-container {
     width: 35px;
     height: 35px;
-    background: red;
+    padding: 5px;
+    border-radius: 18px;
+    /* background: red; */
+}
+
+.notificaiton-icon {
+    width: 100%;
+    height: 100%;
 }

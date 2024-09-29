@@ -47,6 +47,7 @@ export default function Main() {
   const [user_profile, set_user_profile] = useState(get_blank_profile());
   const [confirmation_menu, set_confirmation_menu] = useState(null);
   const [detailed_report_menu, set_detailed_report_menu] = useState(null);
+  const [new_notification, set_new_notification] = useState(null);
 
   const [reports, set_reports] = useState(null);
   
@@ -63,20 +64,29 @@ export default function Main() {
 
     eventSource.onmessage = (event) => {
       const data = JSON.parse(event.data);
+      console.log(data);
       //const message = JSON.parse(data.message);
       if (!hasNotified) {
 
         console.log(data.message);
         // Trigger the notification using react-push-notification
-        const desc = data.message.desc;
+        const type = data.message.type;
+        const lng = data.message.lng;
+        const lat = data.message.lat;
         addNotification({
           title: 'Campus Safety',
-          message: desc,
+          message: report_types[type].header,
           duration: 5000,
-          icon: logo,
+          icon: report_types[type].icon,
           native: true,
         });
+
         setHasNotified(true);
+        setTimeout(() => {
+          setHasNotified(false);
+        }, 8000)
+
+        set_new_notification(data.message);
       }
     };
 
@@ -215,12 +225,11 @@ export default function Main() {
 
   return (
     <main className='main-root'>
-        {/* <Notification></Notification> */}
         {render_report_menu()}
         {current_menu === "none" ? <></> : render_menu() }      
         <Navbar show_quickreports={show_quickreports} set_show_quickreports={set_show_quickreports} report_types_data={report_types_data} open_detailed_report_menu={() => set_current_menu("detailed_report")}  set_confirmation_menu={update_confirmation_menu}/>
         <Topbar set_show_side_menu={set_show_side_menu} />
-        {reports === null ? <></> : <Map incident_reports={reports}/>}
+        {reports === null ? <></> : <Map new_notification={new_notification} set_new_notification={set_new_notification} incident_reports={reports}/>}
         <SideMenu show_side_menu={show_side_menu} set_current_menu={set_current_menu} profile={user_profile}/>
         {show_side_menu ? <div className='main-dark-back' onClick={close_all_menus}></div> : <></> }
     </main>

@@ -19,6 +19,7 @@ function formatDate(isoString) {
     }
     };
 }
+
 // Retrieve all reported safety incidents, including details, statuses, and locations, etc 
 async function getAllIncidents() {
     try {

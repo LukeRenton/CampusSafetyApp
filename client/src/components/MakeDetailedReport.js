@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../styles/MakeDetailedReport.css'
 import camera from '../icons/camera.svg'
 import { make_report } from '../services/IncidentReportsService';
@@ -6,7 +6,12 @@ import { fetch_all_reports } from '../services/GeneralReportService';
 
 export default function MakeDetailedReport( { report_type, close_menu, close_all_menus } ) {
 
+    const [show_menu, set_show_menu] = useState(false);
     const [image_upload, set_image_upload] = useState(null);
+
+    useEffect(() => {
+        set_show_menu(true);
+    },[])
 
     const handle_submit_detailed_report = async () => {
         // Handle submit report
@@ -22,7 +27,7 @@ export default function MakeDetailedReport( { report_type, close_menu, close_all
 
   return (
     <>
-        <div className='make-detailed-report-root'>
+        <div className={'make-detailed-report-root '+(show_menu ? 'make-detailed-report-root-shown' : '')}>
             <div className='make-detailed-report-container'>
                 <div className='make-detailed-report-header' style={{background: `${report_type.colour}`}}>
                     <img className='make-detailed-report-icon' src={report_type.icon}></img>

@@ -9,6 +9,16 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    opacity: 0;
+    transform: translateY(-100px);
+    transition: 0.2s;
+}
+
+.make-detailed-report-root-shown {
+    opacity: 1;
+    transform: translateY(0);
+    transition: 0.2s;
 }
 
 .make-detailed-report-container {

@@ -9,14 +9,13 @@
 import React, { useState } from 'react'
 import '../styles/Navbar.css'
 import QuickReportButton from './QuickReportButton'
-import exclamation from '../icons/exclamation.svg'
+// import exclamation from '../icons/exclamation.svg'
+import sos from '../icons/sos.svg'
 import report_types from '../common/ReportTypes'
 import arrow from '../icons/arrow_white.svg'
 
 
 export default function Navbar({ show_quickreports, set_show_quickreports, report_types_data, open_detailed_report_menu, set_confirmation_menu }) {
-
-  // const [show_quickreports, set_show_quickreports] = useState(false);
 
   /* 
     Function: render_quick_report_buttons
@@ -63,9 +62,18 @@ export default function Navbar({ show_quickreports, set_show_quickreports, repor
           </ul>
           <button className={'navbar-report-button'} onClick={!show_quickreports ? () => set_show_quickreports(true) : () => handle_show_detailed_report_menu()}>
             <section className='navbar-report-button-inner'>
-                {show_quickreports ? <img className='navbar-report-icon arrow-icon' src={arrow}></img> : <img className='navbar-report-icon' src={exclamation}></img>}
+                {show_quickreports ?
+                <img className='navbar-report-icon arrow-icon' src={arrow}></img>
+                // <h2>More</h2>
+                :
+                // <h2>SOS</h2>
+                <img className='navbar-report-icon' src={sos} style={{marginTop: `-7px`}}></img>
+                }
             </section>
           </button>
+          <section className={'navbar-detailed-menu-indicator '+(show_quickreports ? 'navbar-detailed-menu-indicator-shown' : '')}>
+                <h3 className='navbar-detailed-menu-indicator-text'>click again to bring up detailed menu</h3>
+          </section>
       </nav>
     </>
   )

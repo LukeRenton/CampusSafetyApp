@@ -2,6 +2,18 @@ const express = require('express');
 const router = express.Router();
 const { insertAlert, fetchAlerts, updateAlertStatus, deleteAlerts } = require('../controllers/SafetyAlertsController');
 
+function formatDate(isoString) {
+    const date = new Date(isoString);
+    return {
+    day: date.getUTCDate(),
+    month: date.getUTCMonth() + 1, // Months are zero-based, so add 1
+    year: date.getUTCFullYear(),
+    time: {
+        hour: date.getUTCHours(),
+        minute: date.getUTCMinutes()
+    }
+    };
+}
 
 // Store connected clients
 let clients = [];
@@ -54,7 +66,11 @@ router.post('/alerts', async (req, res) => {
         await insertAlert(type, active, longitude, latitude, date);
 
         const newRecordMessage = {
-            desc: type
+            type: type,
+            active: active,
+            longitude: longitude,
+            latitude: latitude,
+            date: formatDate(new Date())
         };
     
         // Notify all connected clients

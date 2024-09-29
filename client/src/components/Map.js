@@ -10,13 +10,15 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import '../styles/Map.css'
-import { create_map, render_report_areas, set_user_coords } from '../services/MapService';
+import handle_marker_click, { add_new_report_area, create_map, render_report_areas, set_user_coords } from '../services/MapService';
 import MarkerPopup from './MarkerPopup';
 import { render_incident_report_items } from '../services/IncidentReportsService';
+import Notification from './Notification';
+import create_new_alert_from_notification from '../services/PushNotificationService';
 
 
 
-export default function Map( { incident_reports } ) {
+export default function Map( { incident_reports, new_notification, set_new_notification } ) {
     
     const map_container = useRef(null);
     const map = useRef(null);
@@ -25,6 +27,7 @@ export default function Map( { incident_reports } ) {
     const [user_lng, set_user_lng] = useState(0);
     const [user_lat, set_user_lat] = useState(0);
     const [show_marker_popup, set_show_marker_popup] = useState(null);
+    const [show_notification, set_show_notification] = useState(null);
 
     /*
         Function: handle_marker_popup
@@ -72,10 +75,34 @@ export default function Map( { incident_reports } ) {
             maximumAge: 0,
           };
         const reference = navigator.geolocation.watchPosition((res) => set_user_coords(res.coords.longitude, res.coords.latitude), (err) => {console.log(err)}, options);
-    });
+    },[]);
+
+    const close_notification = () => {
+        set_new_notification(null);
+        set_show_notification(null);
+    }
+
+    useEffect(() => {
+        console.log("new notification just arrived!!");
+        console.log(new_notification);
+        if (new_notification) {
+            const new_alert = create_new_alert_from_notification(new_notification);
+            set_show_notification(new_alert);
+            add_new_report_area(handle_marker_popup, new_alert);
+            setTimeout(() => {
+                close_notification();
+            }, 8000)
+        }
+    },[new_notification])
+
+    const go_to = () => {
+        handle_marker_click(show_notification, handle_marker_popup);
+        close_notification();
+    }
 
   return (
     <>
+        {show_notification ? <Notification go_to={go_to} close_notification={close_notification} report={show_notification}></Notification> : <></>}
         {show_marker_popup === null ? <></> : <MarkerPopup report={show_marker_popup} close={() => set_show_marker_popup(null)} />}
         <section className='map-root'>
             <section ref={map_container} className="map-container" />

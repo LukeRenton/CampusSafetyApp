@@ -237,13 +237,56 @@ function render_wits_boundary() {
   
   Returns: N/A
 */
-function handle_marker_click(report, marker_popup_handler) {
+export default function handle_marker_click(report, marker_popup_handler) {
   const coords = report.location;
   map.current.flyTo({
     center: [coords.lng, coords.lat],
     zoom: 18.80
   })
   marker_popup_handler(report);
+}
+
+let report_counter = 0;
+
+export function add_new_report_area(marker_popup_handler, report) {
+  console.log(report);
+  map.current.addSource("polygon"+String(report_counter), createGeoJSONCircle([report.location.lng, report.location.lat], report_types[report.type].radius));
+  map.current.addLayer({
+      "id": "polygon"+String(report_counter),
+      "type": "fill",
+      "source": "polygon"+String(report_counter),
+      "layout": {},
+      "paint": {
+          "fill-color": report_types[report.type].colour,
+          "fill-opacity": 0.5,
+      }
+  });
+  // map.current.addLayer({
+  //     "id": "outline"+String(i),
+  //     "type": "line",
+  //     "source": "polygon"+String(i),
+  //     "layout": {},
+  //     "paint": {
+  //         'line-color': '#000',
+  //         'line-width': 1
+  //     }
+  // });
+  
+  const el = document.createElement('div');
+  el.className = 'marker';
+  el.style.backgroundImage = `url(${report_types[report.type].marker})`;
+  el.style.paddingBottom = `45px`;
+  el.style.backgroundRepeat = 'no-repeat';
+  el.style.width = `${report_types[report.type].icon_size}px`;
+  el.style.height = `${report_types[report.type].icon_size + 45}px`;
+  el.style.backgroundSize = '100%';
+  el.style.display = 'block';
+  el.style.border = 'none';
+  el.style.cursor = 'pointer';
+  el.addEventListener('click', () => {handle_marker_click(report, marker_popup_handler)});
+  
+  new mapboxgl.Marker(el).setLngLat([report.location.lng, report.location.lat]).addTo(map.current);
+  report_counter += 1;
 }
 
 /*
@@ -266,43 +309,7 @@ export function render_report_areas(marker_popup_handler, all_reports) {
 
     all_reports.forEach((report,i) => {
       if (report.active) {
-        console.log(report);
-        map.current.addSource("polygon"+String(i), createGeoJSONCircle([report.location.lng, report.location.lat], report_types[report.type].radius));
-        map.current.addLayer({
-            "id": "polygon"+String(i),
-            "type": "fill",
-            "source": "polygon"+String(i),
-            "layout": {},
-            "paint": {
-                "fill-color": report_types[report.type].colour,
-                "fill-opacity": 0.5,
-            }
-        });
-        // map.current.addLayer({
-        //     "id": "outline"+String(i),
-        //     "type": "line",
-        //     "source": "polygon"+String(i),
-        //     "layout": {},
-        //     "paint": {
-        //         'line-color': '#000',
-        //         'line-width': 1
-        //     }
-        // });
-        
-        const el = document.createElement('div');
-        el.className = 'marker';
-        el.style.backgroundImage = `url(${report_types[report.type].marker})`;
-        el.style.paddingBottom = `45px`;
-        el.style.backgroundRepeat = 'no-repeat';
-        el.style.width = `${report_types[report.type].icon_size}px`;
-        el.style.height = `${report_types[report.type].icon_size + 45}px`;
-        el.style.backgroundSize = '100%';
-        el.style.display = 'block';
-        el.style.border = 'none';
-        el.style.cursor = 'pointer';
-        el.addEventListener('click', () => {handle_marker_click(report, marker_popup_handler)});
-        
-        new mapboxgl.Marker(el).setLngLat([report.location.lng, report.location.lat]).addTo(map.current);
+        add_new_report_area(marker_popup_handler, report);
       }
     })
 }

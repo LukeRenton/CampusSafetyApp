@@ -1,7 +1,91 @@
 .edit-medical-profile-root {
-    position: absolute;
+    width: calc(100% - 20px);
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 15px;
+
+    background: #f0f0f0;
+    border: 1px solid var(--medicalblue);
+    border-radius: 18px;
+    align-items: center;
+    z-index: 999999;
+    position: relative;
+    overflow-y: auto;
+}
+.edit-medical-profile-section {
     width: 100%;
-    height: 100%;
-    background: white;
-    z-index: 6;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid var(--medicalblue);
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #ffffff;
+    z-index: 999999;
+    position: relative; /* Add position relative */
+}
+
+.edit-medical-profile-input {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 999999;
+    position: relative; /* Add position relative */
+}
+
+.edit-medical-profile-input label {
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 999999;
+    position: relative; /* Add position relative */
+}
+
+.edit-medical-profile-input input {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    z-index: 999999;
+    position: relative; /* Add position relative */
+}
+
+.edit-medical-profile-buttons {
+    display: flex;
+    gap: 10px;
+    z-index: 999999;
+    position: relative; /* Add position relative */
+}
+
+.edit-medical-profile-buttons button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--medicalblue);
+    color: white;
+    cursor: pointer;
+    z-index: 999999;
+    position: relative; /* Add position relative */
+}
+
+.edit-medical-profile-buttons button[type='button'] {
+    background-color: #ccc;
+}
+
+.medical-profile-edit {
+    width: 100%;
+    height: 35px;
+    background: var(--medicalblue);
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 12px;
+    border: none;
+    text-align: center;
+    z-index: 999999;
+    position: relative; /* Add position relative */
 }

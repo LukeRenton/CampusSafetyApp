@@ -71,7 +71,7 @@ router.post('/report-incidents-external',upload.single('photo'), async (req, res
             const reportIncident = await IncidentController.ReportSafetyIncidents(description,photo, latitude, longitude, type, building_name);
             res.status(200).json(reportIncident);
         } else if (typeof result === "string") {
-
+            console.log("Building not found");
             res.status(500).json({message: 'error: Building Not Found, Use full name.e.g Wits Flower Hall '}); 
         }
         

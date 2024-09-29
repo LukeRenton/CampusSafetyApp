@@ -8,7 +8,6 @@ const pool = require("../db");
 async function getAllUserInfo() {
     try {
         const [rows] = await pool.query('SELECT * FROM userinformation');
-
         return rows;
     } catch (err) {
         console.error(err);

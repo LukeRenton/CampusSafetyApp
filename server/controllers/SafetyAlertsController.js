@@ -10,6 +10,11 @@ const pool = require("../db");
 
 async function insertAlert(type, status, longitude, latitude, timestamp) {
     try {
+
+        let date = new Date();
+        const sast_date = new Date(date.toLocaleString('en-US', { timeZone: 'Africa/Johannesburg' }));
+        console.log(sast_date);
+
         // Insert a new row into the alerts table
         const result = await pool.query(
             "INSERT INTO safetyalerts (type, active, longitude, latitude, date) VALUES (?, ?, ?, ?, ?)",
@@ -18,7 +23,7 @@ async function insertAlert(type, status, longitude, latitude, timestamp) {
                 status,             // Explicitly set the status ('active', 'closed', etc.)
                 longitude,
                 latitude,
-                timestamp || new Date()  // Timestamp parameter or current date
+                timestamp || sast_date  // Timestamp parameter or current date
             ]
         );
         

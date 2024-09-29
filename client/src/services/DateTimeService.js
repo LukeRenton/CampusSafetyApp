@@ -67,7 +67,7 @@ export function get_date_string(date_object) {
     const month_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     
     const year = String(date_object.year);
-    const month = month_names[date_object.month];
+    const month = month_names[date_object.month - 1];
     const day = String(date_object.day).padStart(2, '0');
 
     return day + ' ' + month + ' ' + year

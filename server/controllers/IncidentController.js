@@ -57,7 +57,9 @@ async function UpdateSafetyIncidents(id_val, active) {
 
 async function ReportSafetyIncidents(description, photo, latitude, longitude, type) {
     try {
-        await pool.query('INSERT INTO incidents(description, photo, latitude, longitude, type, date) VALUES(?, ?, ?, ?, ?, NOW())', [description, photo, latitude, longitude, type]);
+        let date = new Date();
+        const sast_date = new Date(date.toLocaleString('en-US', { timeZone: 'Africa/Johannesburg' }))
+        await pool.query('INSERT INTO incidents(description, photo, latitude, longitude, type, date) VALUES(?, ?, ?, ?, ?, ?)', [description, photo, latitude, longitude, type, sast_date]);
         return "Data Inserted";
     } catch (err) {
         console.error(err);

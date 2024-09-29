@@ -58,6 +58,31 @@ Cypress.Commands.add('incident', () => {
     // cy.wait('@postIncidents').its('response.statusCode').should('eq', 200);
 });
 
+// Command to check each tab in the navigation bar
+Cypress.Commands.add('checkTabs', () => {
+    cy.get('.menu-button-root').click();
+
+    cy.get('.side-menu-nav-item.side-menu-notifications .side-menu-item-root').click();
+    cy.wait(1000);
+    cy.get('.menu-top-nav').click();
+
+    cy.get('.side-menu-nav-item.side-menu-reports .side-menu-item-root').click();
+    cy.wait(1000);
+    cy.get('.menu-top-nav').click();
+
+    cy.get('.side-menu-nav-item.side-menu-info .side-menu-item-root').click();
+    cy.wait(1000);
+    cy.get('.menu-top-nav').click();
+
+    cy.get('.side-menu-nav-item.side-menu-first-aid .side-menu-item-root').eq(0).click();
+    cy.wait(1000);
+    cy.get('.menu-top-nav').click();
+
+    cy.get('.side-menu-nav-item.side-menu-first-aid .side-menu-item-root').eq(1).click();
+    cy.wait(1000);
+    cy.get('.menu-top-nav').click();
+});
+
 
 // Command to go to walk home assistance page
 Cypress.Commands.add('goToWalkHomeAssist', () => {
@@ -91,6 +116,6 @@ Cypress.Commands.add('walkHomeAssistSchedule', () => {
 // Command to logout
 Cypress.Commands.add('logout', () => {
     cy.get('.menu-button-root').click();
-    cy.get('.side-menu-logout-signout-button').click();
+    cy.get('.side-menu-signout-button').click();
     // cy.get('.inputField').should('be.visible');
 })

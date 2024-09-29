@@ -53,13 +53,12 @@ async function UpdateSafetyIncidents(id_val, active) {
 }
 
 //Report a new safety incident  with location details and optional photo.
-// Assuming that this is the order of the table columns and there is a table called incidents
 
-async function ReportSafetyIncidents(description, photo, latitude, longitude, type) {
+async function ReportSafetyIncidents(description, photo, latitude, longitude, type, building_name) {
     try {
         let date = new Date();
         const sast_date = new Date(date.toLocaleString('en-US', { timeZone: 'Africa/Johannesburg' }))
-        await pool.query('INSERT INTO incidents(description, photo, latitude, longitude, type, date) VALUES(?, ?, ?, ?, ?, ?)', [description, photo, latitude, longitude, type, sast_date]);
+        await pool.query('INSERT INTO incidents(description, photo, latitude, longitude, type, date, building_name) VALUES(?, ?, ?, ?, ?, ?,?)', [description, photo, latitude, longitude, type, sast_date, building_name]);
         return "Data Inserted";
     } catch (err) {
         console.error(err);

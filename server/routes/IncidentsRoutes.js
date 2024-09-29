@@ -63,6 +63,12 @@ router.post('/report-incidents-external',upload.single('photo'), async (req, res
         let latitude, longitude;
         const {description, type, building_name} = req.body;
         //retrieve building's latitude and longitude, using building name
+        const validTypes = ['fire', 'medical', 'natural', 'security', 'weather'];
+        if (!validTypes.includes(type)) {
+            res.status(500).json({message:"error: invalid incident type. Should be of fire, medical, natural, security or weather"});
+            return;
+           }
+
         const result = BuildingName(building_name);
 
         if (typeof result === "object") {

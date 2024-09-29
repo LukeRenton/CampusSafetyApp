@@ -4,11 +4,23 @@ import '../styles/SchedulerideCard.css';
 const SchedulerideCard = ({ isOpen, onClose, onSchedule }) => {
   const [time, setTime] = useState('10:00'); // Default time
 
-  const handleSchedule = () => {
+  const handleSchedule = async () => {
     console.log("Ride Scheduled for", time);
-    onSchedule(); // Call the parent's onSchedule function to trigger the transition
-    onClose();    // Close the SchedulerideCard
+    try {
+      await fetch('/email/store-time', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ time }),
+      });
+      onSchedule(time); // Trigger the next step in the flow
+      onClose();
+    } catch (error) {
+      console.error('Error storing time:', error);
+    }
   };
+  
 
   if (!isOpen) return null;
 
@@ -18,7 +30,6 @@ const SchedulerideCard = ({ isOpen, onClose, onSchedule }) => {
         <h1 className="scheduleride-heading">Schedule a Ride</h1>
         <h6 className="scheduleride-subheading">Pick a time for your ride</h6>
 
-        {/* Native Time Input */}
         <input
           type="time"
           value={time}

@@ -7,18 +7,64 @@
  *  Service to handle profile fetching
  */
 
+
 /*
     Function: get_profile
 
     Description:
-      Fetches profile of user
+      Fetches the user profile from the server
+
+    Arguments:
+      studentNumber - The student number of the user
+
+    Returns:
+      The user profile
+*/
+// TODO: implement response failure handling
+export async function get_profile(studentNumber) {
+    try{
+        const response = await fetch(`/users/user-information/${studentNumber}`).then((res) => res.json());
+        const full_profile = response[0];
+        const profile = {
+            first_names: full_profile.FirstNames,
+            last_name: full_profile.LastNames,
+            student_staff_num: full_profile.StudentNumber,
+            gender : full_profile.Gender,
+            dob: full_profile.DateOfBirth,
+            age: '-',
+            allergens: full_profile.Allergies,
+            first_emergency_contact: {
+                name: full_profile.firstContactName,
+                relationship: full_profile.firstContactRelationship,
+                cell: full_profile.firstContactCellNumber,
+                work: full_profile.firstContactWorkNumber
+            },
+            second_emergency_contact: {
+                name: full_profile.secondContactName,
+                relationship: full_profile.secondContactRelationship,
+                cell: full_profile.secondContactCellNumber,
+                work: full_profile.secondContactWorkNumber
+            }
+        }
+        return profile;
+    } catch (error) {
+        console.error('Error fetching profile:', error.message);
+        return get_blank_profile();
+    }
+}
+/*
+    Function: get_demo_profile
+
+    Description:
+      Returns a sample profile
 
     Arguments: N/A
 
     Returns:
-      User profile
+      Sample user profile
 */
-export function get_profile() {
+
+export function get_demo_profile() {
     const sample_profile = {
         first_names: 'Mary Anne',
         last_name: 'Jane',

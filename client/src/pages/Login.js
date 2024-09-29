@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { ReactComponent as Logo } from '../icons/Logo.svg';
+import { UserContext } from '../contexts/UserContext';
 import '../styles/LoginPage.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,11 +8,13 @@ const SignInPage = () => {
   //state to manage the visibility of the password
   const [showPassword, setShowPassword] = useState(false);
   //state to manage the student number
-  const [studentNumber, setStudentNumber] = useState('');
+  const [studentNumber, setLocalStudentNumber] = useState('');
   //state to manage the password
   const [password, setPassword] = useState('');
   //state to manage the visibility of the login form
   const [show_login, set_show_login] = useState(false);
+
+  const { setStudentNumber } = useContext(UserContext);
 
   //setting navigate 
   const navigate = useNavigate();
@@ -40,6 +43,7 @@ const SignInPage = () => {
 
       if (response.status === 200) {
         console.log('Login successful!');
+        setStudentNumber(studentNumber);
         // Redirect to the next page
         navigate('/main');
       } else if (response.status === 401) {
@@ -70,7 +74,7 @@ const SignInPage = () => {
           placeholder="Student Number"
           className="inputField"
           value={studentNumber}
-          onChange={(e) => setStudentNumber(e.target.value)}
+          onChange={(e) => setLocalStudentNumber(e.target.value)}
         />
         <div className="passwordContainer">
           <input

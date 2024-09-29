@@ -9,10 +9,11 @@ const express =  require('express');
 const router = express.Router();
 const UserInformationController = require('../controllers/UserInformationController');
 
-//fetching data from the database (user information)
-router.get("/user-information", async (req, res) => {
+//fetching specific user from the DB
+router.get("/user-information/:studentNumber", async (req, res) => {
     try {
-        const users_info = await UserInformationController.getAllUserInfo();
+        const studentNumber = req.params.studentNumber;
+        const users_info = await UserInformationController.getUserInfo(2540440);
         res.status(200).json(users_info);
         
     } catch (err) {
@@ -25,8 +26,10 @@ router.get("/user-information", async (req, res) => {
 //getting data from the body request then passing it to the controller to be inserted into the database.
 router.post('/user-information', async (req, res) => {
     try {
-        const {firstnames, lastnames, student_number, gender, DOB, allergies} = req.body;
-        const InsertUserInfo = await UserInformationController.InsertUserInfo(firstnames, lastnames, student_number, gender, DOB, allergies);
+        const {firstnames, lastnames, student_number, gender, DOB, allergies, contactID1, contactID2} = req.body;
+        console.log("contactID1: ", contactID1);
+        console.log("contactID2: ", contactID2);
+        const InsertUserInfo = await UserInformationController.InsertUserInfo(firstnames, lastnames, student_number, gender, DOB, allergies, contactID1, contactID2);
         res.status(200).json(InsertUserInfo);
     } catch (err) {
         console.error('Error Insertin data : ' + err.message);

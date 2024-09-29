@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import '../styles/EditMedicalProfile.css'
 
+// TODO : Validate form fiesl
+// TODO : use contexts to store user data and autofill the form
 export default function EditMedicalProfile() {
   const [profile, setProfile] = useState({
     first_names: '', //+
@@ -8,7 +10,6 @@ export default function EditMedicalProfile() {
     student_staff_num: '', //+
     gender: '', //+
     dob: '', //+
-    age: '', //marked for removal
     allergens: '', //+
     first_emergency_contact: {
       name: '', //+
@@ -90,14 +91,6 @@ export default function EditMedicalProfile() {
           type='date'
           name='dob'
           value={profile.dob}
-          onChange={handleInputChange}
-        />
-
-        <label>Age:</label>
-        <input
-          type='number'
-          name='age'
-          value={profile.age}
           onChange={handleInputChange}
         />
 

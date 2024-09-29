@@ -68,8 +68,8 @@ const PopupCard = ({ isOpen, onClose }) => {
         <div className='popup-container'>
           {!hidePopupContent && !showScheduler && !showSelectRes && !showRideNowConfirmation && (
             <>
-              <h1 className='Card1-Heading' id='Main-Heading'>Going home?</h1>
-              <h6 className='Card1-subheading'>No need to go home alone</h6>
+              <h1 className='Card1-Heading' id='Main-Heading'>Walk Home Assistance</h1>
+              {/* <h6 className='Card1-subheading'>No need to go home alone</h6> */}
 
               <h1 className='Card1-Heading'>Leave now</h1>
               <h6 className='Card1-subheading'>Get dropped off at your residence</h6>

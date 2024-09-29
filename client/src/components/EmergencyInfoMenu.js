@@ -1,15 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Menu from './Menu'
 import '../styles/EmergencyInfoMenu.css'
 import Slider from './Slider'
 import EmergencyInfoBox from './EmergencyInfoBox'
 import Spinner from './Spinner'
-import emergency_contacts from '../common/EmergencyContacts'
+import { fetch_contacts } from '../services/EmergencyContactsService'
 
 export default function EmergencyInfoMenu( props ) {
 
   const [contacts_shown, set_contacts_shown] = useState('wits');
-  const [loading_contacts, set_loading_contacts] = useState(false);
+  const [loading_contacts, set_loading_contacts] = useState(true);
+  const [emergency_contacts, set_emergency_contacts] = useState({
+      wits_contacts: [],
+      external_contacts: []
+  });
+
+  useEffect(() => {
+
+    // Fetch contact information
+    fetch_contacts().then((contacts) => {
+      set_emergency_contacts(contacts);
+      set_loading_contacts(false);
+    });
+
+  },[])
 
   /* 
     Function: handle_slider_click
@@ -23,15 +37,14 @@ export default function EmergencyInfoMenu( props ) {
   */
   const handle_slider_click = (slider_position) => {
     set_loading_contacts(true);
-    setTimeout(() => {
-      if (slider_position === 'left') {
-        set_contacts_shown('wits');
-      } else {
-        set_contacts_shown('external');
-      }
+
+    if (slider_position === 'left') {
+      set_contacts_shown('wits');
+    } else {
+      set_contacts_shown('external');
+    }
     set_loading_contacts(false);
 
-    },1500)
   }
 
   /* 

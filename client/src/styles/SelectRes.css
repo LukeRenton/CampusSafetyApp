@@ -1,14 +1,14 @@
 
 /* SelectRes Content */
 .selectres-content {
-  background-color: white;
+  /* background-color: white; */
   padding: 5vh 5vw; /* Responsive padding */
   border-radius: 20px; /* Rounded corners for all corners */
   width: auto;
   max-width: 90vw; /* Adjust maximum width to fit better */
   max-height: 85vh; /* Allow content to grow, with a maximum height */
   overflow-y: auto; /* Add scrolling if content exceeds available space */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
   animation: slideUp 0.4s ease forwards; /* Apply slideUp animation */
   text-align: center; /* Center the text */
   display: flex;
@@ -20,7 +20,7 @@
 .selectres-dropdown {
   width: 100%; /* Full width of the content container */
   padding: 1.5vh 0; /* Adjust padding for dropdown */
-  font-size: 4vw; /* Responsive font size */
+  font-size: 14px; /* Responsive font size */
   border-radius: 10px;
   border: none;
   text-align: center;
@@ -39,7 +39,7 @@
 .selectres-button {
   width: 80%; /* Full width with padding */
   padding: 1.5vh 0;
-  font-size: 4vw; /* Responsive font size */
+  font-size: 14px; /* Responsive font size */
   margin: 2vh auto; /* Margin for spacing */
   background-color: var(--medicalblue); /* Primary color for the button */
   color: white;

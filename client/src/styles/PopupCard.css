@@ -3,8 +3,8 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
     display: flex;
     justify-content: center;
@@ -17,13 +17,12 @@
   /* Popup Content */
   .popup-content {
     background: var(--medicalblue);
-    padding-top: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-top: 12px;
+    /* padding-left: 20px; */
+    /* padding-right: 20px; */
     /* padding: 5vh 5vw;  Responsive padding */
-    border-radius: 20px 20px 0 0;
-    width: 100%;
-    max-width: none;
+    border-radius: 40px 40px 0 0;
+
     max-height: 85vh; /* Allow content to grow, with a maximum height */
     overflow-y: auto; /* Add scrolling if content exceeds available space */
     box-shadow: 0 4px 6px rgba(56, 20, 20, 0.1);
@@ -34,6 +33,9 @@
 
     transform: translateY(1000px);
     transition: 0.4s;
+
+    width: 100%;
+    max-width: 600px;
 
   }
 
@@ -51,9 +53,11 @@
     align-items: center;
     margin: 2% auto;
     padding: 0;
-    font-size: 6vw; /* Responsive font size */
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 600;
     font-style: normal;
+    /* color: var(--medicalblue); */
+    /* border-bottom: 3px solid var(--medicalblue); */
   }
   
   /* Card1 Heading */
@@ -61,8 +65,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 4.5vw; /* Responsive font size */
-    margin: 5% auto;
+    font-size: 18px;
+    margin-top: 30px;
     font-weight: 700;
     font-style: normal;
   }
@@ -72,19 +76,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 2% 10%; /* Reduce the margin to fit content better */
+    /* margin: 2% 10%; */
     padding: 0;
-    font-size: 3.5vw; /* Responsive font size */
-    font-weight: 400;
+    font-size: 14px;
+    font-weight: 300;
     font-style: normal;
+    color: var(--subtext);
   }
   
   /* Card1 Button */
   .Card1-Button {
-    width: 90%; /* Full width with padding */
-    padding: 2vh 0;
-    font-size: 4vw; /* Responsive font size */
-    margin: 2vh;
+    width: 40%;
+    padding: 5px 0;
+    font-size: 14px; /* Responsive font size */
+    margin: 5px;
     background-color: var(--medicalblue);
     color: white;
     border: none;
@@ -105,9 +110,15 @@
     height: calc(100% - 15px);
     background: white;
 
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
 
     padding-top: 15px;
+    padding-bottom: 50px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 
   }

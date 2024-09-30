@@ -5,7 +5,8 @@ import { string_to_date } from '../services/DateTimeService';
 
 // TODO : Validate form fiesl
 // TODO : use contexts to store user data and autofill the form
-export default function EditMedicalProfile() {
+export default function EditMedicalProfile( { user_profile } ) {
+  console.log(user_profile);
   const [profile, setProfile] = useState({
     first_names: '', //+
     last_name: '', //+

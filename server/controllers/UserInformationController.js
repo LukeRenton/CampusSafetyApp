@@ -106,7 +106,6 @@ async function UpdateUserInfo(firstnames, lastnames, student_number, gender, dat
             `UPDATE usercontacts set name='${second_emergency_contact.name}', relationship='${second_emergency_contact.relationship}', cellNumber='${second_emergency_contact.cell_number}', workNumber='${second_emergency_contact.work_number}' where userContactId='${second_contact_id}' `
         );
 
-
         console.log(`the contact id's are ${first_contact_id} and ${second_contact_id}!`);
 
         return "User updated!";

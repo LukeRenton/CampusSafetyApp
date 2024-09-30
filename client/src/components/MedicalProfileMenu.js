@@ -19,7 +19,7 @@ export default function MedicalProfileMenu( { close_menu, profile } ) {
 
   return (
     <>
-        {show_edit_medical_profile ? <EditMedicalProfile></EditMedicalProfile> : <></>}
+        {show_edit_medical_profile ? <EditMedicalProfile user_profile={profile}></EditMedicalProfile> : <></>}
         <Menu menu_header={"Medical Profile"} close={close_menu}>
         <section className='medical-profile-menu-content'>
             <section className='medical-profile-menu-screen-on'>

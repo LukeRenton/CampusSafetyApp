@@ -26,10 +26,10 @@ router.get("/user-information/:studentNumber", async (req, res) => {
 //getting data from the body request then passing it to the controller to be inserted into the database.
 router.post('/user-information', async (req, res) => {
     try {
-        const {firstnames, lastnames, student_number, gender, DOB, allergies, contactID1, contactID2} = req.body;
+        const {firstnames, lastnames, student_staff_num, gender, DOB, allergies, contactID1, contactID2} = req.body;
         console.log("contactID1: ", contactID1);
         console.log("contactID2: ", contactID2);
-        const InsertUserInfo = await UserInformationController.InsertUserInfo(firstnames, lastnames, student_number, gender, DOB, allergies, contactID1, contactID2);
+        const InsertUserInfo = await UserInformationController.InsertUserInfo(firstnames, lastnames, student_staff_num, gender, DOB, allergies, contactID1, contactID2);
         res.status(200).json(InsertUserInfo);
     } catch (err) {
         console.error('Error Insertin data : ' + err.message);

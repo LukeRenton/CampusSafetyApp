@@ -3,14 +3,15 @@ import '../styles/EditMedicalProfile.css'
 import { update_user_info } from '../services/UserInformationService';
 import { string_to_date } from '../services/DateTimeService';
 
-export default function EditMedicalProfile( { student_number } ) {
+// TODO : Validate form fiesl
+// TODO : use contexts to store user data and autofill the form
+export default function EditMedicalProfile() {
   const [profile, setProfile] = useState({
     first_names: '', //+
     last_name: '', //+
     student_staff_num: '', //+
     gender: '', //+
     dob: '', //+
-    age: '', //marked for removal
     allergens: '', //+
     first_emergency_contact: {
       name: '', //+
@@ -103,14 +104,6 @@ export default function EditMedicalProfile( { student_number } ) {
           type='date'
           name='dob'
           value={profile.dob}
-          onChange={handleInputChange}
-        />
-
-        <label>Age:</label>
-        <input
-          type='number'
-          name='age'
-          value={profile.age}
           onChange={handleInputChange}
         />
 

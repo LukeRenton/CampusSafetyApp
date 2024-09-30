@@ -21,6 +21,7 @@ async function insertUserContact(name, relationship, cellNumber, workNumber) {
         );
 
         console.log('Row inserted:', result[0].affectedRows);
+        return result[0].insertId;
     } catch (error) {
         console.error('Error inserting user contact:', error);
     }

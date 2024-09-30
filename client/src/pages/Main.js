@@ -6,7 +6,7 @@
  * Description:
  *  Main page component to host items to be displayed on the main page (home page) of the app
  */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import Map from '../components/Map';
 import '../styles/Main.css'
 import { get_profile, get_blank_profile } from '../services/ProfileService'
@@ -26,7 +26,8 @@ import Notification from '../components/Notification';
 import SafetyResourcesMenu from '../components/SafetyResourcesMenu';
 import MakeDetailedReport from '../components/MakeDetailedReport';
 import { fetch_all_reports, get_all_reports } from '../services/GeneralReportService';
-import addNotification from 'react-push-notification'; 
+import addNotification from 'react-push-notification';
+import { UserContext } from '../contexts/UserContext';
 
 import logo from '../icons/call.svg'
 import create_new_alert_from_notification from '../services/PushNotificationService';
@@ -51,13 +52,14 @@ export default function Main() {
   const [new_notification, set_new_notification] = useState(null);
 
   const [reports, set_reports] = useState(null);
-  
+
 
   const [show_quickreports, set_show_quickreports] = useState(false);
 
 
   const [hasNotified, setHasNotified] = useState(false); // State to track if notification is sent
 
+  const { studentNumber } = useContext(UserContext);
 
   useEffect(() => {
     // Create an EventSource connection to listen to server-sent events
@@ -89,7 +91,7 @@ export default function Main() {
         }, 8000)
 
         set_new_notification(data.message);
-        
+
         const new_alert = create_new_alert_from_notification(data.message);
 
         const incident_reports = fetch_all_reports();
@@ -138,17 +140,25 @@ export default function Main() {
   }, [hasNotified]);
 
 
-  
-  useEffect(() => {
-    const fetched_profile = get_profile();
-    set_user_profile(fetched_profile);
 
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const fetched_profile = await get_profile(studentNumber);
+        set_user_profile(fetched_profile);
+      } catch (error) {
+        console.error('Error fetching profile:', error.message);
+        set_user_profile(get_blank_profile()); // Handle error gracefully
+      }
+    };
+    fetchProfile();
     const incident_reports = fetch_all_reports();
     incident_reports.then(
       (incident_reports) => set_reports(incident_reports)
     )
-  },[])
-  
+
+  }, [])
+
   /*
     Function: close_all_menus
 
@@ -178,9 +188,9 @@ export default function Main() {
 
     Returns: N/A
   */
-    const close_menu = () => {
-      set_current_menu("none");
-    }
+  const close_menu = () => {
+    set_current_menu("none");
+  }
 
   /*
     Function: close_confirmation
@@ -192,10 +202,10 @@ export default function Main() {
 
     Returns: N/A
   */
-    const close_confirmation = () => {
-      set_confirmation_menu(null);
-      set_detailed_report_menu(null);
-    }
+  const close_confirmation = () => {
+    set_confirmation_menu(null);
+    set_detailed_report_menu(null);
+  }
 
   /*
     Function: render_menu
@@ -214,14 +224,14 @@ export default function Main() {
         return <></>
 
       case "notifications":
-        return <NotificationsMenu reports={reports} close_all_menus={close_all_menus} close_menu={close_menu}></NotificationsMenu> 
+        return <NotificationsMenu reports={reports} close_all_menus={close_all_menus} close_menu={close_menu}></NotificationsMenu>
 
       case "incident_reports":
         return <IncidentReportsMenu reports={reports} close_all_menus={close_all_menus} close_menu={close_menu}></IncidentReportsMenu>
 
       case "emergency_info":
         return <EmergencyInfoMenu close_menu={close_menu}></EmergencyInfoMenu>
-  
+
       case "first_aid":
         return <FirstAidMenu close_menu={close_menu}></FirstAidMenu>
 
@@ -230,13 +240,13 @@ export default function Main() {
 
       case "detailed_report":
         return <DetailedReport set_detailed_report_menu={update_detailed_report_menu} report_types_data={report_types_data} close_menu={close_menu} profile={user_profile}></DetailedReport>
-  
+
       case "walk_home":
         return <PopupCard isOpen={true} onClose={close_menu}> <p>Walk-home assistance information goes here.</p> </PopupCard>
 
       case "safety_resources":
         return <SafetyResourcesMenu close_menu={close_menu}></SafetyResourcesMenu>
-        
+
       default:
         break;
     }
@@ -260,19 +270,19 @@ export default function Main() {
     } else if (confirmation_menu) {
       return <ReportConfirmation report_type={confirmation_menu} close_all_menus={close_all_menus} close_menu={close_confirmation}></ReportConfirmation>
     } else if (detailed_report_menu) {
-      return <MakeDetailedReport  report_type={detailed_report_menu} close_all_menus={close_all_menus} close_menu={close_confirmation}></MakeDetailedReport>
+      return <MakeDetailedReport report_type={detailed_report_menu} close_all_menus={close_all_menus} close_menu={close_confirmation}></MakeDetailedReport>
     }
   }
 
   return (
     <main className='main-root'>
-        {render_report_menu()}
-        {current_menu === "none" ? <></> : render_menu() }      
-        <Navbar show_quickreports={show_quickreports} set_show_quickreports={set_show_quickreports} report_types_data={report_types_data} open_detailed_report_menu={() => set_current_menu("detailed_report")}  set_confirmation_menu={update_confirmation_menu}/>
-        <Topbar set_show_side_menu={set_show_side_menu} />
-        {reports === null ? <></> : <Map new_notification={new_notification} set_new_notification={set_new_notification} incident_reports={reports}/>}
-        <SideMenu show_side_menu={show_side_menu} set_current_menu={set_current_menu} profile={user_profile}/>
-        {show_side_menu ? <div className='main-dark-back' onClick={close_all_menus}></div> : <></> }
+      {render_report_menu()}
+      {current_menu === "none" ? <></> : render_menu()}
+      <Navbar show_quickreports={show_quickreports} set_show_quickreports={set_show_quickreports} report_types_data={report_types_data} open_detailed_report_menu={() => set_current_menu("detailed_report")} set_confirmation_menu={update_confirmation_menu} />
+      <Topbar set_show_side_menu={set_show_side_menu} />
+      {reports === null ? <></> : <Map new_notification={new_notification} set_new_notification={set_new_notification} incident_reports={reports} />}
+      <SideMenu show_side_menu={show_side_menu} set_current_menu={set_current_menu} profile={user_profile} />
+      {show_side_menu ? <div className='main-dark-back' onClick={close_all_menus}></div> : <></>}
     </main>
   )
 }

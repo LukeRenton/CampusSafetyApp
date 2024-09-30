@@ -7,6 +7,15 @@
  *  Service hosting important functions for date/time objects.
  */
 
+export function string_to_date(string) {
+    const parts = string.split('-');
+    const year = parts[0];
+    const month = parts[1];
+    const day = parts[2];
+    const date = new Date(year, month, day);
+    return date;
+}
+
 /*
     Function: compare_dates
 

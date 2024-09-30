@@ -21,6 +21,19 @@ router.get("/user-information", async (req, res) => {
     }
 });
 
+//fetching data from the database for a specific user (user information)
+router.get("/user-information/:student_num", async (req, res) => {
+    try {
+        const student_num = req.params.student_num;
+        const users_info = await UserInformationController.getUserInfo(student_num);
+        res.status(200).json(users_info);
+        
+    } catch (err) {
+        console.error('Error fetching Data: ' + err.message);
+        res.status(500).json({message: err.message});
+    }
+});
+
 
 //getting data from the body request then passing it to the controller to be inserted into the database.
 router.post('/user-information', async (req, res) => {
@@ -33,6 +46,20 @@ router.post('/user-information', async (req, res) => {
         res.status(500).json({message: 'Serve error: ' + err.message});
     }
 });
+
+//getting data from the body request then passing it to the controller to be inserted into the database.
+router.put('/update-user', async (req, res) => {
+    try {
+        console.log(req.body);
+        const {firstnames, lastnames, student_number, gender, DOB, allergies} = req.body;
+        const UpdateUserInfo = await UserInformationController.UpdateUserInfo(firstnames, lastnames, student_number, gender, DOB, allergies);
+        res.status(200).json(UpdateUserInfo);
+    } catch (err) {
+        console.error('Error Insertin data : ' + err.message);
+        res.status(500).json({message: 'Serve error: ' + err.message});
+    }
+});
+
 
 
 module.exports = router;

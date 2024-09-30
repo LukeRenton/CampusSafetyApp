@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import '../styles/EditMedicalProfile.css'
+import { update_user_info } from '../services/UserInformationService';
+import { string_to_date } from '../services/DateTimeService';
 
-export default function EditMedicalProfile() {
+export default function EditMedicalProfile( { student_number } ) {
   const [profile, setProfile] = useState({
     first_names: '', //+
     last_name: '', //+
@@ -30,7 +32,16 @@ export default function EditMedicalProfile() {
       ...profile,
       [name]: value
     });
+    console.log(profile);
   };
+
+  // const handleDOBChange = (e) => {
+  //   const dob = string_to_date(e.target.value);
+  //   setProfile({
+  //     ...profile,
+  //     dob: dob
+  //   })
+  // }
 
   const handleEmergencyContactChange = (e, contactType) => {
     const { name, value } = e.target;
@@ -41,11 +52,13 @@ export default function EditMedicalProfile() {
         [name]: value
       }
     });
+
   };
 
   const handleSubmit = () => {
     // You can send this profile data to your endpoint
     console.log('Submitted Profile:', profile);
+    update_user_info(profile);
   };
 
   return (

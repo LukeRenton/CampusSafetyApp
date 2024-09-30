@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import '../styles/EditMedicalProfile.css'
-import { update_user_info } from '../services/UserInformationService';
+import { update_user_info } from '../services/ProfileService';
 import { string_to_date } from '../services/DateTimeService';
 
 // TODO : Validate form fiesl

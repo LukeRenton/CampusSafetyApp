@@ -145,6 +145,7 @@ export default function Main() {
     const fetchProfile = async () => {
       try {
         const fetched_profile = await get_profile(studentNumber);
+        console.log(fetched_profile);
         set_user_profile(fetched_profile);
       } catch (error) {
         console.error('Error fetching profile:', error.message);

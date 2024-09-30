@@ -7,6 +7,17 @@
  *  Service hosting important functions for date/time objects.
  */
 
+export function convert_date_string_to_sql_valid(string) {
+    const parts = string.split('-');
+    const year = parts[0];
+    const month = parts[1];
+    const day = parseInt(parts[2]) + 1;
+
+    const date = year+"-"+month+"-"+day;
+
+    return date;
+}
+
 export function string_to_date(string) {
     const parts = string.split('-');
     const year = parts[0];

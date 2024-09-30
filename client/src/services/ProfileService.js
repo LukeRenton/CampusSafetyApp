@@ -7,6 +7,8 @@
  *  Service to handle profile fetching
  */
 
+import { convert_date_string_to_sql_valid, string_to_date } from "./DateTimeService";
+
 
 /*
     Function: get_profile
@@ -25,6 +27,7 @@ export async function get_profile(studentNumber) {
     try{
         const response = await fetch(`/users/user-information/${studentNumber}`).then((res) => res.json());
         const full_profile = response[0];
+        console.log(full_profile);
         const profile = {
             first_names: full_profile.FirstNames,
             last_name: full_profile.LastNames,
@@ -46,6 +49,7 @@ export async function get_profile(studentNumber) {
                 work: full_profile.secondContactWorkNumber
             }
         }
+        console.log(profile);
         return profile;
     } catch (error) {
         console.error('Error fetching profile:', error.message);
@@ -125,4 +129,45 @@ export function get_blank_profile() {
     }
 
     return blank_profile;
+}
+
+
+
+
+export async function update_user_info(user_profile) {
+    console.log(user_profile);
+
+    // firstnames, lastnames, student_number, gender, DOB, allergies
+    try {
+        const res = await fetch('/users/update-user', {
+                method: 'PUT',
+                headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                firstnames: user_profile.first_names,
+                lastnames: user_profile.last_name,
+                student_number: user_profile.student_staff_num,
+                gender: user_profile.gender,
+                DOB: convert_date_string_to_sql_valid(user_profile.dob),
+                allergies: user_profile.allergens,
+                first_emergency_contact_name: user_profile.first_emergency_contact.name,
+                first_emergency_contact_relationship: user_profile.first_emergency_contact.relationship,
+                first_emergency_contact_cell_number: user_profile.first_emergency_contact.cell,
+                first_emergency_contact_work_number: user_profile.first_emergency_contact.work,
+                second_emergency_contact_name: user_profile.second_emergency_contact.name,
+                second_emergency_contact_relationship: user_profile.second_emergency_contact.relationship,
+                second_emergency_contact_cell_number: user_profile.second_emergency_contact.cell,
+                second_emergency_contact_work_number: user_profile.second_emergency_contact.work
+            })
+
+        }).then((res) => res.json());
+
+        if (res.ok) {
+            console.log(res);
+        }
+    
+    } catch (err) {
+        console.log(err);
+    }
 }

@@ -1,3 +1,13 @@
+/**
+ * File: SelectRes.js
+ * 
+ * Author: Anand
+ * 
+ * Description:
+ *  Modal allowing user to select res for SCHEDULE RIDE for walk home assistance
+ */
+
+
 import React, { useState } from 'react';
 import '../styles/SelectRes.css'; // Use updated SelectRes CSS
 import ConfirmationCard from './ConfirmationCard.js'; // Import the confirmation card
@@ -7,12 +17,32 @@ const SelectRes = ({ isOpen, onClose }) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [selectedResidence, setSelectedResidence] = useState(''); // State to store selected residence
 
+  /* 
+    Function: handleSelect
+
+    Description:
+      Handle when user selects a residence
+
+    Parameters:
+      event: event from which selection is made
+
+    Returns: N/A
+  */
   const handleSelect = (event) => {
     const residence = event.target.value;
     setSelectedResidence(residence); // Update the selected residence
-    console.log("Selected Residence:", residence);
   };
 
+  /*
+    Function: handleGoClick
+
+    Description:
+      Form submission function
+
+    Parameters: N/A
+
+    Returns: N/A
+  */
   const handleGoClick = async () => {
     console.log("Selected Residence:", selectedResidence);
   

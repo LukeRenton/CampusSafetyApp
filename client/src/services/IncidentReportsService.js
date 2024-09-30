@@ -24,32 +24,51 @@ import { get_user_coords } from './MapService';
       Mapping of HTML objects
 */
 export function render_incident_report_items(reports_array_in, close_all_menus_handler) {
-  // var reports_array = get_all_reports();
-  var reports_array = [...reports_array_in];
+  try {
+    // var reports_array = get_all_reports();
+    var reports_array = [...reports_array_in];
 
-  // Handle notifications
-  if (reports_array.length > 0) {
-    // Add a final element to the bottom of the list: improves ui/ux by allowing further scroll distance
-    reports_array.push({type: 'scroll-base'});
+    // Handle notifications
+    if (reports_array.length > 0) {
+      // Add a final element to the bottom of the list: improves ui/ux by allowing further scroll distance
+      reports_array.push({type: 'scroll-base'});
 
-    // Return mapping of ReportItem objects
-    return reports_array.map((report, i) => { 
-      if (report.type === 'scroll-base') {
-        return <div key={i} className='reports-menu-scroll-base'></div>
-      } else {
-        if (report.active) {
-          return <ReportItem key={i} location={report.location} close_all_menus_handler={close_all_menus_handler} type={report.type} description={report.description} active={report.active} time={get_time(report.date)} show_time={false}></ReportItem>
+      // Return mapping of ReportItem objects
+      return reports_array.map((report, i) => { 
+        if (report.type === 'scroll-base') {
+          return <div key={i} className='reports-menu-scroll-base'></div>
+        } else {
+          if (report.active) {
+            return <ReportItem key={i} location={report.location} close_all_menus_handler={close_all_menus_handler} type={report.type} description={report.description} active={report.active} time={get_time(report.date)} show_time={false}></ReportItem>
+          }
         }
-      }
-    });
+      });
 
-  } else {
-    // Handle no notifications
-    return <p className='reports-menu-no-reports'>No reports currently active.</p>
+    } else {
+      // Handle no notifications
+      return <p className='reports-menu-no-reports'>No reports currently active.</p>
+    }
+  } catch (err) {
+    return {
+      error: "Error getting incident reports"
+    }
   }
 }
 
+/*
+    Function: make_report
 
+    Description:
+        Constructs a new report
+    
+    Parameters:
+        type: type of report
+        image: image to be pushed to Firestore (urL)
+        description: description of report
+
+    Returns: 
+      Either success or error object
+*/
 export async function make_report(type, image, description) {  
 
   try {    

@@ -1,5 +1,25 @@
+/**
+ * File: GeneralReportService.js
+ * 
+ * Author: Mitchell
+ * 
+ * Description:
+ *  Service hosting important functions for both incident- and alert reports
+ */
+
 import report_types from "../common/ReportTypes";
 
+/*
+    Function: fetch_all_reports
+
+    Description:
+        Fetches all reports (alert + incident)
+    
+    Parameters: N/A
+
+    Returns:
+        Array of reports
+*/
 export async function fetch_all_reports() {
   // Fetch goes here
   
@@ -84,7 +104,7 @@ export async function fetch_all_reports() {
 
 
 /*
-Function: get_all_reports
+Function: get_all_reports (SAMPLE)
 
 Description:
   Fetches all reports from backend

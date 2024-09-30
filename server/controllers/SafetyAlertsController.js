@@ -12,7 +12,18 @@ async function insertAlert(type, status, longitude, latitude, timestamp) {
     try {
 
         let date = new Date();
-        const sast_date = new Date(date.toLocaleString('en-US', { timeZone: 'Africa/Johannesburg' }));
+        
+        //Convert date to SAST (+2)
+        const day = date.getDate();
+        const month = date.getMonth();
+        const year = date.getFullYear();
+        const hour = date.getHours() + 2;
+        const minute = date.getMinutes();
+        const seconds = date.getSeconds();
+
+        const sast_date = new Date(year, month, day, hour, minute, seconds);
+
+        // const sast_date = new Date(date.toLocaleString('en-US', { timeZone: 'Africa/Johannesburg' }));
         console.log(sast_date);
 
         // Insert a new row into the alerts table

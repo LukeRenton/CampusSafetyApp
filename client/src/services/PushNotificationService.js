@@ -1,6 +1,25 @@
+/**
+ * File: PushNotificationService.js
+ * 
+ * Author: Mitchell
+ * 
+ * Description:
+ *  Service hosting important functions for push notifications.
+ */
 import report_types from "../common/ReportTypes";
 
-export default function create_new_alert_from_notification(report) {
+/*
+    Function: create_new_report_from_notification
+
+    Description:
+        Creates a temporary report from a notification to satisfy the frontend
+    
+    Parameters:
+        report: the report information
+
+    Returns: Valid report object for frontend
+*/
+export default function create_new_report_from_notification(report) {
     return {
         type: report.type,
         description: report.description ? report.description : (report_types[report.type].header + " Alert"),

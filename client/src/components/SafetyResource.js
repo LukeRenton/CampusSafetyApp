@@ -1,3 +1,12 @@
+/**
+ * File: SafetyResource.js
+ * 
+ * Author: Mitchell
+ * 
+ * Description:
+ *  Card to display information for a specific safety resource
+ */
+
 import React from 'react'
 import '../styles/SafetyResource.css'
 import report_types from '../common/ReportTypes'

@@ -1,3 +1,13 @@
+/**
+ * File: UploadingReport.js
+ * 
+ * Author: Mitchell
+ * 
+ * Description:
+ *  Small card to indicate when report is being uploaded to backend
+ */
+
+
 import React, { useEffect, useState } from 'react'
 import '../styles/UploadingReport.css'
 import report_types from '../common/ReportTypes'

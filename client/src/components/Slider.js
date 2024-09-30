@@ -14,6 +14,17 @@ export default function Slider({ click_event, left_option, right_option }) {
 
     const [slider_position, set_slider_position] = useState('left');
 
+    /*
+        Function: handle_slider_click
+
+        Description:
+            Handles when slider is clicked
+
+        Parameters:
+            new_slider_position: position (left or right) to move to
+
+        Returns: N/A
+    */
     const handle_slider_click = (new_slider_position) => {
         set_slider_position(new_slider_position);
         click_event(new_slider_position);

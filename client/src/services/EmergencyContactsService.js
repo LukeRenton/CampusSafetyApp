@@ -1,5 +1,23 @@
+/**
+ * File: EmergencyContactsService.js
+ * 
+ * Author: Mitchell
+ * 
+ * Description:
+ *  Service hosting important functions for emergency contacts (wits and external).
+ */
 
+/*
+    Function: fetch_contacts
 
+    Description:
+        Fetches list of emergency contacts and organizes into arrays and objects
+    
+    Parameters: N/A
+
+    Returns:
+        Array of varied objects and sub-arrays containing contact info
+*/
 export async function fetch_contacts() {
     const res = await fetch('/emergencycontacts/emergency-contacts', {
         method: 'GET',

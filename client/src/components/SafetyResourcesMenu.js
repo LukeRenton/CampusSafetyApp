@@ -1,3 +1,13 @@
+/**
+ * File: SafetyResourcesMenu.js
+ * 
+ * Author: Mitchell
+ * 
+ * Description:
+ *  Menu to display all safety resources
+ */
+
+
 import React, { useEffect, useState } from 'react'
 import '../styles/SafetyResourcesMenu.css'
 // import safety_resources from '../common/SafetyResources'
@@ -14,6 +24,17 @@ export default function SafetyResourcesMenu( { set_error, close_menu } ) {
     const [safety_resources, set_safety_resources] = useState([]);
     const [loading, set_loading] = useState(true);
 
+    /*
+        Function: render_safety_resources
+
+        Description:
+            Renders the safety resources based on what is being searched by user
+        
+        Parameters: N/A
+
+        Returns:
+            Mapped list of SafetyResource objects in list items (li)
+    */
     const render_safety_resources = () => {
         if (safety_resources.length > 0) {
             const resources = search === "" ? safety_resources : safety_resources.filter((resource) => {
@@ -33,27 +54,38 @@ export default function SafetyResourcesMenu( { set_error, close_menu } ) {
 
     }
 
+    /*
+        Function: get_safety_resources
+
+        Description:
+            Driver function to fetch safety resources
+
+        Parameters: N/A
+
+        Returns: N/A
+    */
     const get_safety_resources = async () => {
         const res = await fetch_safety_resources()
         .then((safety_resources) => {
             if (!safety_resources) {
-                console.log("safety resources is null");
+                // Handle case of null return
                 set_error({
                     message: "Error fetching safety resources"
                 })
                 return []
             } else if (safety_resources.error) {
-                console.log("error received");
+                // Handle case of error present
                 set_error({
                     message: "Error fetching safety resources"
                 });
                 return []
             } else {
-                console.log("Success");
+                // Success case
                 return safety_resources;
             }
         })
         .catch(err => {
+            // Handle case of error return from fetch
             set_error({
                 message: "Error fetching safety resources"
             });

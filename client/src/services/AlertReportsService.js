@@ -1,5 +1,26 @@
+/**
+ * File: AlertReportsService.js
+ * 
+ * Author: Mitchell
+ * 
+ * Description:
+ *  Service hosting important functions for alert reports.
+ */
+
 import { get_user_coords } from "./MapService";
 
+/*
+    Function: make_alert_report
+
+    Description:
+        Creates an alert of a specific type and uploads to backend
+    
+    Parameters:
+        type: type of alert to be reported
+
+    Returns:
+        either success or error object
+*/
 export async function make_alert_report(type) {
 
     try {

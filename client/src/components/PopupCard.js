@@ -1,3 +1,13 @@
+/**
+ * File: PopupCard.js
+ * 
+ * Author: Anand
+ * 
+ * Description:
+ *  Popup to ask user for input to schedule a ride
+ */
+
+
 import React, { useState, useEffect } from 'react';
 import '../styles/PopupCard.css';
 import SchedulerideCard from './SchedulerideCard';
@@ -29,25 +39,64 @@ const PopupCard = ({ isOpen, onClose }) => {
     }
   }, [isOpen]);
 
+  /*
+    Function: handleScheduleComplete
+
+    Description:
+      Handles schedule completed
+    
+    Parameters: N/A
+
+    Returns: N/A
+  */
   const handleScheduleComplete = () => {
     setShowScheduler(false);
     setShowSelectRes(true);
   };
 
+  /*
+    Function: openSchedulerideCard
+
+    Description:
+      Handles opening the schedule ride card
+    
+    Parameters: N/A
+
+    Returns: N/A
+  */
   const openSchedulerideCard = () => {
     setShowScheduler(true);
     setHidePopupContent(true);
     //handleClose();
   };
 
+  /*
+    Function: handleRideNowClick
+
+    Description:
+      Handles opening the ride now card
+    
+    Parameters: N/A
+
+    Returns: N/A
+  */
   const handleRideNowClick = () => {
     setHidePopupContent(true);
     setShowRideNowConfirmation(true); // Show Ride Now confirmation card
     //handleClose(); // Close the PopupCard
   };
 
+  /*
+    Function: handleClose
+
+    Description:
+      Closes the modal
+    
+    Parameters: N/A
+
+    Returns: N/A
+  */
   const handleClose = () => {
-    console.log("Closing PopupCard");
     setIsClosing(true);
     setShowPopup(false);
     setTimeout(() => {
@@ -55,6 +104,16 @@ const PopupCard = ({ isOpen, onClose }) => {
     }, 400); // Match the animation duration
   };
 
+  /*
+    Function: handle_close_ride_now_confirmation
+
+    Description:
+      Handles closing ride now confirmation modal
+    
+    Parameters: N/A
+
+    Returns: N/A
+  */
   const handle_close_ride_now_confirmation = () => {
     setShowRideNowConfirmation(false);
     onClose();

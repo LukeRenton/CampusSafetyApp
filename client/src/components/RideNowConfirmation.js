@@ -1,3 +1,12 @@
+/**
+ * File: RideNowConfirmation.js
+ * 
+ * Author: Anand
+ * 
+ * Description:
+ *  Confirmation modal to display information for RIDE NOW option of walk home assistance
+ */
+
 import React, { useState, useEffect } from 'react';
 import '../styles/RideNowConfirmation.css'; // Specific to RideNowConfirmation
 // import '../styles/PopupCard.css'; // For slide-out animation
@@ -13,8 +22,17 @@ const RideNowConfirmation = ({ onClose, show_sub_message }) => {
     return () => clearTimeout(timer); // Clear the timer if the component unmounts
   }, []);
 
+  /*
+    Function: handleClose
+
+    Description:
+      Closes the modal
+
+    Parameters: N/A
+
+    Returns: N/A
+  */
   const handleClose = () => {
-    console.log("Closing confirmation with slide-out");
     setIsClosing(true); // Trigger slide-out animation
     setTimeout(() => {
       onClose(); // Call onClose after animation completes

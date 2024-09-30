@@ -14,7 +14,7 @@ import handle_marker_click, { add_new_report_area, create_map, render_report_are
 import MarkerPopup from './MarkerPopup';
 import { render_incident_report_items } from '../services/IncidentReportsService';
 import Notification from './Notification';
-import create_new_alert_from_notification from '../services/PushNotificationService';
+import create_new_report_from_notification from '../services/PushNotificationService';
 
 
 
@@ -62,10 +62,9 @@ export default function Map( { set_error, incident_reports, new_notification, se
     // On component load, add the map and add required parts
     useEffect(() => {
         if (map.current) return; // Ensure only 1 map object from mapbox is made
-        console.log("inside map.js");
-        console.log(incident_reports);
 
         try {
+            console.log(incident_reports);
             const result = create_map(map, map_container, handle_movement, handle_marker_popup, incident_reports);
             console.log(result);
 
@@ -78,8 +77,12 @@ export default function Map( { set_error, incident_reports, new_notification, se
                 maximumAge: 0,
             };
             const reference = navigator.geolocation.watchPosition((res) => set_user_coords(res.coords.longitude, res.coords.latitude), (err) => {console.log(err)}, options);
+       
         } catch (err) {
             console.log(err);
+            set_error({
+                message: "Error loading map"
+            })
         }
     },[]);
 
@@ -89,10 +92,9 @@ export default function Map( { set_error, incident_reports, new_notification, se
     }
 
     useEffect(() => {
-        console.log("new notification just arrived!!");
-        console.log(new_notification);
+        // If a new notification has arrived, create 
         if (new_notification) {
-            const new_alert = create_new_alert_from_notification(new_notification);
+            const new_alert = create_new_report_from_notification(new_notification);
             set_show_notification(new_alert);
             add_new_report_area(handle_marker_popup, new_alert);
         }

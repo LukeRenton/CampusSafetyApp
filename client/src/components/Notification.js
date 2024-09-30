@@ -1,3 +1,12 @@
+/**
+ * File: Notification.js
+ * 
+ * Author: Mitchell
+ * 
+ * Description:
+ *  Displays notification of report at top of screen
+ */
+
 import React, { useEffect, useState } from 'react'
 import '../styles/Notification.css'
 import report_types from '../common/ReportTypes'
@@ -7,9 +16,18 @@ export default function Notification({ report, close_notification, go_to }) {
 
   const [show_notification, set_show_notification] = useState(false);
 
+  /*
+    Function: handle_close_notification
+
+    Description:
+      Function to close the notification modal
+
+    Parameters: N/A
+
+    Returns: N/A
+  */
   const handle_close_notification = () => {
     set_show_notification(false);
-    console.log("show_notification is ",show_notification);
     setTimeout(() => {
         close_notification();
     }, 500);

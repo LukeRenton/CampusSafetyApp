@@ -1,3 +1,12 @@
+/**
+ * File: Loader.js
+ * 
+ * Author: Mitchell
+ * 
+ * Description:
+ *  Simple loading animation component
+ */
+
 import React from 'react'
 import Lottie, { LottiePlayer } from 'lottie-react'
 import '../styles/Loader.css'

@@ -135,9 +135,17 @@ export function get_blank_profile() {
     return blank_profile;
 }
 
+/*
+    Function: update_user_info
 
+    Description:
+        Updates users edited profile information
+    
+    Parameters:
+        user_profile: the new profile information
 
-
+    Returns: N/A
+*/
 export async function update_user_info(user_profile) {
     console.log(user_profile);
 

@@ -7,6 +7,18 @@
  *  Service hosting important functions for date/time objects.
  */
 
+/*
+    Function: convert_date_string_to_sql_valid
+
+    Description:
+        Converts a date string into SQL-valid string (SQL takes day as zero-indexed, so we add 1)
+    
+    Parameters:
+        string: The date string in formate 'yyyy-mm-dd'
+
+    Returns:
+        SQL-valid string in form 'yyyy-mm-dd'
+*/
 export function convert_date_string_to_sql_valid(string) {
     const parts = string.split('-');
     const year = parts[0];
@@ -18,6 +30,18 @@ export function convert_date_string_to_sql_valid(string) {
     return date;
 }
 
+/*
+    Function: string_to_date
+
+    Description:
+        Converts a date string into Date object
+    
+    Parameters:
+        string: The date string in formate 'yyyy-mm-dd'
+
+    Returns:
+        Date object with date of string passed
+*/
 export function string_to_date(string) {
     const parts = string.split('-');
     const year = parts[0];
@@ -158,6 +182,18 @@ export function get_date_header(date) {
     }
 }
 
+/*
+    Function: get_time
+
+    Description:
+        Converts a Date object into string of time
+    
+    Parameters:
+        date: the Date object to be converted
+
+    Returns:
+        String in format hh:mm
+*/
 export function get_time(date) {
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
@@ -165,11 +201,35 @@ export function get_time(date) {
     return hours + ':' + minutes;
 }
 
+/*
+    Function: date_to_dashed_string
+
+    Description:
+        Converts a Date object into dashed string
+    
+    Parameters:
+        date: the Date object to be converted
+
+    Returns:
+        String in form yyyy-mm-dd
+*/
 export function date_to_dashed_string(date) {
     const string = date.getYear() + "-" + date.getMonth() + "-" + date.getDate();
     return string;
 }
 
+/*
+    Function: years_between
+
+    Description:
+        Gets years between date and now
+    
+    Parameters:
+        original_date: the Date to be compared to now
+
+    Returns:
+        Integer of years between original_date and now
+*/
 export function years_between(original_date) {
     const date_diff = Date.now() - original_date;
     const date = new Date(date_diff);

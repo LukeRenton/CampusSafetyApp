@@ -1,3 +1,23 @@
+/**
+ * File: SafetyResourceServices.js
+ * 
+ * Author: Mitchell
+ * 
+ * Description:
+ *  Service hosting important functions for safety resources.
+ */
+
+/*
+    Function: fetch_safety_resources
+
+    Description:
+        Fetches safety resources from backend
+    
+    Parameters: N/A
+
+    Returns:
+      Array of safety resources as objects
+*/
 export async function fetch_safety_resources() {
 
 

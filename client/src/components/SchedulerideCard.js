@@ -1,9 +1,28 @@
+/**
+ * File: SchedulerideCard.js
+ * 
+ * Author: Anand
+ * 
+ * Description:
+ *  Card to handle scheduling a ride
+ */
+
 import React, { useState } from 'react';
 import '../styles/SchedulerideCard.css';
 
 const SchedulerideCard = ({ isOpen, onClose, onSchedule }) => {
   const [time, setTime] = useState('10:00'); // Default time
 
+  /*
+    Function: handle_schedule
+
+    Description:
+      Handles ride scheduling and email upload
+    
+    Parameters: N/A
+
+    Returns: N/A
+  */
   const handleSchedule = async () => {
     console.log("Ride Scheduled for", time);
     try {

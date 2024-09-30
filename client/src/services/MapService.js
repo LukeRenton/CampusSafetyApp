@@ -75,6 +75,9 @@ export function create_map(map_in, map_container_in, map_movement_handler, marke
     
     let result_map_load;
 
+    console.log("rendering the map");
+    console.log(incident_reports);
+
     map.current.on('load', () => {
         geolocate_control.trigger();
         result_map_load = render_report_areas(marker_popup_handler, incident_reports);
@@ -91,6 +94,7 @@ export function create_map(map_in, map_container_in, map_movement_handler, marke
     }); 
 
     if (result_map_load.error) {
+      // Handle error
       return {
         error: "Could not render areas on the map"
       }
@@ -100,6 +104,7 @@ export function create_map(map_in, map_container_in, map_movement_handler, marke
       success: 'success'
     }
   } catch (err) {
+    // Handle error
     return {
       error: "Could not load map correctly"
     }
@@ -403,6 +408,17 @@ const user_coords = {
   lat: 0
 }
 
+/*
+    Function: set_user_coords
+
+    Description:
+        Sets the user's coordinates
+    
+    Parameters:
+        lng, lat: users longitude and latitude coordinates
+
+    Returns: N/A
+*/
 export function set_user_coords(lng, lat) {
   user_coords.lat = lat;
   user_coords.lng = lng;

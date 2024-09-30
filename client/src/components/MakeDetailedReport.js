@@ -1,3 +1,12 @@
+/**
+ * File: MakeDetailedReport.js
+ * 
+ * Author: Mitchell
+ * 
+ * Description:
+ *  Component allowing user to add photo and description to a report
+ */
+
 import React, { useEffect, useState } from 'react'
 import '../styles/MakeDetailedReport.css'
 import camera from '../icons/camera.svg'
@@ -13,6 +22,16 @@ export default function MakeDetailedReport( { set_error, set_uploading_report, r
         set_show_menu(true);
     },[])
 
+    /*
+        Function: handle_submit_detailed_report
+
+        Description:
+            Submits a detailed report to the backend
+
+        Parameters: N/A
+
+        Returns: N/A
+    */
     const handle_submit_detailed_report = async () => {
         const description = document.getElementById('report-description-input').value;
         

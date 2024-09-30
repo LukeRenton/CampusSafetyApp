@@ -21,8 +21,6 @@ export default function MedicalProfileMenu( { studentNumber, close_menu, profile
 
   return (
     <>
-        {/* {show_edit_medical_profile ? <EditMedicalProfile user_profile={profile}></EditMedicalProfile> : <></>} */}
-        
         <Menu menu_header={"Medical Profile"} close={close_menu}>
             {!show_edit_medical_profile ?
             <section className='medical-profile-menu-content'>

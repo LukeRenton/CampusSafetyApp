@@ -13,6 +13,16 @@ import { move_map_to } from '../services/MapService'
 
 export default function ReportItem({ type, description, time, show_time, active, close_all_menus_handler, location }) {
 
+  /*
+    Function: handle_go_to_map
+
+    Description:
+      Controls map movement to a location for the report item
+    
+    Parameters: N/A
+
+    Returns: N/A
+  */
   const handle_go_to_map = () => {
     move_map_to([location.lng, location.lat]);
     close_all_menus_handler();

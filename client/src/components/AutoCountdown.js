@@ -1,3 +1,13 @@
+/**
+ * File: AutoCountdown.js
+ * 
+ * Author: Mitchell
+ * 
+ * Description:
+ *  Component that shows counted down time
+ */
+
+
 import React, { useEffect, useState } from 'react'
 
 export default function AutoCountdown( { on_finish_event } ) {

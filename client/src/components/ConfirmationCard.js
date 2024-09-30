@@ -1,3 +1,13 @@
+/**
+ * File: ConfirmationCard.js
+ * 
+ * Author: Anand
+ * 
+ * Description:
+ *  Confirmation display for when user has signed up for ride home
+ */
+
+
 import React from 'react';
 import '../styles/ConfirmationCard.css'; // Use updated ConfirmationCard CSS
 

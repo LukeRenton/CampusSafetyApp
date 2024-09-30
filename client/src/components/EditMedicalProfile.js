@@ -1,3 +1,13 @@
+/**
+ * File: EditMedicalProfile.js
+ * 
+ * Author: Mitchell and Anand
+ * 
+ * Description:
+ *  Component to edit the medical profile of the user
+ */
+
+
 import React, { useState } from 'react'
 import '../styles/EditMedicalProfile.css'
 import { update_user_info } from '../services/ProfileService';
@@ -5,10 +15,8 @@ import { date_to_dashed_string, string_to_date } from '../services/DateTimeServi
 import Spinner from './Spinner';
 import Loader from './Loader';
 
-// TODO : Validate form fiesl
-// TODO : use contexts to store user data and autofill the form
 export default function EditMedicalProfile( { user_profile, close_edit_menu, get_user_profile } ) {
-  console.log(user_profile);
+  
   const [profile, setProfile] = useState({
     first_names: user_profile.first_names, //+
     last_name: user_profile.last_name, //+
@@ -32,6 +40,16 @@ export default function EditMedicalProfile( { user_profile, close_edit_menu, get
 
   const [uploading_info, set_uploading_info] = useState(false);
 
+  /*
+    Function: handleInputChange
+
+    Description:
+      Handles when input of some time is changed
+    
+    Parameters: N/A
+
+    Returns: N/A
+  */
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProfile({
@@ -41,22 +59,16 @@ export default function EditMedicalProfile( { user_profile, close_edit_menu, get
     console.log(profile);
   };
 
-  // const handleDOBChange = (e) => {
-  //   const dob = string_to_date(e.target.value);
-  //   setProfile({
-  //     ...profile,
-  //     dob: dob
-  //   })
-  // }
+  /*
+    Function: handleEmergencyContactChange
 
-  const handleSelectGender = (e) => {
-    console.log(e.target.value);
-    setProfile({
-      ...profile,
-      gender: e.target.value
-    });
-  }
+    Description:
+      Handles when an emergency contact's information is changed
+    
+    Parameters: N/A
 
+    Returns: N/A
+  */
   const handleEmergencyContactChange = (e, contactType) => {
     const { name, value } = e.target;
     setProfile({
@@ -69,6 +81,16 @@ export default function EditMedicalProfile( { user_profile, close_edit_menu, get
 
   };
 
+  /*
+    Function: handleSubmit
+
+    Description:
+      Uploads information to backend
+    
+    Parameters: N/A
+
+    Returns: N/A
+  */
   const handleSubmit = () => {
     // You can send this profile data to your endpoint
     console.log('Submitted Profile:', profile);
@@ -80,6 +102,16 @@ export default function EditMedicalProfile( { user_profile, close_edit_menu, get
     })
   };
 
+  /*
+    Function: handleCancel
+
+    Description:
+      Closes the menu
+    
+    Parameters: N/A
+
+    Returns: N/A
+  */
   const handleCancel = () => {
     close_edit_menu();
   }
@@ -119,13 +151,6 @@ export default function EditMedicalProfile( { user_profile, close_edit_menu, get
           />
 
           <label>Gender:</label>
-          {/* <input
-            type='text'
-            name='gender'
-            value={profile.gender}
-            onChange={handleInputChange}
-            className='edit-medical-profile-input'
-          /> */}
           <select className="edit-medical-profile-input" name='gender' onChange={handleInputChange} value={profile.gender}>
             <option value="Male">Male</option>
             <option value="Female">Female</option>

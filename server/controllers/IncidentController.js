@@ -53,11 +53,18 @@ async function UpdateSafetyIncidents(id_val, active) {
 }
 
 //Report a new safety incident  with location details and optional photo.
-
 async function ReportSafetyIncidents(description, photo, latitude, longitude, type, building_name) {
     try {
         let date = new Date();
-        const sast_date = new Date(date.toLocaleString('en-US', { timeZone: 'Africa/Johannesburg' }))
+        
+        //Convert date to SAST (+2)
+        const day = date.getDate();
+        const month = date.getMonth();
+        const year = date.getFullYear();
+        const hour = date.getHours() + 2;
+        const minute = date.getMinutes();
+        const seconds = date.getSeconds();
+        const sast_date = new Date(year, month, day, hour, minute, seconds);
         await pool.query('INSERT INTO incidents(description, photo, latitude, longitude, type, date, building_name) VALUES(?, ?, ?, ?, ?, ?,?)', [description, photo, latitude, longitude, type, sast_date, building_name]);
         return "Data Inserted";
     } catch (err) {

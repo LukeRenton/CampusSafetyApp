@@ -25,10 +25,10 @@ export default function NotificationsMenu( props ) {
     Returns: N/A
   */
   const render_notifications = () => {
-    console.log(props.reports)
     const result = render_notification_items(props.reports, props.close_all_menus); 
     
     if (result.error) {
+      // Handle error
       props.set_error({
         error: result.error
       })

@@ -1,3 +1,13 @@
+/**
+ * File: ErrorCard.js
+ * 
+ * Author: Mitchell
+ * 
+ * Description:
+ *  Card to display errors to user
+ */
+
+
 import React, { useEffect, useState } from 'react'
 import '../styles/ErrorCard.css'
 import error_icon from '../icons/error.svg'
@@ -6,6 +16,16 @@ export default function ErrorCard( { set_error, error } ) {
 
     const [show, set_show] = useState(false);
 
+    /*
+        Function: handle_close
+
+        Description:
+            Closes the error card
+
+        Parameters: N/A
+
+        Returns: N/A
+    */
     const handle_close = () => {
         set_show(false);
         setTimeout(() => {

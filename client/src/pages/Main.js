@@ -45,31 +45,48 @@ export default function Main() {
     report_types['weather'],
   ]
 
-  // Hook variable for showing the side menu and current (open) menu
+  // Showing side menu
   const [show_side_menu, set_show_side_menu] = useState(false);
+  // Showing current menu within sidemenu
   const [current_menu, set_current_menu] = useState("none");
+  // Current user profile
   const [user_profile, set_user_profile] = useState(get_blank_profile());
+  // Confirmation menu modal (popup)
   const [confirmation_menu, set_confirmation_menu] = useState(null);
+  // Detailed report menu to allow user to add photo and description to report
   const [detailed_report_menu, set_detailed_report_menu] = useState(null);
+  // New notification menu
   const [new_notification, set_new_notification] = useState(null);
+  // Spinner and card to indicate report is currently uploading
   const [uploading_report, set_uploading_report] = useState(null);
+  // Error card notification (handled in different cases)
   const [error, set_error] = useState(null);
-
+  // Reports array for ALL incident and alert reports
   const [reports, set_reports] = useState([]);
-
-
+  // Show quickreports menu at navbar button
   const [show_quickreports, set_show_quickreports] = useState(false);
-
-
+  // Handle if this user has been notified yet
   const [hasNotified, setHasNotified] = useState(false); // State to track if notification is sent
-
+  // Student number of logged in user
   const { studentNumber } = useContext(UserContext);
+  // Check if reports have been loaded yet
+  const [reports_loaded, set_reports_loaded] = useState(false);
 
+  /*
+    Function: get_user_profile
+
+    Description:
+      Fetches the user profile based on the current student number
+
+    Arguments: N/A
+
+    Returns: N/A
+  */  
   const get_user_profile = () => {
     const fetchProfile = async () => {
       try {
         const fetched_profile = await get_profile(studentNumber);
-        console.log(fetched_profile);
+        
         if (fetched_profile.error) {
           set_error({
             message: fetched_profile.error
@@ -97,11 +114,11 @@ export default function Main() {
 
     eventSource_alerts.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      console.log(data);
+      // console.log(data);
       //const message = JSON.parse(data.message);
       if (!hasNotified) {
 
-        console.log(data.message);
+        // console.log(data.message);
         // Trigger the notification using react-push-notification
         const type = data.message.type;
         const lng = data.message.lng;
@@ -130,6 +147,7 @@ export default function Main() {
           }
         )
         .catch(err => {
+          // Handle error
           set_reports([]);
           set_error({
             message: err
@@ -140,11 +158,11 @@ export default function Main() {
 
     eventSource_incidents.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      console.log(data);
+      // console.log(data);
       //const message = JSON.parse(data.message);
       if (!hasNotified) {
 
-        console.log(data.message);
+        // console.log(data.message);
         // Trigger the notification using react-push-notification
         const type = data.message.type;
         const description = data.message.description;
@@ -172,6 +190,7 @@ export default function Main() {
           }
         )
         .catch(err => {
+          // Handle error
           set_reports([]);
           set_error({
             message: err
@@ -194,11 +213,15 @@ export default function Main() {
     incident_reports.then(
       (incident_reports) => {
         if (incident_reports) {
+          // console.log("retrieved reports:")
+          // console.log(incident_reports)
           set_reports(incident_reports)
+          set_reports_loaded(true);
         }
       }
     )
     .catch(err => {
+      // Handle error
       set_reports([]);
       set_error({
         message: err
@@ -300,18 +323,48 @@ export default function Main() {
     }
   }
 
+  /*
+    Function: update_confirmation_menu
 
+    Description:
+      Sets the confirmation menu
+
+    Parameters:
+      reports: the report to be confirmed
+
+    Returns: N/A
+  */
   const update_confirmation_menu = (report) => {
     set_confirmation_menu(report);
     set_detailed_report_menu(null);
   }
 
+  /*
+    Function: update_detailed_report_menu
 
+    Description:
+      Sets the detailed reports menu
+
+    Parameters:
+      reports: the report (with type) to be made
+
+    Returns: N/A
+  */
   const update_detailed_report_menu = (report) => {
     set_confirmation_menu(null);
     set_detailed_report_menu(report);
   }
 
+  /*
+    Function: render_report_menu
+
+    Description:
+      Renders the report menu: Either confrimation or detailed report
+
+    Parameters: N/A
+
+    Returns: N/A
+  */
   const render_report_menu = () => {
     if ((confirmation_menu === null) && (detailed_report_menu === null)) {
       return <></>
@@ -330,7 +383,7 @@ export default function Main() {
       {current_menu === "none" ? <></> : render_menu()}
       <Navbar show_quickreports={show_quickreports} set_show_quickreports={set_show_quickreports} report_types_data={report_types_data} open_detailed_report_menu={() => set_current_menu("detailed_report")} set_confirmation_menu={update_confirmation_menu} />
       <Topbar set_show_side_menu={set_show_side_menu} />
-      {reports === null ? <></> : <Map set_error={set_error} new_notification={new_notification} set_new_notification={set_new_notification} incident_reports={reports} />}
+      {reports_loaded? <Map set_error={set_error} new_notification={new_notification} set_new_notification={set_new_notification} incident_reports={reports} /> : <></>}
       <SideMenu show_side_menu={show_side_menu} set_current_menu={set_current_menu} profile={user_profile} />
       {show_side_menu ? <div className='main-dark-back' onClick={close_all_menus}></div> : <></>}
     </main>

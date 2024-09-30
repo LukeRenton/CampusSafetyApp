@@ -20,6 +20,8 @@ import car from '../icons/car.svg'
 import signout from '../icons/signout.svg'
 import fire_extinguisher from '../icons/fire_extinguisher.svg'
 
+import account_icon from '../icons/account.svg'
+
 //component imports
 import PopupCard from "../components/PopupCard.js"
 
@@ -39,7 +41,7 @@ export default function SideMenu( props ) {
     <section className={'side-menu-root '+(props.show_side_menu ? ' shown-side-menu' : '')}>
         <section className='side-menu-contents-top'>
             <article className='side-menu-profile'>
-                <div className='side-menu-profile-image-container' style={{backgroundImage: `url(${sample_student_pic})`}}></div>
+                <div className='side-menu-profile-image-container' style={{backgroundImage: `url(${account_icon})`}}></div>
                 <section className='side-menu-profile-info' onClick={() => props.set_current_menu('medical_profile')}>
                     <section className='side-menu-profile-name-num'>
                         <h1 className='side-menu-profile-name'>{props.profile.first_names} {props.profile.last_name}</h1>

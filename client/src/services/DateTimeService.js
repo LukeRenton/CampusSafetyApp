@@ -164,3 +164,14 @@ export function get_time(date) {
 
     return hours + ':' + minutes;
 }
+
+export function date_to_dashed_string(date) {
+    const string = date.getYear() + "-" + date.getMonth() + "-" + date.getDate();
+    return string;
+}
+
+export function years_between(original_date) {
+    const date_diff = Date.now() - original_date;
+    const date = new Date(date_diff);
+    return Math.abs(date.getUTCFullYear() - 1970);
+}

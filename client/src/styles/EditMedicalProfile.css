@@ -1,44 +1,65 @@
 .edit-medical-profile-root {
-    width: calc(100% - 20px);
-    max-height: 100vh;
+    width: calc(100%);
+    max-height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 20px;
-    gap: 15px;
 
-    background: #f0f0f0;
-    border: 1px solid var(--medicalblue);
+    /* gap: 15px; */
+
+    /* background: #f0f0f0; */
+    /* background: black; */
+    /* background: white; */
+    /* border: 1px solid var(--medicalblue); */
     border-radius: 18px;
     align-items: center;
-    z-index: 999999;
-    position: relative;
-    overflow-y: auto;
+    /* position: relative; */
+    /* overflow-y: auto; */
 }
 .edit-medical-profile-section {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    border: 1px solid var(--medicalblue);
+    /* border: 1px solid var(--medicalblue); */
+    border: 1px solid rgb(192, 192, 192);
+
     border-radius: 10px;
     padding: 15px;
     background-color: #ffffff;
-    z-index: 999999;
     position: relative; /* Add position relative */
+}
+
+.edit-medical-profile-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    overflow-y: auto;
+    /* border: 1px solid rgb(221, 221, 221); */
+    /* border: 1px solid var(--medicalblue); */
+
+    border-radius: 12px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 10px;
+}
+
+.edit-medical-profile-content-disabled {
+    opacity: 0.5;
+    pointer-events: none;
 }
 
 .edit-medical-profile-input {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    z-index: 999999;
     position: relative; /* Add position relative */
 }
 
 .edit-medical-profile-input label {
     font-size: 14px;
     font-weight: 600;
-    z-index: 999999;
     position: relative; /* Add position relative */
 }
 
@@ -47,26 +68,6 @@
     font-size: 16px;
     border-radius: 8px;
     border: 1px solid #ccc;
-    z-index: 999999;
-    position: relative; /* Add position relative */
-}
-
-.edit-medical-profile-buttons {
-    display: flex;
-    gap: 10px;
-    z-index: 999999;
-    position: relative; /* Add position relative */
-}
-
-.edit-medical-profile-buttons button {
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    background-color: var(--medicalblue);
-    color: white;
-    cursor: pointer;
-    z-index: 999999;
     position: relative; /* Add position relative */
 }
 
@@ -74,18 +75,79 @@
     background-color: #ccc;
 }
 
-.medical-profile-edit {
+.edit-medical-profile-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    height: 35px;
+    height: 120px;
+    gap: 10px 0px;
+}
+
+.edit-medical-profile-save {
+    width: 100%;
+    min-height: 40px;
+    max-height: 40px;
+    height: 40px;
+
     background: var(--medicalblue);
-    margin: 0;
-    padding: 0;
-    color: white;
-    font-size: 16px;
-    font-weight: 500;
-    border-radius: 12px;
     border: none;
-    text-align: center;
-    z-index: 999999;
-    position: relative; /* Add position relative */
+    color: white;
+    border-radius: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-medical-profile-cancel {
+    width: 100%;
+    min-height: 40px;
+    max-height: 40px;
+    height: 40px;
+    background: rgb(199, 199, 199);
+    border: none;
+    color: white;
+    border-radius: 16px;
+}
+
+.edit-medical-profile-input {
+    /* border-radius: 12px; */
+    /* background: gray; */
+    border: none;
+    border-bottom: 1px solid black;
+    padding-left: 5px;
+    padding-right: 5px;
+
+}
+
+.edit-medical-profile-input:focus {
+    /* border: none; */
+    outline: none;
+    border-bottom: 1px solid var(--medicalblue);
+    color: var(--medicalblue)
+}
+
+.edit-medical-profile-student-num {
+    background: rgb(238, 238, 238);
+    border-radius: 8px;
+    border: none;
+}
+
+.edit-medical-profile-heading {
+    margin: 0;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 0;
+
+    font-size: 20px;
+    font-weight: 400;
+    font-style: normal;
+
+}
+
+.edit-medical-profile-cancel-disabled {
+    opacity: 0.5;
+    pointer-events: none;
 }

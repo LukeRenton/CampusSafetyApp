@@ -31,6 +31,7 @@ import { UserContext } from '../contexts/UserContext';
 
 import logo from '../icons/call.svg'
 import create_new_alert_from_notification from '../services/PushNotificationService';
+import UploadingReport from '../components/UploadingReport';
 
 export default function Main() {
 
@@ -50,6 +51,7 @@ export default function Main() {
   const [confirmation_menu, set_confirmation_menu] = useState(null);
   const [detailed_report_menu, set_detailed_report_menu] = useState(null);
   const [new_notification, set_new_notification] = useState(null);
+  const [uploading_report, set_uploading_report] = useState(null);
 
   const [reports, set_reports] = useState(null);
 
@@ -60,6 +62,20 @@ export default function Main() {
   const [hasNotified, setHasNotified] = useState(false); // State to track if notification is sent
 
   const { studentNumber } = useContext(UserContext);
+
+  const get_user_profile = () => {
+    const fetchProfile = async () => {
+      try {
+        const fetched_profile = await get_profile(studentNumber);
+        console.log(fetched_profile);
+        set_user_profile(fetched_profile);
+      } catch (error) {
+        console.error('Error fetching profile:', error.message);
+        set_user_profile(get_blank_profile());
+      }
+    };
+    fetchProfile();
+  }
 
   useEffect(() => {
     // Create an EventSource connection to listen to server-sent events
@@ -142,17 +158,7 @@ export default function Main() {
 
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const fetched_profile = await get_profile(studentNumber);
-        console.log(fetched_profile);
-        set_user_profile(fetched_profile);
-      } catch (error) {
-        console.error('Error fetching profile:', error.message);
-        set_user_profile(get_blank_profile()); // Handle error gracefully
-      }
-    };
-    fetchProfile();
+    get_user_profile();
     const incident_reports = fetch_all_reports();
     incident_reports.then(
       (incident_reports) => set_reports(incident_reports)
@@ -237,7 +243,7 @@ export default function Main() {
         return <FirstAidMenu close_menu={close_menu}></FirstAidMenu>
 
       case "medical_profile":
-        return <MedicalProfileMenu close_menu={close_menu} profile={user_profile}></MedicalProfileMenu>
+        return <MedicalProfileMenu get_user_profile={get_user_profile} close_menu={close_menu} profile={user_profile}></MedicalProfileMenu>
 
       case "detailed_report":
         return <DetailedReport set_detailed_report_menu={update_detailed_report_menu} report_types_data={report_types_data} close_menu={close_menu} profile={user_profile}></DetailedReport>
@@ -269,15 +275,16 @@ export default function Main() {
     if ((confirmation_menu === null) && (detailed_report_menu === null)) {
       return <></>
     } else if (confirmation_menu) {
-      return <ReportConfirmation report_type={confirmation_menu} close_all_menus={close_all_menus} close_menu={close_confirmation}></ReportConfirmation>
+      return <ReportConfirmation set_uploading_report={set_uploading_report} report_type={confirmation_menu} close_all_menus={close_all_menus} close_menu={close_confirmation}></ReportConfirmation>
     } else if (detailed_report_menu) {
-      return <MakeDetailedReport report_type={detailed_report_menu} close_all_menus={close_all_menus} close_menu={close_confirmation}></MakeDetailedReport>
+      return <MakeDetailedReport set_uploading_report={set_uploading_report} report_type={detailed_report_menu} close_all_menus={close_all_menus} close_menu={close_confirmation}></MakeDetailedReport>
     }
   }
 
   return (
     <main className='main-root'>
       {render_report_menu()}
+      {uploading_report ? <UploadingReport report_type={uploading_report}></UploadingReport> : <></>}
       {current_menu === "none" ? <></> : render_menu()}
       <Navbar show_quickreports={show_quickreports} set_show_quickreports={set_show_quickreports} report_types_data={report_types_data} open_detailed_report_menu={() => set_current_menu("detailed_report")} set_confirmation_menu={update_confirmation_menu} />
       <Topbar set_show_side_menu={set_show_side_menu} />

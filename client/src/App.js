@@ -6,9 +6,8 @@ import { UserProvider } from './contexts/UserContext';
 import LoginPage from './pages/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
-
 const App = () => {
+
   return (
     <div className="App">
       <UserProvider>

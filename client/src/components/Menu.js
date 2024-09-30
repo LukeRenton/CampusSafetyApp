@@ -33,7 +33,7 @@ export default function Menu({ close, menu_header, children }) {
         set_show_menu(false);
         setTimeout(() => {
             close();
-        },200)
+        },500)
     }
 
     return (

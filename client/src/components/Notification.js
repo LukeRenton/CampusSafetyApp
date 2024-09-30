@@ -20,9 +20,9 @@ export default function Notification({ report, close_notification, go_to }) {
         set_show_notification(true);
     }, 1)
 
-    setTimeout(() => {
-      handle_close_notification();
-    }, 8000)
+    // setTimeout(() => {
+    //   handle_close_notification();
+    // }, 8000)
   },[])
 
   return (
@@ -32,7 +32,7 @@ export default function Notification({ report, close_notification, go_to }) {
             <div className='notification-container' onClick={go_to}>
                 <section className='notification-header'>
                   <div className='notification-blank-div'></div>
-                  <h1 className='notification-heading'>New Alert!</h1>
+                  <h1 className='notification-heading'>New Notification!</h1>
                   <img className='notification-close' src={close_icon} onClick={handle_close_notification}></img>
                 </section>
                 <div className='notification-info'>

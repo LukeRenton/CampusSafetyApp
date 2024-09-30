@@ -61,7 +61,7 @@ export default function MedicalProfileMenu( { studentNumber, close_menu, profile
                         <section className='medical-profile-menu-info-item'>
                             <h2 className='medical-profile-menu-info-item-header'>DOB | Age</h2>
                             <h3 className='medical-profile-menu-info-item-value'>
-                                {profile.dob.substr(0,10)} | {years_between(string_to_date(profile.dob.substr(0,10)))}
+                                {profile.dob.substr(0,10)} | {profile.dob !=='-' ? years_between(string_to_date(profile.dob.substr(0,10))) : '-'}
                             </h3>
                         </section>
                     </section>

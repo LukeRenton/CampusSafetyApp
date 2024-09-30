@@ -1,0 +1,93 @@
+.error-card-root {
+    position: absolute;
+    width: 100%;
+    z-index: 6;
+    left: 0;
+    top: 0px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background: linear-gradient(to bottom, rgba(50, 50, 50, 0.521), rgba(255, 255, 255, 0));
+    opacity: 0;
+    transition: 0.4s;
+
+    pointer-events: none;
+}
+
+.error-card-root-shown {
+    opacity: 1;
+    transition: 0.4s;
+}
+
+
+.error-card-content {
+    margin-top: 15px;
+    width: 80%;
+    max-width: 300px;
+    
+    height: 100%;
+    max-height: 200px;
+    background: #f02f4c;
+    padding: 10px;
+
+    border-radius: 16px;
+
+    display: flex;
+    flex-direction: row;
+
+    transform: translateY(-200px);
+    transition: 0.4s;
+}
+
+.error-card-content-shown {
+    transform: translateY(0);
+    transition: 0.4s;
+}
+
+
+.error-card-icon-container {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+.error-card-icon {
+    width: 25px;
+    height: 25px;
+}
+
+.error-card-heading {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+
+    color: white;
+
+    font-size: 18px;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.error-card-message {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+
+    color: white;
+
+    font-size: 16px;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.error-card-text-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}

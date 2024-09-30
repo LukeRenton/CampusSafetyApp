@@ -31,58 +31,79 @@ var map_container;
 
 */
 export function create_map(map_in, map_container_in, map_movement_handler, marker_popup_handler, incident_reports) {
-  map = map_in;
-  map_container = map_container_in;
   
-  // Token retrieval
-  mapboxgl.accessToken = token;
+  try {
+    map = map_in;
+    map_container = map_container_in;
+    
+    // Token retrieval
+    mapboxgl.accessToken = token;
 
-  
-  // Defining map information from Mapbox API
-  const geolocate_control = new mapboxgl.GeolocateControl({positionOptions: {
-                                                                  enableHighAccuracy: true
-                                                              },
-                                                          trackUserLocation: true,
-                                                          showUserHeading: true,
-                                                          showAccuracyCircle: false
-                                                          });
+    
+    // Defining map information from Mapbox API
+    const geolocate_control = new mapboxgl.GeolocateControl({positionOptions: {
+                                                                    enableHighAccuracy: true
+                                                                },
+                                                            trackUserLocation: true,
+                                                            showUserHeading: true,
+                                                            showAccuracyCircle: false
+                                                            });
 
-  geolocate_control.on('geolocate', () => {
-      console.log('geo occurred');
-      // map.current.flyTo({
-      //   center: [28.030228, -26.190955],
-      //   zoom: 18.38,
-      //   pitch: 60,
-      //   bearing: 173.60
-      // });
-  })
+    geolocate_control.on('geolocate', () => {
+        console.log('geo occurred');
+        // map.current.flyTo({
+        //   center: [28.030228, -26.190955],
+        //   zoom: 18.38,
+        //   pitch: 60,
+        //   bearing: 173.60
+        // });
+    })
 
-  const bounds = [
-    [28.020809, -26.194245],
-    [28.031961, -26.183341]
-  ]
+    const bounds = [
+      [28.020809, -26.194245],
+      [28.031961, -26.183341]
+    ]
 
-  map.current = new mapboxgl.Map({
-    container: map_container.current,
-    // style: 'mapbox://styles/mapbox/streets-v12',
-    style: 'mapbox://styles/mitchellneilsonwits/cm12lbun601g101pj7kh63w7f',
-    // maxBounds: bounds  
-});
+    map.current = new mapboxgl.Map({
+      container: map_container.current,
+      // style: 'mapbox://styles/mapbox/streets-v12',
+      style: 'mapbox://styles/mitchellneilsonwits/cm12lbun601g101pj7kh63w7f',
+      // maxBounds: bounds  
+  });
 
-  map.current.addControl(geolocate_control);
-          
-  map.current.on('load', () => {
-      geolocate_control.trigger();
-      render_report_areas(marker_popup_handler, incident_reports);
-      render_wits_boundary();
-      map.current.flyTo({
-          center: [28.030228, -26.190955],
-          zoom: 18.38,
-          pitch: 60,
-          bearing: 173.60
-      });
-      map.current.on('move', map_movement_handler); 
-  }); 
+    map.current.addControl(geolocate_control);
+    
+    let result_map_load;
+
+    map.current.on('load', () => {
+        geolocate_control.trigger();
+        result_map_load = render_report_areas(marker_popup_handler, incident_reports);
+        
+
+        render_wits_boundary();
+        map.current.flyTo({
+            center: [28.030228, -26.190955],
+            zoom: 18.38,
+            pitch: 60,
+            bearing: 173.60
+        });
+        map.current.on('move', map_movement_handler); 
+    }); 
+
+    if (result_map_load.error) {
+      return {
+        error: "Could not render areas on the map"
+      }
+    }
+
+    return {
+      success: 'success'
+    }
+  } catch (err) {
+    return {
+      error: "Could not load map correctly"
+    }
+  }
 }
 
 /*
@@ -302,8 +323,9 @@ export function add_new_report_area(marker_popup_handler, report) {
 */
 export function render_report_areas(marker_popup_handler, all_reports) {
 
-  console.log("rendering areas");
-  // console.log(all_reports);
+  try {
+    console.log("rendering areas");
+    // console.log(all_reports);
 
     // const all_reports = get_all_reports();
 
@@ -312,6 +334,16 @@ export function render_report_areas(marker_popup_handler, all_reports) {
         add_new_report_area(marker_popup_handler, report);
       }
     })
+
+    return {
+      success: 'success'
+    }
+
+  } catch (err) {
+    return {
+      error: err
+    }
+  }
 }
 
 /*

@@ -32,6 +32,7 @@ import { UserContext } from '../contexts/UserContext';
 import logo from '../icons/call.svg'
 import create_new_alert_from_notification from '../services/PushNotificationService';
 import UploadingReport from '../components/UploadingReport';
+import ErrorCard from '../components/ErrorCard';
 
 export default function Main() {
 
@@ -52,8 +53,9 @@ export default function Main() {
   const [detailed_report_menu, set_detailed_report_menu] = useState(null);
   const [new_notification, set_new_notification] = useState(null);
   const [uploading_report, set_uploading_report] = useState(null);
+  const [error, set_error] = useState(null);
 
-  const [reports, set_reports] = useState(null);
+  const [reports, set_reports] = useState([]);
 
 
   const [show_quickreports, set_show_quickreports] = useState(false);
@@ -68,10 +70,21 @@ export default function Main() {
       try {
         const fetched_profile = await get_profile(studentNumber);
         console.log(fetched_profile);
-        set_user_profile(fetched_profile);
+        if (fetched_profile.error) {
+          set_error({
+            message: fetched_profile.error
+          })
+          set_user_profile(get_blank_profile());
+        } else {
+          set_user_profile(fetched_profile);
+        }
+
       } catch (error) {
         console.error('Error fetching profile:', error.message);
         set_user_profile(get_blank_profile());
+        set_error({
+          message: "Error fetching user profile."
+        })
       }
     };
     fetchProfile();
@@ -108,12 +121,20 @@ export default function Main() {
 
         set_new_notification(data.message);
 
-        const new_alert = create_new_alert_from_notification(data.message);
-
         const incident_reports = fetch_all_reports();
         incident_reports.then(
-          (incident_reports) => set_reports(incident_reports)
+          (incident_reports) => {
+            if (incident_reports) {
+              set_reports(incident_reports)
+            }
+          }
         )
+        .catch(err => {
+          set_reports([]);
+          set_error({
+            message: err
+          })
+        })
       }
     };
 
@@ -144,8 +165,18 @@ export default function Main() {
 
         const incident_reports = fetch_all_reports();
         incident_reports.then(
-          (incident_reports) => set_reports(incident_reports)
+          (incident_reports) => {
+            if (incident_reports) {
+              set_reports(incident_reports)
+            }
+          }
         )
+        .catch(err => {
+          set_reports([]);
+          set_error({
+            message: err
+          })
+        })
       }
     };
 
@@ -161,8 +192,18 @@ export default function Main() {
     get_user_profile();
     const incident_reports = fetch_all_reports();
     incident_reports.then(
-      (incident_reports) => set_reports(incident_reports)
+      (incident_reports) => {
+        if (incident_reports) {
+          set_reports(incident_reports)
+        }
+      }
     )
+    .catch(err => {
+      set_reports([]);
+      set_error({
+        message: err
+      })
+    })
 
   }, [])
 
@@ -231,28 +272,28 @@ export default function Main() {
         return <></>
 
       case "notifications":
-        return <NotificationsMenu reports={reports} close_all_menus={close_all_menus} close_menu={close_menu}></NotificationsMenu>
+        return <NotificationsMenu set_error={set_error} reports={reports} close_all_menus={close_all_menus} close_menu={close_menu}></NotificationsMenu>
 
       case "incident_reports":
-        return <IncidentReportsMenu reports={reports} close_all_menus={close_all_menus} close_menu={close_menu}></IncidentReportsMenu>
+        return <IncidentReportsMenu set_error={set_error} reports={reports} close_all_menus={close_all_menus} close_menu={close_menu}></IncidentReportsMenu>
 
       case "emergency_info":
-        return <EmergencyInfoMenu close_menu={close_menu}></EmergencyInfoMenu>
+        return <EmergencyInfoMenu set_error={set_error} close_menu={close_menu}></EmergencyInfoMenu>
 
       case "first_aid":
         return <FirstAidMenu close_menu={close_menu}></FirstAidMenu>
 
       case "medical_profile":
-        return <MedicalProfileMenu get_user_profile={get_user_profile} close_menu={close_menu} profile={user_profile}></MedicalProfileMenu>
+        return <MedicalProfileMenu set_error={set_error} get_user_profile={get_user_profile} close_menu={close_menu} profile={user_profile}></MedicalProfileMenu>
 
       case "detailed_report":
-        return <DetailedReport set_detailed_report_menu={update_detailed_report_menu} report_types_data={report_types_data} close_menu={close_menu} profile={user_profile}></DetailedReport>
+        return <DetailedReport set_error={set_error} set_detailed_report_menu={update_detailed_report_menu} report_types_data={report_types_data} close_menu={close_menu} profile={user_profile}></DetailedReport>
 
       case "walk_home":
-        return <PopupCard isOpen={true} onClose={close_menu}> <p>Walk-home assistance information goes here.</p> </PopupCard>
+        return <PopupCard set_error={set_error} isOpen={true} onClose={close_menu}> <p>Walk-home assistance information goes here.</p> </PopupCard>
 
       case "safety_resources":
-        return <SafetyResourcesMenu close_menu={close_menu}></SafetyResourcesMenu>
+        return <SafetyResourcesMenu set_error={set_error} close_menu={close_menu}></SafetyResourcesMenu>
 
       default:
         break;
@@ -275,20 +316,21 @@ export default function Main() {
     if ((confirmation_menu === null) && (detailed_report_menu === null)) {
       return <></>
     } else if (confirmation_menu) {
-      return <ReportConfirmation set_uploading_report={set_uploading_report} report_type={confirmation_menu} close_all_menus={close_all_menus} close_menu={close_confirmation}></ReportConfirmation>
+      return <ReportConfirmation set_error={set_error} set_uploading_report={set_uploading_report} report_type={confirmation_menu} close_all_menus={close_all_menus} close_menu={close_confirmation}></ReportConfirmation>
     } else if (detailed_report_menu) {
-      return <MakeDetailedReport set_uploading_report={set_uploading_report} report_type={detailed_report_menu} close_all_menus={close_all_menus} close_menu={close_confirmation}></MakeDetailedReport>
+      return <MakeDetailedReport set_error={set_error} set_uploading_report={set_uploading_report} report_type={detailed_report_menu} close_all_menus={close_all_menus} close_menu={close_confirmation}></MakeDetailedReport>
     }
   }
 
   return (
     <main className='main-root'>
       {render_report_menu()}
+      {error ? <ErrorCard set_error={set_error} error={error}></ErrorCard> : <></>}
       {uploading_report ? <UploadingReport report_type={uploading_report}></UploadingReport> : <></>}
       {current_menu === "none" ? <></> : render_menu()}
       <Navbar show_quickreports={show_quickreports} set_show_quickreports={set_show_quickreports} report_types_data={report_types_data} open_detailed_report_menu={() => set_current_menu("detailed_report")} set_confirmation_menu={update_confirmation_menu} />
       <Topbar set_show_side_menu={set_show_side_menu} />
-      {reports === null ? <></> : <Map new_notification={new_notification} set_new_notification={set_new_notification} incident_reports={reports} />}
+      {reports === null ? <></> : <Map set_error={set_error} new_notification={new_notification} set_new_notification={set_new_notification} incident_reports={reports} />}
       <SideMenu show_side_menu={show_side_menu} set_current_menu={set_current_menu} profile={user_profile} />
       {show_side_menu ? <div className='main-dark-back' onClick={close_all_menus}></div> : <></>}
     </main>

@@ -81,15 +81,31 @@ export async function make_report(type, image, description) {
 
     console.log('making report');
     
-    const res = await fetch('/incidents/report-incidents', requestOptions).then((res) => res.json());
+    const res = await fetch('/incidents/report-incidents', requestOptions)
+    .then((res) => res.json())
+    .catch(err => {return {error: err}});
+    
+    console.log("RESULT HERE");
+    console.log(res);
 
-    if (res.ok) {
-      console.log(res);
+    if (!res.error) {
+      return {
+        success: "success"
+      }
+    } else {
+      return {
+        error: "Error sending alert"
+      }
     }
+
+    return res;
 
     
   } catch (err) {
     // Error handling!
     console.log(err);
+    return {
+      error: "Error sending incident report"
+    }
   }
 }

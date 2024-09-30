@@ -26,6 +26,8 @@ import { convert_date_string_to_sql_valid, string_to_date } from "./DateTimeServ
 export async function get_profile(studentNumber) {
     try{
         const response = await fetch(`/users/user-information/${studentNumber}`).then((res) => res.json());
+        // const response = await fetch(`/users/user-information/abc`).then((res) => res.json());
+        
         const full_profile = response[0];
         console.log(full_profile);
         const profile = {
@@ -53,7 +55,9 @@ export async function get_profile(studentNumber) {
         return profile;
     } catch (error) {
         console.error('Error fetching profile:', error.message);
-        return get_blank_profile();
+        return {
+            error: "Unable to fetch profile"
+        };
     }
 }
 /*

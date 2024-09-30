@@ -18,7 +18,7 @@ import create_new_alert_from_notification from '../services/PushNotificationServ
 
 
 
-export default function Map( { incident_reports, new_notification, set_new_notification } ) {
+export default function Map( { set_error, incident_reports, new_notification, set_new_notification } ) {
     
     const map_container = useRef(null);
     const map = useRef(null);
@@ -65,16 +65,22 @@ export default function Map( { incident_reports, new_notification, set_new_notif
         console.log("inside map.js");
         console.log(incident_reports);
 
-        create_map(map, map_container, handle_movement, handle_marker_popup, incident_reports);
-        // render_report_areas(handle_marker_popup, incident_reports);
+        try {
+            const result = create_map(map, map_container, handle_movement, handle_marker_popup, incident_reports);
+            console.log(result);
 
-        // Watch user's position
-        const options = {
-            enableHighAccuracy: true,
-            timeout: 10000,
-            maximumAge: 0,
-          };
-        const reference = navigator.geolocation.watchPosition((res) => set_user_coords(res.coords.longitude, res.coords.latitude), (err) => {console.log(err)}, options);
+            // render_report_areas(handle_marker_popup, incident_reports);
+
+            // Watch user's position
+            const options = {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0,
+            };
+            const reference = navigator.geolocation.watchPosition((res) => set_user_coords(res.coords.longitude, res.coords.latitude), (err) => {console.log(err)}, options);
+        } catch (err) {
+            console.log(err);
+        }
     },[]);
 
     const close_notification = () => {

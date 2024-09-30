@@ -106,10 +106,11 @@
 }
 
 .notificaiton-icon-container {
-    width: 35px;
-    height: 35px;
-    padding: 5px;
-    border-radius: 18px;
+    width: 55px;
+    height: 55px;
+    padding: 15px;
+    border-radius: 27px;
+    /* padding: 5px; */
     /* background: red; */
 }
 

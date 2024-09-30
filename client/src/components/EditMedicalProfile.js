@@ -49,6 +49,14 @@ export default function EditMedicalProfile( { user_profile, close_edit_menu, get
   //   })
   // }
 
+  const handleSelectGender = (e) => {
+    console.log(e.target.value);
+    setProfile({
+      ...profile,
+      gender: e.target.value
+    });
+  }
+
   const handleEmergencyContactChange = (e, contactType) => {
     const { name, value } = e.target;
     setProfile({
@@ -111,13 +119,17 @@ export default function EditMedicalProfile( { user_profile, close_edit_menu, get
           />
 
           <label>Gender:</label>
-          <input
+          {/* <input
             type='text'
             name='gender'
             value={profile.gender}
             onChange={handleInputChange}
             className='edit-medical-profile-input'
-          />
+          /> */}
+          <select className="edit-medical-profile-input" name='gender' onChange={handleInputChange} value={profile.gender}>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
 
           <label>Date of Birth:</label>
           <input
@@ -151,14 +163,15 @@ export default function EditMedicalProfile( { user_profile, close_edit_menu, get
             className='edit-medical-profile-input'
           />
 
-          <label>Relationship:</label>
-          <input
-            type='text'
-            name='relationship'
-            value={profile.first_emergency_contact.relationship}
-            onChange={(e) => handleEmergencyContactChange(e, 'first_emergency_contact')}
-            className='edit-medical-profile-input'
-          />
+          <label>Relationship to individual:</label>
+          <select className="edit-medical-profile-input" name='relationship' value={profile.first_emergency_contact.relationship} onChange={(e) => handleEmergencyContactChange(e, 'first_emergency_contact')}>
+            <option value="Mother">Mother</option>
+            <option value="Father">Father</option>
+            <option value="Child">Child</option>
+            <option value="Spouse">Spouse</option>
+            <option value="Guardian">Guardian</option>
+            <option value="Other">Other</option>
+          </select>
 
           <label>Cell No.:</label>
           <input
@@ -191,14 +204,15 @@ export default function EditMedicalProfile( { user_profile, close_edit_menu, get
             className='edit-medical-profile-input'
           />
 
-          <label>Relationship:</label>
-          <input
-            type='text'
-            name='relationship'
-            value={profile.second_emergency_contact.relationship}
-            onChange={(e) => handleEmergencyContactChange(e, 'second_emergency_contact')}
-            className='edit-medical-profile-input'
-          />
+          <label>Relationship to individual:</label>
+          <select className="edit-medical-profile-input" name='relationship' value={profile.second_emergency_contact.relationship} onChange={(e) => handleEmergencyContactChange(e, 'second_emergency_contact')} >
+            <option value="Mother">Mother</option>
+            <option value="Father">Father</option>
+            <option value="Child">Child</option>
+            <option value="Spouse">Spouse</option>
+            <option value="Guardian">Guardian</option>
+            <option value="Other">Other</option>
+          </select>
 
           <label>Cell No.:</label>
           <input

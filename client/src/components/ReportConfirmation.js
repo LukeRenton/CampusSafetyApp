@@ -12,7 +12,7 @@ import ReportCard from './ReportCard'
 import AutoCountdown from './AutoCountdown'
 import { make_alert_report } from '../services/AlertReportsService'
 
-export default function ReportConfirmation({ report_type,  close_all_menus, close_menu, set_uploading_report }) {
+export default function ReportConfirmation({ set_error, report_type,  close_all_menus, close_menu, set_uploading_report }) {
 
     /*
       Function: handle_countdown_finish
@@ -42,9 +42,22 @@ export default function ReportConfirmation({ report_type,  close_all_menus, clos
         // ToDo: handle report submission
         set_uploading_report(report_type.type);
         close_all_menus();
-        make_alert_report(report_type.type).then(() => {
+        make_alert_report(report_type.type).then((result) => {
+          
           set_uploading_report(null);
-        });
+          if (result.error) {
+            set_error({
+              message: "Error sending alert"
+            });
+          }
+
+        }).catch(err => {
+          set_error({
+            message: "Error sending alert"
+          });
+
+          set_uploading_report(null);
+        })
     }
 
     /*

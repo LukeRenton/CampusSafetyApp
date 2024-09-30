@@ -23,56 +23,63 @@ import { get_all_reports } from './GeneralReportService';
       Mapping of HTML objects
 */
 export function render_notification_items(notification_array_in, close_all_menus_handler) {
-  // var notification_array = get_all_reports();
-  var notification_array = [...notification_array_in];
-  console.log(notification_array);
+  try {
 
-  // Handle notifications
-  if (notification_array.length > 0) {
-    // Sort the list of notifications by date
-    notification_array.sort((date1, date2) => compare_dates(date1.date, date2.date));
-    
-    // Augment the list of notifications by adding unique dates where needed
-    // -- add the firt notification's date as the most recent date
-    var prev_date = get_date_header(notification_array[0].date);
-    notification_array.splice(0, 0, {type: 'new-date', date: prev_date})
-    // -- continuously go through the list of notifications and add new dates if they are found
-    var notification_number = 0;
+    // var notification_array = get_all_reports();
+    var notification_array = [...notification_array_in];
+    console.log(notification_array);
 
-    
-    while (notification_number < notification_array.length) {
-      console.log(`Read notification array[${notification_number}]`)
-      const notification = notification_array[notification_number];
+    // Handle notifications
+    if (notification_array.length > 0) {
+      // Sort the list of notifications by date
+      notification_array.sort((date1, date2) => compare_dates(date1.date, date2.date));
+      
+      // Augment the list of notifications by adding unique dates where needed
+      // -- add the firt notification's date as the most recent date
+      var prev_date = get_date_header(notification_array[0].date);
+      notification_array.splice(0, 0, {type: 'new-date', date: prev_date})
+      // -- continuously go through the list of notifications and add new dates if they are found
+      var notification_number = 0;
 
-      if (!(notification.type === 'new-date') && !(notification.type === 'scroll-base')) {
-        const new_date = get_date_header(notification.date);
-        if (new_date !== prev_date) {
-          notification_array.splice(notification_number, 0, {type: 'new-date', date: new_date})
-          prev_date = new_date
+      
+      while (notification_number < notification_array.length) {
+        console.log(`Read notification array[${notification_number}]`)
+        const notification = notification_array[notification_number];
+
+        if (!(notification.type === 'new-date') && !(notification.type === 'scroll-base')) {
+          const new_date = get_date_header(notification.date);
+          if (new_date !== prev_date) {
+            notification_array.splice(notification_number, 0, {type: 'new-date', date: new_date})
+            prev_date = new_date
+          } else {
+            notification_number++;
+          }
         } else {
           notification_number++;
         }
-      } else {
-        notification_number++;
       }
+
+      // Add a final element to the bottom of the list: improves ui/ux by allowing further scroll distance
+      notification_array.push({type: 'scroll-base'});
+
+      // Return mapping of ReportItem objects and "new-date" cards
+      return notification_array.map((notification, i) => { 
+        if (notification.type === 'new-date') {
+          return <div key={i} className='notifications-menu-new-date'>{notification.date}</div>
+        } else if (notification.type === 'scroll-base') {
+          return <div key={i} className='notifications-menu-scroll-base'></div>
+        } else {
+          return <ReportItem key={i} location={notification.location} type={notification.type} description={notification.description} active={notification.active} time={get_time(notification.date)} show_time={true} close_all_menus_handler={close_all_menus_handler}></ReportItem>
+        }
+      });
+
+    } else {
+      // Handle no notifications
+      return <p className='notifications-menu-no-notifications'>You have no notifications</p>
     }
-
-    // Add a final element to the bottom of the list: improves ui/ux by allowing further scroll distance
-    notification_array.push({type: 'scroll-base'});
-
-    // Return mapping of ReportItem objects and "new-date" cards
-    return notification_array.map((notification, i) => { 
-      if (notification.type === 'new-date') {
-        return <div key={i} className='notifications-menu-new-date'>{notification.date}</div>
-      } else if (notification.type === 'scroll-base') {
-        return <div key={i} className='notifications-menu-scroll-base'></div>
-      } else {
-        return <ReportItem key={i} location={notification.location} type={notification.type} description={notification.description} active={notification.active} time={get_time(notification.date)} show_time={true} close_all_menus_handler={close_all_menus_handler}></ReportItem>
-      }
-    });
-
-  } else {
-    // Handle no notifications
-    return <p className='notifications-menu-no-notifications'>You have no notifications</p>
+  } catch (err) {
+    return {
+      error: err
+    }
   }
 }

@@ -4,7 +4,7 @@ import camera from '../icons/camera.svg'
 import { make_report } from '../services/IncidentReportsService';
 import { fetch_all_reports } from '../services/GeneralReportService';
 
-export default function MakeDetailedReport( { set_uploading_report, report_type, close_menu, close_all_menus } ) {
+export default function MakeDetailedReport( { set_error, set_uploading_report, report_type, close_menu, close_all_menus } ) {
 
     const [show_menu, set_show_menu] = useState(false);
     const [image_upload, set_image_upload] = useState(null);
@@ -14,16 +14,23 @@ export default function MakeDetailedReport( { set_uploading_report, report_type,
     },[])
 
     const handle_submit_detailed_report = async () => {
-        // Handle submit report
         const description = document.getElementById('report-description-input').value;
-        // console.log(URL.createObjectURL(image_upload));
-
-        console.log("making report");
-        
         
         set_uploading_report(report_type.type);
         close_all_menus();
-        make_report(report_type.type, image_upload, description).then(() => {
+        make_report(report_type.type, image_upload, description).then((result) => {
+            if (result.error) {
+                set_error({
+                    message: "Error sending incident report"
+                });
+            }
+            set_uploading_report(null);
+        }).catch(err => {
+            console.log("JUST RECEIVED AN ERROR!")
+            console.log(err)
+            set_error({
+                message: "Error sending incident report"
+            });
             set_uploading_report(null);
         })
     }

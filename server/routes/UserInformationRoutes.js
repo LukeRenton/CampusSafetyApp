@@ -12,7 +12,7 @@ const UserInformationController = require('../controllers/UserInformationControl
 //fetching data from the database (user information)
 router.get("/user-information", async (req, res) => {
     try {
-        const users_info = await UserInformationController.getUserInfo(2540440);
+        const users_info = await UserInformationController.getAllUserInfo();
         console.log(users_info);
         res.status(200).json(users_info);
         
@@ -26,21 +26,7 @@ router.get("/user-information", async (req, res) => {
 router.get("/user-information/:studentNumber", async (req, res) => {
     try {
         const studentNumber = req.params.studentNumber;
-        const users_info = await UserInformationController.getUserInfo(2540440);
-        console.log(users_info);
-        res.status(200).json(users_info);
-        
-    } catch (err) {
-        console.error('Error fetching Data: ' + err.message);
-        res.status(500).json({message: err.message});
-    }
-});
-
-//fetching data from the database (user information)
-router.get("/user-information-full/:studentNumber", async (req, res) => {
-    try {
-        const studentNumber = req.params.studentNumber;
-        const users_info = await UserInformationController.getAllUserInfo(2540440);
+        const users_info = await UserInformationController.getUserInfo(studentNumber);
         console.log(users_info);
         res.status(200).json(users_info);
         
@@ -81,7 +67,7 @@ router.put('/update-user', async (req, res) => {
             cell_number: second_emergency_contact_cell_number,
             work_number: second_emergency_contact_work_number
         }
-        const UpdateUserInfo = await UserInformationController.UpdateUserInfo(firstnames, lastnames, '2540440', gender, DOB, allergies, first_emergency_contact, second_emergency_contact);
+        const UpdateUserInfo = await UserInformationController.UpdateUserInfo(firstnames, lastnames, student_number, gender, DOB, allergies, first_emergency_contact, second_emergency_contact);
         res.status(200).json(UpdateUserInfo);
     } catch (err) {
         console.error('Error Insertin data : ' + err.message);

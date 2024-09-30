@@ -18,15 +18,32 @@ export async function make_alert_report(type) {
             longitude: position.lng
         })
   
-      }).then((res) => res.json());
-  
-      if (res.ok) {
+      }).then((res) => res.json())
+      .catch(err => {
+        return {
+          error: "Error sending alert"
+        }
+      })
+
+
+      if (!res.error) {
         console.log(res);
+        return {
+          success: "success"
+        }
+      } else {
+        return {
+          error: "Error sending alert"
+        }
       }
+
 
       
     } catch (err) {
       // Error handling!
       console.log(err);
+      return {
+        error: "Error sending alert"
+      }
     }
   }

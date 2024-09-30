@@ -89,10 +89,11 @@
     display: flex;
     flex-direction: row;
     width: 100%;
-    gap: 0px 20px;
+    gap: 0px 5px;
 }
 
 .medical-profile-menu-info-name-box {
+    width: 50%;
     display: flex;
     flex-direction: column;
 }

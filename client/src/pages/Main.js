@@ -131,16 +131,42 @@ export default function Main( { set_user } ) {
     fetchProfile();
   }
 
-  useEffect(() => {
+  const handle_fetch_reports = async () => {
+    if (reports_loaded) {
+      set_reports_loaded(false);
+      const incident_reports = await fetch_all_reports();
+      incident_reports.then(
+        (incident_reports) => {
+          if (incident_reports) {
+            set_reports(incident_reports)
+          } else {
+            set_reports([])
+          }
+          set_reports_loaded(true);
+        }
+      )
+      .catch(err => {
+        // Handle error
+        set_reports([]);
+        set_error({
+          message: err
+        })
+        set_reports_loaded(true);
+      })
+    }
+  }
+
+
+  useEffect(async () => {
     // Create an EventSource connection to listen to server-sent events
     const eventSource_alerts = new EventSource('/alerts/pushalerts');
     const eventSource_incidents = new EventSource('/incidents/pushalerts');
 
-    eventSource_alerts.onmessage = (event) => {
+    eventSource_alerts.onmessage = async (event) => {
       const data = JSON.parse(event.data);
       // console.log(data);
       //const message = JSON.parse(data.message);
-      if (!hasNotified) {
+      // if (!hasNotified) {
 
         console.log(data.message);
         // Trigger the notification using react-push-notification
@@ -155,40 +181,21 @@ export default function Main( { set_user } ) {
           native: true,
         });
 
-        setHasNotified(true);
-        setTimeout(() => {
-          setHasNotified(false);
-        }, 8000)
+        // setHasNotified(true);
+        // setHasNotified(false);
 
         set_new_notification(data.message);
 
-        const incident_reports = fetch_all_reports();
-        incident_reports.then(
-          (incident_reports) => {
-            if (incident_reports) {
-              set_reports(incident_reports)
-            } else {
-              set_reports([])
-            }
-            set_reports_loaded(true);
-          }
-        )
-        .catch(err => {
-          // Handle error
-          set_reports([]);
-          set_error({
-            message: err
-          })
-          set_reports_loaded(true);
-        })
-      }
+        handle_fetch_reports();
+        
+      // }
     };
 
     eventSource_incidents.onmessage = (event) => {
       const data = JSON.parse(event.data);
       // console.log(data);
       //const message = JSON.parse(data.message);
-      if (!hasNotified) {
+      // if (!hasNotified) {
 
         console.log(data.message);
         // Trigger the notification using react-push-notification
@@ -202,33 +209,10 @@ export default function Main( { set_user } ) {
           native: true,
         });
 
-        setHasNotified(true);
-        setTimeout(() => {
-          setHasNotified(false);
-        }, 8000)
-
         set_new_notification(data.message);
 
-        const incident_reports = fetch_all_reports();
-        incident_reports.then(
-          (incident_reports) => {
-            if (incident_reports) {
-              set_reports(incident_reports)
-            } else {
-              set_reports([]);
-            }
-            set_reports_loaded(true);
-          }
-        )
-        .catch(err => {
-          // Handle error
-          set_reports([]);
-          set_error({
-            message: err
-          })
-          set_reports_loaded(true);
-        })
-      }
+        handle_fetch_reports();
+      // }
     };
 
     // Cleanup on unmount
@@ -418,7 +402,7 @@ export default function Main( { set_user } ) {
       {error ? <ErrorCard set_error={set_error} error={error}></ErrorCard> : <></>}
       {uploading_report ? <UploadingReport report_type={uploading_report}></UploadingReport> : <></>}
       {current_menu === "none" ? <></> : render_menu()}
-      <Navbar location_services_enabled={location_services_enabled} show_quickreports={show_quickreports} set_show_quickreports={set_show_quickreports} report_types_data={report_types_data} open_detailed_report_menu={() => set_current_menu("detailed_report")} set_confirmation_menu={update_confirmation_menu} />
+      <Navbar uploading_report={uploading_report} location_services_enabled={location_services_enabled} show_quickreports={show_quickreports} set_show_quickreports={set_show_quickreports} report_types_data={report_types_data} open_detailed_report_menu={() => set_current_menu("detailed_report")} set_confirmation_menu={update_confirmation_menu} />
       <Topbar set_show_side_menu={set_show_side_menu} />
       {reports_loaded ? <Map set_location_services_enabled={set_location_services_enabled} set_error={set_error} new_notification={new_notification} set_new_notification={set_new_notification} incident_reports={reports} /> : <></>}
       <SideMenu handle_signout={handle_signout} valid_profile={valid_profile} show_side_menu={show_side_menu} set_current_menu={set_current_menu} profile={user_profile} />

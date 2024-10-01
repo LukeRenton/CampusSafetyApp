@@ -12,10 +12,12 @@ import React, { useState } from 'react';
 import '../styles/SelectRes.css'; // Use updated SelectRes CSS
 import ConfirmationCard from './ConfirmationCard.js'; // Import the confirmation card
 import RideNowConfirmation from './RideNowConfirmation.js';
+import Loader from './Loader.js'
 
-const SelectRes = ({ isOpen, onClose }) => {
+const SelectRes = ({ set_error, isOpen, onClose }) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [selectedResidence, setSelectedResidence] = useState(''); // State to store selected residence
+  const [loading, set_loading] = useState(false);
 
   /* 
     Function: handleSelect
@@ -47,6 +49,7 @@ const SelectRes = ({ isOpen, onClose }) => {
     console.log("Selected Residence:", selectedResidence);
   
     try {
+      set_loading(true);
       await fetch('/email/store-residence', {
         method: 'POST',
         headers: {
@@ -54,6 +57,7 @@ const SelectRes = ({ isOpen, onClose }) => {
         },
         body: JSON.stringify({ residence: selectedResidence }), // Use selectedResidence here
       });
+      set_loading(false);
       setShowConfirmation(true); // Show confirmation after sending the email
       setTimeout(() => {
         setShowConfirmation(false);
@@ -61,6 +65,10 @@ const SelectRes = ({ isOpen, onClose }) => {
       }, 5000);
     } catch (error) {
       console.error('Error storing residence or sending email:', error);
+      set_loading(false);
+      set_error({
+        message: "Error submitting requested ride. Please try again"
+      })
     }
   };
 
@@ -71,7 +79,7 @@ const SelectRes = ({ isOpen, onClose }) => {
       {/* SelectRes Card */}
       {!showConfirmation && isOpen && (
         <div className="selectres-overlay" onClick={onClose}>
-          <div className="selectres-content" onClick={(e) => e.stopPropagation()}>
+          <div className={"selectres-content "+(loading ? 'selectres-content-loading' : '')} onClick={(e) => e.stopPropagation()}>
             <h1 className="Card1-Heading">Select Residence</h1>
             <h6 className="Card1-subheading">Choose your residence from the list</h6>
 
@@ -84,8 +92,8 @@ const SelectRes = ({ isOpen, onClose }) => {
               <option value="Reith Hall">Reith Hall</option>
             </select>
 
-            <button className="selectres-button" onClick={handleGoClick} disabled={!selectedResidence}>
-              Go
+            <button className="selectres-button" onClick={!loading ? handleGoClick : () => {}} disabled={!selectedResidence}>
+              {loading ? <Loader size={30}></Loader> : 'Go'}
             </button>
           </div>
         </div>

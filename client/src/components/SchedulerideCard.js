@@ -10,7 +10,7 @@
 import React, { useState } from 'react';
 import '../styles/SchedulerideCard.css';
 
-const SchedulerideCard = ({ isOpen, onClose, onSchedule }) => {
+const SchedulerideCard = ({ set_error, isOpen, onClose, onSchedule }) => {
   const [time, setTime] = useState('10:00'); // Default time
 
   /*

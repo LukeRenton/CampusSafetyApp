@@ -1,0 +1,73 @@
+.finding-location-root {
+    position: absolute;
+    z-index: 1;
+    top: 80px;
+
+    /* width: fit-content; */
+    width: 150px;
+    height: 50px;
+    left: 10px;
+
+    background: white;
+    border-radius: 8px;
+ 
+    box-shadow: 0px 3px 5px 5px rgba(0, 0, 0, 0.2);
+
+    transform: translateX(-200px);
+    transition: 0.4s;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0 2px;
+
+    overflow: hidden;
+}
+
+.finding-location-root-shown {
+    transform: translateX(0);
+    transition: 0.4s; 
+}
+
+.finding-location-root-hide-text {
+    width: 50px;
+}
+
+.finding-location-lottie-container {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.finding-location-lottie {
+    width: 50px;
+    height: 50px;
+}
+.finding-location-lottie svg {
+    scale: 2;
+}
+
+.finding-location-text {
+    margin: 0;
+    padding: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+
+    color: black;
+
+    font-size: 14px;
+    font-weight: 400;
+    font-style: normal;
+
+    width: 100px;
+    transition: 0.4s;
+    overflow: hidden;
+}
+
+.finding-location-text-hidden {
+    width: 0;
+    transition: 0.4s;
+}

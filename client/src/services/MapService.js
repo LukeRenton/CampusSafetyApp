@@ -91,19 +91,13 @@ export function create_map(map_in, map_container_in, map_movement_handler, marke
             bearing: 173.60
         });
         map.current.on('move', map_movement_handler); 
-    }); 
-
-    if (result_map_load.error) {
-      // Handle error
-      return {
-        error: "Could not render areas on the map"
-      }
-    }
+    });
 
     return {
       success: 'success'
     }
   } catch (err) {
+    console.log("err 2: ", err);
     // Handle error
     return {
       error: "Could not load map correctly"

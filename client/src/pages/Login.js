@@ -13,7 +13,7 @@ const SignInPage = ( { set_user } ) => {
   //state to manage the password
   const [password, setPassword] = useState('');
   //state to manage the visibility of the login form
-  const [show_login, set_show_login] = useState(false);
+  const [show_login, set_show_login] = useState(true);
 
   const { setStudentNumber } = useContext(UserContext);
 
@@ -29,21 +29,6 @@ const SignInPage = ( { set_user } ) => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
-  const try_get_remembered_user = async () => {
-    const user = localStorage.getItem('user');
-    if (user) {
-      const info = JSON.parse(user);
-      setLocalStudentNumber(info.username);
-      setPassword(info.password);
-      handleLogin(info.username, info.password);
-    }
-  }
-
-  useEffect(() => {
-    set_show_login(true);
-    try_get_remembered_user();
-  }, []);
 
   const handleLogin = async (uname, pass) => {
     // API request to the backend
@@ -96,6 +81,28 @@ const SignInPage = ( { set_user } ) => {
 
     }
   };
+
+  const try_get_remembered_user = async () => {
+    console.log('h');
+    const user = localStorage.getItem('user');
+    if (user) {
+      const info = JSON.parse(user);
+      setLocalStudentNumber(info.username);
+      setPassword(info.password);
+      handleLogin(info.username, info.password);
+    }
+    console.log('i');
+  }
+
+  useEffect(() => {
+    // console.log("test e");
+    // set_show_login(true);
+    // console.log("test f");
+    // try_get_remembered_user();
+    // console.log("test g");
+  }, []);
+
+  
 
   return (
     <div className="login-container">

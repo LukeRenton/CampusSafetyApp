@@ -16,7 +16,7 @@ const App = () => {
       <UserProvider>
         <BrowserRouter>
           <Routes>
-            {user ? <Route path="/main" element={<Main set_user={set_user} />} /> : <></>}
+            <Route path="/main" element={<Main user={user} set_user={set_user} />} />
             <Route path="/" element={<LoginPage set_user={set_user}  />} />
           </Routes>
         </BrowserRouter>

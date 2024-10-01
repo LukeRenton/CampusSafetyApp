@@ -14,7 +14,7 @@ import SchedulerideCard from './SchedulerideCard';
 import SelectRes from './SelectRes';
 import RideNowConfirmation from './RideNowConfirmation'; // Import the new confirmation card
 
-const PopupCard = ({ isOpen, onClose }) => {
+const PopupCard = ({ set_error, isOpen, onClose }) => {
 
   const [showPopup, setShowPopup] = useState(false);
 
@@ -141,11 +141,11 @@ const PopupCard = ({ isOpen, onClose }) => {
           )}
 
           {showScheduler && (
-            <SchedulerideCard isOpen={showScheduler} onClose={() => setShowScheduler(false)} onSchedule={handleScheduleComplete} />
+            <SchedulerideCard set_error={set_error} isOpen={showScheduler} onClose={() => setShowScheduler(false)} onSchedule={handleScheduleComplete} />
           )}
 
           {showSelectRes && (
-            <SelectRes isOpen={showSelectRes} onClose={handleClose} />
+            <SelectRes set_error={set_error} isOpen={showSelectRes} onClose={handleClose} />
           )}
 
           {showRideNowConfirmation && (

@@ -34,6 +34,7 @@ import create_new_alert_from_notification from '../services/PushNotificationServ
 import UploadingReport from '../components/UploadingReport';
 import ErrorCard from '../components/ErrorCard';
 import { useNavigate } from 'react-router-dom';
+import FindingLocation from '../components/FindingLocation';
 
 export default function Main( { set_user } ) {
 
@@ -80,9 +81,13 @@ export default function Main( { set_user } ) {
   const navigate = useNavigate();
 
   const handle_signout = () => {
-    set_user(null);
-    localStorage.clear('user');
+    console.log("test a");
+    // set_user(null);
+    console.log("test b");
+    // localStorage.removeItem('user');
+    console.log("test c");
     navigate('/');
+    console.log("test d");
   }
 
   /*
@@ -157,7 +162,7 @@ export default function Main( { set_user } ) {
   }
 
 
-  useEffect(async () => {
+  useEffect(() => {
     // Create an EventSource connection to listen to server-sent events
     const eventSource_alerts = new EventSource('/alerts/pushalerts');
     const eventSource_incidents = new EventSource('/incidents/pushalerts');
@@ -399,6 +404,7 @@ export default function Main( { set_user } ) {
   return (
     <main className='main-root'>
       {render_report_menu()}
+      {!location_services_enabled ? <FindingLocation></FindingLocation> : <></>}
       {error ? <ErrorCard set_error={set_error} error={error}></ErrorCard> : <></>}
       {uploading_report ? <UploadingReport report_type={uploading_report}></UploadingReport> : <></>}
       {current_menu === "none" ? <></> : render_menu()}

@@ -62,14 +62,17 @@ export default function Map( { set_location_services_enabled, set_error, inciden
     
     // On component load, add the map and add required parts
     useEffect(() => {
-        if (map.current) return; // Ensure only 1 map object from mapbox is made
-
         try {
-            console.log(incident_reports);
-            const result = create_map(map, map_container, handle_movement, handle_marker_popup, incident_reports);
-            console.log(result);
+            // Ensure only 1 map is generated
+            if (!map.current) {
+                console.log(incident_reports);
+                const result = create_map(map, map_container, handle_movement, handle_marker_popup, incident_reports);
+                console.log(result);
 
             // render_report_areas(handle_marker_popup, incident_reports);
+
+                
+            }
 
             // Watch user's position
             const options = {
@@ -78,14 +81,14 @@ export default function Map( { set_location_services_enabled, set_error, inciden
                 maximumAge: 0,
             };
             const reference = navigator.geolocation.watchPosition(
-                (res) => {
-                    set_user_coords(res.coords.longitude, res.coords.latitude)
-                    set_location_services_enabled(true);
-                },
-                (err) => {
-                    console.log(err)
-                    set_location_services_enabled(false);
-                }, options);
+            (res) => {
+                set_user_coords(res.coords.longitude, res.coords.latitude)
+                set_location_services_enabled(true);
+            },
+            (err) => {
+                console.log(err)
+                set_location_services_enabled(false);
+            }, options)
             
         } catch (err) {
             console.log(err);

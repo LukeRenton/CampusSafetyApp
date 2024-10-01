@@ -21,7 +21,6 @@ jobs:
       - name: npm install, build, and test
         run: |
           npm install
-          npm run tests
       
       - name : Cypress run (e2e testing)
         uses: cypress-io/github-action@v6

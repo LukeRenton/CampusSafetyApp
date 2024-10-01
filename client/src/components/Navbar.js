@@ -15,7 +15,7 @@ import report_types from '../common/ReportTypes'
 import arrow from '../icons/arrow_white.svg'
 
 
-export default function Navbar({ show_quickreports, set_show_quickreports, report_types_data, open_detailed_report_menu, set_confirmation_menu }) {
+export default function Navbar({ location_services_enabled, show_quickreports, set_show_quickreports, report_types_data, open_detailed_report_menu, set_confirmation_menu }) {
 
   /* 
     Function: render_quick_report_buttons
@@ -57,10 +57,15 @@ export default function Navbar({ show_quickreports, set_show_quickreports, repor
     <>
       {show_quickreports ? <div className='navbar-back' onClick={() => set_show_quickreports(false)}></div> : <></>}
       <nav className='navbar-root'>
+          {
+          location_services_enabled ?
           <ul className='navbar-report-buttons'>
             {render_quick_report_buttons()}
           </ul>
-          <button className={'navbar-report-button'} onClick={!show_quickreports ? () => set_show_quickreports(true) : () => handle_show_detailed_report_menu()}>
+          :
+          <></>
+          }
+          <button className={'navbar-report-button '+(location_services_enabled ? 'navbar-report-button-shown' : 'navbar-report-button-hidden')} onClick={!show_quickreports ? () => set_show_quickreports(true) : () => handle_show_detailed_report_menu()}>
             <section className='navbar-report-button-inner'>
                 {show_quickreports ?
                 <img className='navbar-report-icon arrow-icon' src={arrow}></img>
@@ -71,9 +76,16 @@ export default function Navbar({ show_quickreports, set_show_quickreports, repor
                 }
             </section>
           </button>
+          {
+          location_services_enabled ?
           <section className={'navbar-detailed-menu-indicator '+(show_quickreports ? 'navbar-detailed-menu-indicator-shown' : '')}>
                 <h3 className='navbar-detailed-menu-indicator-text'>click again to bring up detailed menu</h3>
           </section>
+          :
+          <section className={'navbar-disabled-location '+(!location_services_enabled ? 'navbar-disabled-location-shown' : '')}>
+                <h3 className='navbar-disabled-location-text'>enable your location and refresh to make reports</h3>
+          </section>
+          }
       </nav>
     </>
   )

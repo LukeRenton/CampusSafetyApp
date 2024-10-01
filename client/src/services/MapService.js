@@ -275,7 +275,6 @@ export default function handle_marker_click(report, marker_popup_handler) {
 let report_counter = 0;
 
 export function add_new_report_area(marker_popup_handler, report) {
-  console.log(report);
   map.current.addSource("polygon"+String(report_counter), createGeoJSONCircle([report.location.lng, report.location.lat], report_types[report.type].radius));
   map.current.addLayer({
       "id": "polygon"+String(report_counter),

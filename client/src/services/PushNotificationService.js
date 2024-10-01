@@ -21,6 +21,8 @@ import report_types from "../common/ReportTypes";
 */
 export default function create_new_report_from_notification(report) {
     return {
+        of_type: report.of_type,
+        id: report.id,
         type: report.type,
         description: report.description ? report.description : (report_types[report.type].header + " Alert"),
         active: report.active === 1,

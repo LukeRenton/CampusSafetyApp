@@ -41,6 +41,8 @@ export async function fetch_all_reports() {
 
         if (["medical", "fire", "natural", "security", "weather"].includes(report.type)) {
           incident_reports.push({
+            of_type: 'incident',
+            id: report.id,
             type: report.type,
             description: report.description,
             active: report.active === 1,
@@ -70,6 +72,8 @@ export async function fetch_all_reports() {
 
         if (["medical", "fire", "natural", "security", "weather"].includes(report.type)) {
           incident_reports.push({
+            of_type: 'alert',
+            id: report.id,
             type: report.type,
             description: report_types[report.type].header + " Alert",
             active: report.active === 1,

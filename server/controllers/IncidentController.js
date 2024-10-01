@@ -59,14 +59,16 @@ async function ReportSafetyIncidents(description, photo, latitude, longitude, ty
         
         //Convert date to SAST (+2)
         const day = date.getDate();
-        const month = date.getMonth();
+        const month = date.getMonth() - 1;
         const year = date.getFullYear();
         const hour = date.getHours() + 2;
         const minute = date.getMinutes();
         const seconds = date.getSeconds();
         const sast_date = new Date(year, month, day, hour, minute, seconds);
-        await pool.query('INSERT INTO incidents(description, photo, latitude, longitude, type, date, building_name) VALUES(?, ?, ?, ?, ?, ?,?)', [description, photo, latitude, longitude, type, sast_date, building_name]);
-        return "Data Inserted";
+        const [rows] = await pool.query('INSERT INTO incidents(description, photo, latitude, longitude, type, date, building_name) VALUES(?, ?, ?, ?, ?, ?,?)', [description, photo, latitude, longitude, type, sast_date, building_name]);
+        
+        const inserted_id = rows[0].insertId;
+        return inserted_id;
     } catch (err) {
         console.error(err);
         throw new Error("Server error : " + err.message);

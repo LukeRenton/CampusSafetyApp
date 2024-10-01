@@ -18,7 +18,7 @@ import create_new_report_from_notification from '../services/PushNotificationSer
 
 
 
-export default function Map( { set_error, incident_reports, new_notification, set_new_notification } ) {
+export default function Map( { set_location_services_enabled, set_error, incident_reports, new_notification, set_new_notification } ) {
     
     const map_container = useRef(null);
     const map = useRef(null);
@@ -28,6 +28,7 @@ export default function Map( { set_error, incident_reports, new_notification, se
     const [user_lat, set_user_lat] = useState(0);
     const [show_marker_popup, set_show_marker_popup] = useState(null);
     const [show_notification, set_show_notification] = useState(null);
+    // const [location_services_enabled, set_location_services_enabled] = useState(false);
 
     /*
         Function: handle_marker_popup
@@ -76,8 +77,16 @@ export default function Map( { set_error, incident_reports, new_notification, se
                 timeout: 10000,
                 maximumAge: 0,
             };
-            const reference = navigator.geolocation.watchPosition((res) => set_user_coords(res.coords.longitude, res.coords.latitude), (err) => {console.log(err)}, options);
-       
+            const reference = navigator.geolocation.watchPosition(
+                (res) => {
+                    set_user_coords(res.coords.longitude, res.coords.latitude)
+                    set_location_services_enabled(true);
+                },
+                (err) => {
+                    console.log(err)
+                    set_location_services_enabled(false);
+                }, options);
+            
         } catch (err) {
             console.log(err);
             set_error({

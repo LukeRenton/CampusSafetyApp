@@ -42,12 +42,12 @@ export default function SideMenu( props ) {
         <section className='side-menu-contents-top'>
             <article className='side-menu-profile'>
                 <div className='side-menu-profile-image-container' style={{backgroundImage: `url(${account_icon})`}}></div>
-                <section className='side-menu-profile-info' onClick={() => props.set_current_menu('medical_profile')}>
+                <section className='side-menu-profile-info' onClick={props.valid_profile ? () => props.set_current_menu('medical_profile'): () => {}}>
                     <section className='side-menu-profile-name-num'>
                         <h1 className='side-menu-profile-name'>{props.profile.first_names} {props.profile.last_name}</h1>
                         <h2 className='side-menu-profile-student-num'>{props.profile.student_staff_num}</h2>
                     </section>
-                    <button className='side-menu-view-profile'>View Medical Profile</button>
+                    <button className='side-menu-view-profile'>{props.valid_profile ? "View Medical Profile" : "Profile inaccessible. Please reload the page"}</button>
                 </section>
             </article>
             <ul className='side-menu-navigations'>
@@ -60,7 +60,7 @@ export default function SideMenu( props ) {
             </ul>
         </section>
         <section className='side-menu-contents-bottom'>
-            <button className='side-menu-signout-button'>
+            <button className='side-menu-signout-button' onClick={props.handle_signout}>
                 <img src={signout} className='side-menu-signout-button-icon' style={{rotate: `180deg`}}></img>
                 <h2 className='side-menu-signout-button-text'>Sign out</h2>  
             </button>

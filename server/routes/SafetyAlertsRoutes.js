@@ -63,9 +63,11 @@ router.get('/alerts', async (req, res) => {
 router.post('/alerts', async (req, res) => {
     try {
         const { type, active, longitude, latitude, date } = req.body;
-        await insertAlert(type, active, longitude, latitude, date);
+        const id = await insertAlert(type, active, longitude, latitude, date);
 
         const newRecordMessage = {
+            of_type: "alert",
+            id: id,
             type: type,
             active: active,
             longitude: longitude,

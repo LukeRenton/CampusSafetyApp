@@ -155,8 +155,10 @@ router.post('/report-incidents',upload.single('photo'), async (req, res) => {
         }
 
         const {description, latitude, longitude, type, building_name} = req.body;
-        const reportIncident = await IncidentController.ReportSafetyIncidents(description,photo, latitude, longitude, type, building_name);
+        const reportIncidentId = await IncidentController.ReportSafetyIncidents(description,photo, latitude, longitude, type, building_name);
         const newRecordMessage = {
+            of_type: "incident",
+            id: reportIncidentId,
             type: type,
             active: true,
             description: description,
@@ -169,7 +171,7 @@ router.post('/report-incidents',upload.single('photo'), async (req, res) => {
         // Notify all connected clients
         notifyClients(newRecordMessage);
         
-        res.status(200).json(reportIncident);
+        res.status(200).json(`Inserted with id = ${reportIncidentId}`);
     } catch (err) {
         console.error('Error Inserting data: '+ err.message);
         res.status(500).json({message: 'Server error: '+ err.message});

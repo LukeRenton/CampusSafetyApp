@@ -15,7 +15,7 @@ async function insertAlert(type, status, longitude, latitude, timestamp) {
         
         //Convert date to SAST (+2)
         const day = date.getDate();
-        const month = date.getMonth();
+        const month = date.getMonth() - 1;
         const year = date.getFullYear();
         const hour = date.getHours() + 2;
         const minute = date.getMinutes();
@@ -37,8 +37,11 @@ async function insertAlert(type, status, longitude, latitude, timestamp) {
                 timestamp || sast_date  // Timestamp parameter or current date
             ]
         );
-        
-        console.log('Row inserted:', result[0].affectedRows);
+
+        const inserted_id = result[0].insertId;
+        return inserted_id;
+        console.log('Row inserted:', result);
+        console.log("----------------");
     } catch (error) {
         console.error('Error inserting alert:', error);
     }
@@ -76,8 +79,9 @@ async function deleteAlerts() {
 
 async function updateAlertStatus(alertId, newStatus) {
     try {
+        console.log("");
         const [result] = await pool.query(
-            "UPDATE safetyalerts SET status = ? WHERE id = ?",
+            "UPDATE safetyalerts SET active = ? WHERE id = ?",
             [newStatus, alertId]
         );
         

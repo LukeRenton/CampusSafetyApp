@@ -68,3 +68,58 @@ export async function make_alert_report(type) {
       }
     }
   }
+
+/*
+  Function: update_alert_status
+
+  Description:
+      Updates alert status
+  
+  Parameters:
+      id: id of alert to be updated
+      status: status to change to
+
+  Returns:
+      either success or error object
+*/
+export async function update_alert_status(id, status) {
+
+try {
+  const res = await fetch(`/alerts/alerts/${id}/active`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        active: status  
+    })
+
+  }).then((res) => res.json())
+  .catch(err => {
+    return {
+      error: "Error updating alert status"
+    }
+  })
+
+
+  if (!res.error) {
+    console.log(res);
+    return {
+      success: "success"
+    }
+  } else {
+    return {
+      error: "Error updating alert status"
+    }
+  }
+
+
+  
+} catch (err) {
+  // Error handling!
+  console.log(err);
+  return {
+    error: "Error updating alert status"
+  }
+}
+}

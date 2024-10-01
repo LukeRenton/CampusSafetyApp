@@ -33,8 +33,9 @@ import logo from '../icons/call.svg'
 import create_new_alert_from_notification from '../services/PushNotificationService';
 import UploadingReport from '../components/UploadingReport';
 import ErrorCard from '../components/ErrorCard';
+import { useNavigate } from 'react-router-dom';
 
-export default function Main() {
+export default function Main( { set_user } ) {
 
   // Array of report types for easy rendering
   const report_types_data = [
@@ -51,6 +52,8 @@ export default function Main() {
   const [current_menu, set_current_menu] = useState("none");
   // Current user profile
   const [user_profile, set_user_profile] = useState(get_blank_profile());
+  // Is the current user profile valid
+  const [valid_profile, set_valid_profile] = useState(false);
   // Confirmation menu modal (popup)
   const [confirmation_menu, set_confirmation_menu] = useState(null);
   // Detailed report menu to allow user to add photo and description to report
@@ -71,6 +74,16 @@ export default function Main() {
   const { studentNumber } = useContext(UserContext);
   // Check if reports have been loaded yet
   const [reports_loaded, set_reports_loaded] = useState(false);
+  // Checking if location services are enabled
+  const [location_services_enabled, set_location_services_enabled] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handle_signout = () => {
+    set_user(null);
+    localStorage.clear('user');
+    navigate('/');
+  }
 
   /*
     Function: get_user_profile
@@ -83,6 +96,10 @@ export default function Main() {
     Returns: N/A
   */  
   const get_user_profile = () => {
+    if (!studentNumber) {
+      handle_signout();
+    }
+
     const fetchProfile = async () => {
       try {
         const fetched_profile = await get_profile(studentNumber);
@@ -92,16 +109,23 @@ export default function Main() {
             message: fetched_profile.error
           })
           set_user_profile(get_blank_profile());
+          set_valid_profile(false);
+          set_user(null);
+
         } else {
+          set_valid_profile(true);
           set_user_profile(fetched_profile);
+          set_user(studentNumber);
         }
 
       } catch (error) {
         console.error('Error fetching profile:', error.message);
         set_user_profile(get_blank_profile());
+        set_valid_profile(false);
         set_error({
           message: "Error fetching user profile."
         })
+        set_user(null);
       }
     };
     fetchProfile();
@@ -118,7 +142,7 @@ export default function Main() {
       //const message = JSON.parse(data.message);
       if (!hasNotified) {
 
-        // console.log(data.message);
+        console.log(data.message);
         // Trigger the notification using react-push-notification
         const type = data.message.type;
         const lng = data.message.lng;
@@ -143,7 +167,10 @@ export default function Main() {
           (incident_reports) => {
             if (incident_reports) {
               set_reports(incident_reports)
+            } else {
+              set_reports([])
             }
+            set_reports_loaded(true);
           }
         )
         .catch(err => {
@@ -152,6 +179,7 @@ export default function Main() {
           set_error({
             message: err
           })
+          set_reports_loaded(true);
         })
       }
     };
@@ -162,7 +190,7 @@ export default function Main() {
       //const message = JSON.parse(data.message);
       if (!hasNotified) {
 
-        // console.log(data.message);
+        console.log(data.message);
         // Trigger the notification using react-push-notification
         const type = data.message.type;
         const description = data.message.description;
@@ -186,7 +214,10 @@ export default function Main() {
           (incident_reports) => {
             if (incident_reports) {
               set_reports(incident_reports)
+            } else {
+              set_reports([]);
             }
+            set_reports_loaded(true);
           }
         )
         .catch(err => {
@@ -195,6 +226,7 @@ export default function Main() {
           set_error({
             message: err
           })
+          set_reports_loaded(true);
         })
       }
     };
@@ -212,20 +244,25 @@ export default function Main() {
     const incident_reports = fetch_all_reports();
     incident_reports.then(
       (incident_reports) => {
+        console.log("retrieved reports:",incident_reports);
         if (incident_reports) {
           // console.log("retrieved reports:")
           // console.log(incident_reports)
           set_reports(incident_reports)
-          set_reports_loaded(true);
+        } else {
+          set_reports([]);
         }
+        set_reports_loaded(true);
       }
     )
     .catch(err => {
+      console.log("error retrieiving reports");
       // Handle error
       set_reports([]);
       set_error({
         message: err
       })
+      set_reports_loaded(true);
     })
 
   }, [])
@@ -381,10 +418,10 @@ export default function Main() {
       {error ? <ErrorCard set_error={set_error} error={error}></ErrorCard> : <></>}
       {uploading_report ? <UploadingReport report_type={uploading_report}></UploadingReport> : <></>}
       {current_menu === "none" ? <></> : render_menu()}
-      <Navbar show_quickreports={show_quickreports} set_show_quickreports={set_show_quickreports} report_types_data={report_types_data} open_detailed_report_menu={() => set_current_menu("detailed_report")} set_confirmation_menu={update_confirmation_menu} />
+      <Navbar location_services_enabled={location_services_enabled} show_quickreports={show_quickreports} set_show_quickreports={set_show_quickreports} report_types_data={report_types_data} open_detailed_report_menu={() => set_current_menu("detailed_report")} set_confirmation_menu={update_confirmation_menu} />
       <Topbar set_show_side_menu={set_show_side_menu} />
-      {reports_loaded? <Map set_error={set_error} new_notification={new_notification} set_new_notification={set_new_notification} incident_reports={reports} /> : <></>}
-      <SideMenu show_side_menu={show_side_menu} set_current_menu={set_current_menu} profile={user_profile} />
+      {reports_loaded ? <Map set_location_services_enabled={set_location_services_enabled} set_error={set_error} new_notification={new_notification} set_new_notification={set_new_notification} incident_reports={reports} /> : <></>}
+      <SideMenu handle_signout={handle_signout} valid_profile={valid_profile} show_side_menu={show_side_menu} set_current_menu={set_current_menu} profile={user_profile} />
       {show_side_menu ? <div className='main-dark-back' onClick={close_all_menus}></div> : <></>}
     </main>
   )

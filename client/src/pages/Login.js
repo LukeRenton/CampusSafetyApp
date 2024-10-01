@@ -3,8 +3,9 @@ import { ReactComponent as Logo } from '../icons/Logo.svg';
 import { UserContext } from '../contexts/UserContext';
 import '../styles/LoginPage.css';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../components/Loader';
 
-const SignInPage = () => {
+const SignInPage = ( { set_user } ) => {
   //state to manage the visibility of the password
   const [showPassword, setShowPassword] = useState(false);
   //state to manage the student number
@@ -16,6 +17,12 @@ const SignInPage = () => {
 
   const { setStudentNumber } = useContext(UserContext);
 
+  const [error, set_error] = useState(null);
+
+  const [loading, set_loading] = useState(false);
+
+  const [remember_me, set_remember_me] = useState(false);
+
   //setting navigate 
   const navigate = useNavigate();
 
@@ -23,12 +30,24 @@ const SignInPage = () => {
     setShowPassword(!showPassword);
   };
 
+  const try_get_remembered_user = async () => {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const info = JSON.parse(user);
+      setLocalStudentNumber(info.username);
+      setPassword(info.password);
+      handleLogin(info.username, info.password);
+    }
+  }
+
   useEffect(() => {
     set_show_login(true);
+    try_get_remembered_user();
   }, []);
 
-  const handleLogin = async () => {
+  const handleLogin = async (uname, pass) => {
     // API request to the backend
+    set_loading(true);
     try {
       const response = await fetch('/users/login', { //add this onece we have merged with the backend
         method: 'POST',
@@ -36,23 +55,45 @@ const SignInPage = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: studentNumber,
-          password: password,
+          username: uname,
+          password: pass,
         }),
       });
 
       if (response.status === 200) {
         console.log('Login successful!');
-        setStudentNumber(studentNumber);
+        setStudentNumber(uname);
+        set_user(uname);
+        set_loading(false);
+
+        if (remember_me) {
+          localStorage.setItem('user', JSON.stringify({
+            username: uname,
+            password: pass
+          }))
+        }
+
         // Redirect to the next page
         navigate('/main');
       } else if (response.status === 401) {
         console.log('Invalid credentials');
+        set_user(null);
+        set_error("Invalid credentials");
+        set_loading(false);
+
       } else {
         console.log('Unexpected error');
+        set_user(null);
+        set_error("Unexpected error. Please try again");
+        set_loading(false);
+
       }
     } catch (error) {
       console.error('Error during login:', error);
+      set_error("Erorr during login. Please try again");
+      set_user(null);
+      set_loading(false);
+
     }
   };
 
@@ -91,16 +132,27 @@ const SignInPage = () => {
 
         <div className="optionsContainer">
           <label>
-            <input type="checkbox" />
+            <input type="checkbox" onChange={(e) => set_remember_me(!remember_me)}/>
             Remember me?
           </label>
-          <a href="#" className="forgotPasswordLink">
-            Forgot password?
-          </a>
         </div>
 
-        <button className="signInButton" onClick={handleLogin}>
-          Sign In
+        {
+        error?
+        <div className='login-errorContainer'>
+          <h3 className='login-error-message'>{`An error has occurred: ${error}`}</h3>
+        </div>
+        :
+        <></>
+        }
+
+        <button className="signInButton" onClick={() => handleLogin(studentNumber, password)}>
+          {
+          loading ?
+          <Loader size={40}></Loader>
+          :
+          'Sign In'
+          }
         </button>
       </div>
     </div>

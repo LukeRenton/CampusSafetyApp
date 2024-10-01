@@ -31,6 +31,7 @@ Cypress.Commands.add('login', (student_number, password) => {
     cy.get('input.inputField[placeholder="Student Number"]').type(student_number); 
     cy.get('input.inputField[placeholder="Password"]').type(password);
     cy.get('button').click();
+    cy.wait(10000);
   });
 
 // Comamnd to report each type of alert
@@ -38,9 +39,16 @@ Cypress.Commands.add('report', (reportTypes) => {
     cy.intercept('POST', '/alerts/alerts').as('postAlerts');
     reportTypes.forEach((type) => {
         cy.get('.navbar-report-button').click();
+        cy.wait(500);
         cy.get(`.shown-navbar-button-${type}`).click();
+        cy.wait(500);
         cy.get('.report-confirmation-button-yes').click();
         cy.wait('@postAlerts').its('response.statusCode').should('eq', 200);
+        cy.wait(5000);
+        cy.get('.notification-close').click();
+        cy.wait(1000);
+        cy.get('.marker-popup-back').click();
+        cy.wait(500);
     });
 
 });
@@ -55,6 +63,7 @@ Cypress.Commands.add('incident', () => {
         cy.get('.make-detailed-report-button-cancel').click();
     });
     cy.get('.detailed-report-close').click();
+    cy.wait(1000);
     // cy.wait('@postIncidents').its('response.statusCode').should('eq', 200);
 });
 

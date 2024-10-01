@@ -111,14 +111,16 @@ router.post('/report-incidents-external',upload.single('photo'), async (req, res
         if (!validTypes.includes(type)) {
             res.status(500).json({message:"error: invalid incident type. Should be of fire, medical, natural, security or weather"});
             return;
-           }
+        }
 
         const result = BuildingName(building_name);
 
         if (typeof result === "object") {
             latitude = result.latitude;
             longitude = result.longitude;
-            const reportIncident = await IncidentController.ReportSafetyIncidents(description,photo, latitude, longitude, type, building_name);
+            console.log("Made it here");
+            const reportIncident = await IncidentController.ReportSafetyIncidents(description, photo, latitude, longitude, type, building_name);
+            console.log(reportIncident);
             res.status(200).json(reportIncident);
         } else if (typeof result === "string") {
             console.log("Building not found");
@@ -155,7 +157,7 @@ router.post('/report-incidents',upload.single('photo'), async (req, res) => {
         }
 
         const {description, latitude, longitude, type, building_name} = req.body;
-        const reportIncidentId = await IncidentController.ReportSafetyIncidents(description,photo, latitude, longitude, type, building_name);
+        const reportIncidentId = await IncidentController.ReportSafetyIncidents(description, photo, latitude, longitude, type, building_name);
         const newRecordMessage = {
             of_type: "incident",
             id: reportIncidentId,

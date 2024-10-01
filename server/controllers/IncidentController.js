@@ -66,8 +66,7 @@ async function ReportSafetyIncidents(description, photo, latitude, longitude, ty
         const seconds = date.getSeconds();
         const sast_date = new Date(year, month, day, hour, minute, seconds);
         const [rows] = await pool.query('INSERT INTO incidents(description, photo, latitude, longitude, type, date, building_name) VALUES(?, ?, ?, ?, ?, ?,?)', [description, photo, latitude, longitude, type, sast_date, building_name]);
-        
-        const inserted_id = rows[0].insertId;
+        const inserted_id = rows.insertId;
         return inserted_id;
     } catch (err) {
         console.error(err);

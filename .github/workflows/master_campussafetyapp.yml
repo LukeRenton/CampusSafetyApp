@@ -24,10 +24,10 @@ jobs:
       - name: npm install
         run: npm install
 
-      - name: Run cypress tests
-        run: |
-          cd client
-          npx cypress run
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm start
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r

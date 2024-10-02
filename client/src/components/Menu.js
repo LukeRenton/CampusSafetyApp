@@ -42,7 +42,7 @@ export default function Menu({ close, menu_header, children }) {
         <section className={'menu-root ' + (show_menu ? 'menu-root-shown' : '')}>
             <header className='menu-top-header'>
                 <nav className='menu-top-nav'>
-                    <img className='menu-back' src={arrow} onClick={() => {handle_close_menu()}}></img>
+                    <img alt='back' className='menu-back' src={arrow} onClick={() => {handle_close_menu()}}></img>
                 </nav>
                 <h1 className='menu-top-heading'>{menu_header}</h1>
                 <div className='menu-empty-div'></div>

@@ -46,7 +46,6 @@ const SelectRes = ({ set_error, isOpen, onClose }) => {
     Returns: N/A
   */
   const handleGoClick = async () => {
-    console.log("Selected Residence:", selectedResidence);
   
     try {
       set_loading(true);

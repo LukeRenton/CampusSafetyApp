@@ -76,7 +76,6 @@ export async function make_report(type, image, description) {
 
     const position = get_user_coords();
 
-    console.log(image);
 
     var formdata = new FormData();
     formdata.append("description", description);
@@ -89,23 +88,16 @@ export async function make_report(type, image, description) {
       formdata.append("photo", null);
     }
 
-
-    console.log(formdata);
-
     var requestOptions = {
       method: 'POST',
       body: formdata,
       redirect: 'follow'
     };
 
-    console.log('making report');
-    
     const res = await fetch('/incidents/report-incidents', requestOptions)
     .then((res) => res.json())
     .catch(err => {return {error: err}});
     
-    console.log("RESULT HERE");
-    console.log(res);
 
     if (!res.error) {
       return {
@@ -122,7 +114,6 @@ export async function make_report(type, image, description) {
     
   } catch (err) {
     // Error handling!
-    console.log(err);
     return {
       error: "Error sending incident report"
     }
@@ -163,7 +154,6 @@ export async function update_incident_status(id, status) {
   
   
     if (!res.error) {
-      console.log(res);
       return {
         success: "success"
       }
@@ -177,7 +167,6 @@ export async function update_incident_status(id, status) {
     
   } catch (err) {
     // Error handling!
-    console.log(err);
     return {
       error: "Error updating alert status"
     }

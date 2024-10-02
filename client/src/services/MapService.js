@@ -50,7 +50,7 @@ export function create_map(map_in, map_container_in, map_movement_handler, marke
                                                             });
 
     geolocate_control.on('geolocate', () => {
-        console.log('geo occurred');
+        
         // map.current.flyTo({
         //   center: [28.030228, -26.190955],
         //   zoom: 18.38,
@@ -75,9 +75,6 @@ export function create_map(map_in, map_container_in, map_movement_handler, marke
     
     let result_map_load;
 
-    console.log("rendering the map");
-    console.log(incident_reports);
-
     map.current.on('load', () => {
         geolocate_control.trigger();
         result_map_load = render_report_areas(marker_popup_handler, incident_reports);
@@ -97,7 +94,6 @@ export function create_map(map_in, map_container_in, map_movement_handler, marke
       success: 'success'
     }
   } catch (err) {
-    console.log("err 2: ", err);
     // Handle error
     return {
       error: "Could not load map correctly"
@@ -322,8 +318,6 @@ export function add_new_report_area(marker_popup_handler, report) {
 export function render_report_areas(marker_popup_handler, all_reports) {
 
   try {
-    console.log("rendering areas");
-    // console.log(all_reports);
 
     // const all_reports = get_all_reports();
 
@@ -376,9 +370,7 @@ export function move_map_to(coord) {
 */
 export function get_user_coords() {
   // if ("geolocation" in navigator) {
-  //   console.log("here!!");
   //   navigator.geolocation.getCurrentPosition(position => {
-  //     console.log(position);
   //       return {
   //         lng: position.coords.longitude,
   //         lat: position.coords.latitude,
@@ -415,6 +407,4 @@ const user_coords = {
 export function set_user_coords(lng, lat) {
   user_coords.lat = lat;
   user_coords.lng = lng;
-
-  console.log(user_coords);
 }

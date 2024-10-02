@@ -12,7 +12,7 @@ import '../styles/QuickReportButton.css'
 export default function QuickReportButton({ children, colour }) {
   return (
     <button className='quick-report-button-root' style={{background: `${colour}`}}>
-        <img className='quick-report-button-icon' src={children} />
+        <img className='quick-report-button-icon' alt="alert icon" src={children} />
     </button>
   )
 }

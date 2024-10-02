@@ -32,7 +32,7 @@ export default function ReportItem({ type, description, time, show_time, active,
     <article className='report-item-root' onClick={ active ? handle_go_to_map : () => {}}>
       <section className='report-item-contents'>
         <div className='report-item-icon-container' style={{background: `${report_types[type].colour}`}}>
-          <img className='report-item-icon' src={report_types[type].icon}></img>
+          <img className='report-item-icon' alt='report icon' src={report_types[type].icon}></img>
         </div>
         <section className='report-item-info'>
           <article className='report-item-header'>

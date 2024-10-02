@@ -83,7 +83,7 @@ export async function fetch_contacts() {
         
         return emergency_contacts;
     })
-    console.log(res);
+    
     return res;
     
 }

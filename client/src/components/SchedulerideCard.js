@@ -9,9 +9,11 @@
 
 import React, { useState } from 'react';
 import '../styles/SchedulerideCard.css';
+import Loader from './Loader';
 
 const SchedulerideCard = ({ set_error, isOpen, onClose, onSchedule }) => {
   const [time, setTime] = useState('10:00'); // Default time
+  const [loading, set_loading] = useState(false);
 
   /*
     Function: handle_schedule
@@ -24,8 +26,8 @@ const SchedulerideCard = ({ set_error, isOpen, onClose, onSchedule }) => {
     Returns: N/A
   */
   const handleSchedule = async () => {
-    console.log("Ride Scheduled for", time);
     try {
+      set_loading(true);
       await fetch('/email/store-time', {
         method: 'POST',
         headers: {
@@ -35,8 +37,13 @@ const SchedulerideCard = ({ set_error, isOpen, onClose, onSchedule }) => {
       });
       onSchedule(time); // Trigger the next step in the flow
       onClose();
+      set_loading(false);
     } catch (error) {
       console.error('Error storing time:', error);
+      set_error({
+        message: "Error allocating time slot. Please try again."
+      });
+      set_loading(false);
     }
   };
   
@@ -45,7 +52,7 @@ const SchedulerideCard = ({ set_error, isOpen, onClose, onSchedule }) => {
 
   return (
     <div className="scheduleride-overlay" onClick={onClose}>
-      <div className="scheduleride-content" onClick={(e) => e.stopPropagation()}>
+      <div className={"scheduleride-content "+(loading ? 'scheduleride-content-hidden' : '') } onClick={(e) => e.stopPropagation()}>
         <h1 className="scheduleride-heading">Schedule a Ride</h1>
         <h6 className="scheduleride-subheading">Pick a time for your ride</h6>
 
@@ -56,8 +63,8 @@ const SchedulerideCard = ({ set_error, isOpen, onClose, onSchedule }) => {
           className="time-picker"
         />
 
-        <button className="scheduleride-button" onClick={handleSchedule}>
-          Schedule
+        <button className="scheduleride-button" onClick={!loading ? handleSchedule : ()=>{}}>
+          {loading ? <Loader size={30}></Loader> : 'Schedule'}
         </button>
       </div>
     </div>

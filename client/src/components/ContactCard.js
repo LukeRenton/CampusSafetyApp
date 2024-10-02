@@ -25,7 +25,7 @@ export default function ContactCard({ name, phone_num }) {
             </section>
             <a href={`tel: ${phone_num}`} className='contact-card-call-button'>
                 <p className='contact-card-call-button-text'>Call</p>
-                <img className='contact-card-call-button-icon' src={call}></img>
+                <img className='contact-card-call-button-icon' src={call} alt="call icon"></img>
             </a>
         </section>
     </article>

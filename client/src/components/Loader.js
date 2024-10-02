@@ -8,7 +8,7 @@
  */
 
 import React from 'react'
-import Lottie, { LottiePlayer } from 'lottie-react'
+import Lottie from 'lottie-react'
 import '../styles/Loader.css'
 import animationData from '../lotties/loader_white.json'
 

@@ -44,7 +44,7 @@ export default function ErrorCard( { set_error, error } ) {
     <div className={'error-card-root '+(show ? 'error-card-root-shown' : '')}>
         <div className={'error-card-content '+(show ? 'error-card-content-shown' : '')}>
             <div className='error-card-icon-container'>
-                <img className='error-card-icon' src={error_icon}></img>
+                <img className='error-card-icon' src={error_icon} alt="error icon"></img>
             </div>
             <div className='error-card-text-container'>
                 <h2 className='error-card-heading'>An error has occurred: </h2>

@@ -61,7 +61,7 @@ export default function SideMenu( props ) {
         </section>
         <section className='side-menu-contents-bottom'>
             <button className='side-menu-signout-button' onClick={props.handle_signout}>
-                <img src={signout} className='side-menu-signout-button-icon' style={{rotate: `180deg`}}></img>
+                <img src={signout} alt='sign out icon' className='side-menu-signout-button-icon' style={{rotate: `180deg`}}></img>
                 <h2 className='side-menu-signout-button-text'>Sign out</h2>  
             </button>
         </section>

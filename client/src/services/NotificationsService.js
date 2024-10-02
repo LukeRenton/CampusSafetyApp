@@ -27,7 +27,6 @@ export function render_notification_items(notification_array_in, close_all_menus
 
     // var notification_array = get_all_reports();
     var notification_array = [...notification_array_in];
-    console.log(notification_array);
 
     // Handle notifications
     if (notification_array.length > 0) {
@@ -43,7 +42,6 @@ export function render_notification_items(notification_array_in, close_all_menus
 
       
       while (notification_number < notification_array.length) {
-        console.log(`Read notification array[${notification_number}]`)
         const notification = notification_array[notification_number];
 
         if (!(notification.type === 'new-date') && !(notification.type === 'scroll-base')) {

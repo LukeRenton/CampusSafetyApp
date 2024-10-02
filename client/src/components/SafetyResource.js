@@ -15,7 +15,7 @@ export default function SafetyResource( { resource } ) {
   return (
     <div className='safety-resource-root'>
         <div className='safety-resource-header'  style={{background: `${report_types[resource.type].colour}`}}>
-            <img className='safety-resource-icon' src={report_types[resource.type].icon}></img>
+            <img className='safety-resource-icon' alt='resource icon' src={report_types[resource.type].icon}></img>
             <h2 className='safety-resource-heading'>
                 {resource.title}
             </h2>

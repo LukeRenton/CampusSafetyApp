@@ -8,9 +8,8 @@
  */
 
 import React from 'react'
-import Lottie, { LottiePlayer } from 'lottie-react'
+import Lottie from 'lottie-react'
 import '../styles/Spinner.css'
-import animationData from '../lotties/spinner.json'
 import report_types from '../common/ReportTypes'
 
 export default function Spinner({size, report_type}) {

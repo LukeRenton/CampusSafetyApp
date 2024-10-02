@@ -5,11 +5,13 @@ import Slider from './Slider'
 import EmergencyInfoBox from './EmergencyInfoBox'
 import Spinner from './Spinner'
 import { fetch_contacts } from '../services/EmergencyContactsService'
+import static_emergency_contacts from '../common/EmergencyContacts'
 
 export default function EmergencyInfoMenu( props ) {
 
   const [contacts_shown, set_contacts_shown] = useState('wits');
   const [loading_contacts, set_loading_contacts] = useState(true);
+  const [is_content_static, set_is_content_static] = useState(false);
   const [emergency_contacts, set_emergency_contacts] = useState({
       wits_contacts: [],
       external_contacts: []
@@ -21,7 +23,15 @@ export default function EmergencyInfoMenu( props ) {
     fetch_contacts().then((contacts) => {
       set_emergency_contacts(contacts);
       set_loading_contacts(false);
-    });
+      set_is_content_static(false);
+    }).catch(err => {
+      set_emergency_contacts(static_emergency_contacts);
+      set_loading_contacts(false);
+      set_is_content_static(true);
+      props.set_error({
+        message: "Could not fetch contact list. Showing static contact list for emergency purposes."
+      })
+    })
 
   },[])
 

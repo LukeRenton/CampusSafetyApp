@@ -11,7 +11,6 @@ import React, { useEffect, useState } from 'react'
 import '../styles/DetailedReport.css'
 import cross from '../icons/cross_black.svg'
 import ReportCard from './ReportCard'
-import ReportConfirmation from './ReportConfirmation';
 
 export default function DetailedReport( { report_types_data, close_menu, report, set_detailed_report_menu } ) {
 
@@ -46,7 +45,7 @@ export default function DetailedReport( { report_types_data, close_menu, report,
               <section className='detailed-report-top'>
                   <div className='detailed-report-blank-div'></div>
                   <h2 className='detailed-report-header'>Report</h2>
-                  <img className='detailed-report-close' src={cross} onClick={handle_close_menu}></img>
+                  <img className='detailed-report-close' src={cross} onClick={handle_close_menu} alt="close"></img>
               </section>
               <h3 className='detailed-report-sub-header'>What type of incident are you reporting?</h3>
               <ul className='detailed-report-types'>

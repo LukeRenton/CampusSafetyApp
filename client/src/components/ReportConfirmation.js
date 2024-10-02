@@ -6,7 +6,7 @@
  * Description:
  *  Report Confirmation custom modal
  */
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import '../styles/ReportConfirmation.css'
 import ReportCard from './ReportCard'
 import AutoCountdown from './AutoCountdown'

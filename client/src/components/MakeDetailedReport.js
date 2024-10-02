@@ -11,7 +11,6 @@ import React, { useEffect, useState } from 'react'
 import '../styles/MakeDetailedReport.css'
 import camera from '../icons/camera.svg'
 import { make_report } from '../services/IncidentReportsService';
-import { fetch_all_reports } from '../services/GeneralReportService';
 
 export default function MakeDetailedReport( { set_error, set_uploading_report, report_type, close_menu, close_all_menus } ) {
 
@@ -45,8 +44,6 @@ export default function MakeDetailedReport( { set_error, set_uploading_report, r
             }
             set_uploading_report(null);
         }).catch(err => {
-            console.log("JUST RECEIVED AN ERROR!")
-            console.log(err)
             set_error({
                 message: "Error sending incident report"
             });
@@ -59,7 +56,7 @@ export default function MakeDetailedReport( { set_error, set_uploading_report, r
         <div className={'make-detailed-report-root '+(show_menu ? 'make-detailed-report-root-shown' : '')}>
             <div className='make-detailed-report-container'>
                 <div className='make-detailed-report-header' style={{background: `${report_type.colour}`}}>
-                    <img className='make-detailed-report-icon' src={report_type.icon}></img>
+                    <img className='make-detailed-report-icon' src={report_type.icon} alt="report icon"></img>
                     <h2 className='make-detailed-report-heading'>{report_type.header}</h2>
                     <div className='make-detailed-report-empty-div'></div>
                 </div>

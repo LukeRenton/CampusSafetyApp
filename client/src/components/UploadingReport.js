@@ -23,7 +23,7 @@ export default function UploadingReport( { report_type } ) {
 
   return (
     <div className={'uploading-report-root '+(shown ? 'uploading-report-root-shown' : '')} style={{background: `${report_types[report_type].colour}`}}>
-      <img className='uploading-report-icon' src={report_types[report_type].icon}></img>
+      <img className='uploading-report-icon' alt="report icon" src={report_types[report_type].icon}></img>
       <h3 className='uploading-report-text'>Uploading your report</h3>
       <Loader size={30}></Loader>
     </div>

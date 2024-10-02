@@ -68,6 +68,6 @@
 }
 
 .finding-location-text-hidden {
-    width: 0;
+    /* width: 0; */
     transition: 0.4s;
 }

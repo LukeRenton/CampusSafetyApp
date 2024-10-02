@@ -48,7 +48,6 @@ export async function make_alert_report(type) {
 
 
       if (!res.error) {
-        console.log(res);
         return {
           success: "success"
         }
@@ -62,7 +61,6 @@ export async function make_alert_report(type) {
       
     } catch (err) {
       // Error handling!
-      console.log(err);
       return {
         error: "Error sending alert"
       }
@@ -103,7 +101,6 @@ try {
 
 
   if (!res.error) {
-    console.log(res);
     return {
       success: "success"
     }
@@ -117,7 +114,6 @@ try {
   
 } catch (err) {
   // Error handling!
-  console.log(err);
   return {
     error: "Error updating alert status"
   }

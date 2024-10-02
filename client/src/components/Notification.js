@@ -51,11 +51,11 @@ export default function Notification({ report, close_notification, go_to }) {
                 <section className='notification-header'>
                   <div className='notification-blank-div'></div>
                   <h1 className='notification-heading'>New Notification!</h1>
-                  <img className='notification-close' src={close_icon} onClick={handle_close_notification}></img>
+                  <img className='notification-close' alt="close" src={close_icon} onClick={handle_close_notification}></img>
                 </section>
                 <div className='notification-info'>
                     <div className='notificaiton-icon-container' style={{background: `${report_types[report.type].colour}`}}>
-                        <img className='notificaiton-icon' src={report_types[report.type].icon}></img>
+                        <img className='notificaiton-icon' alt="notification icon" src={report_types[report.type].icon}></img>
                     </div>
                     <div className='notification-extra-info'>
                         <h2 className='notification-type'>{report_types[report.type].header}</h2>

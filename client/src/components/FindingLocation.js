@@ -1,7 +1,16 @@
+/**
+ * File: FindingLocation.js
+ * 
+ * Author: Mitchell
+ * 
+ * Description:
+ *  Small card to show that the app is looking for the user's location
+ */
+
 import React, { useEffect, useState } from 'react'
 import '../styles/FindingLocation.css'
 import animationData from '../lotties/finding_location.json'
-import Lottie, { LottiePlayer } from 'lottie-react'
+import Lottie from 'lottie-react'
 
 
 export default function FindingLocation() {
@@ -10,6 +19,16 @@ export default function FindingLocation() {
     
     const [show, set_show] = useState(false);
 
+    /*
+        Function: handle_show_more_info
+
+        Description:
+            Shows the text of the card
+
+        Parameters: N/A
+
+        Returns: N/A
+    */
     const handle_show_more_info = () => {
         set_show_more_info(true);
         setTimeout(() => {

@@ -53,10 +53,10 @@ export default function FirstAidGuide({ guide_name, icon, icon_size, close, step
       <div className='first-aid-guide-back' onClick={close}></div>
         <section className='first-aid-guide-root'>
             <section className='first-aid-guide-top'>
-                <img className='first-aid-guide-icon' src={icon} style={{width: `${icon_size}px`, height: `${icon_size}px`}}></img>
+                <img className='first-aid-guide-icon' alt="first aid icon" src={icon} style={{width: `${icon_size}px`, height: `${icon_size}px`}}></img>
                 <h2 className='first-aid-guide-name'>{guide_name}</h2>
                 <div className='first-aid-close' onClick={close} style={{width: `${icon_size}px`, height: `${icon_size}px`}}>
-                    <img className='first-aid-close-icon' src={cross}></img>
+                    <img className='first-aid-close-icon' src={cross} alt="close"></img>
                 </div>
             </section>
             <section className='first-aid-guide-content'>

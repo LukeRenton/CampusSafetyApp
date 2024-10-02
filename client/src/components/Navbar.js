@@ -6,17 +6,19 @@
  * Description:
  *  Component to host all sub-components for- and to render- the navbar
  */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../styles/Navbar.css'
 import QuickReportButton from './QuickReportButton'
 // import exclamation from '../icons/exclamation.svg'
 import sos from '../icons/sos.svg'
-import report_types from '../common/ReportTypes'
 import arrow from '../icons/arrow_white.svg'
 import Loader from './Loader'
 
 
 export default function Navbar({ uploading_report, location_services_enabled, show_quickreports, set_show_quickreports, report_types_data, open_detailed_report_menu, set_confirmation_menu }) {
+
+  const [sos_img, set_sos_img] = useState(null);
+  const [arrow_img, set_arrow_img] = useState(null);
 
   /* 
     Function: render_quick_report_buttons
@@ -54,6 +56,25 @@ export default function Navbar({ uploading_report, location_services_enabled, sh
     open_detailed_report_menu();
   }
 
+
+  useEffect(() => {
+    const load_sos_img = new Image();
+    load_sos_img.src = sos;
+    const load_arrow = new Image();
+    load_arrow.src = arrow;
+
+
+    load_sos_img.onload = () => {
+      set_sos_img(load_sos_img);
+    }
+
+    load_arrow.onload = () => {
+      set_arrow_img(load_arrow);
+    }
+
+
+  },[])
+
   return (
     <>
       {show_quickreports ? <div className='navbar-back' onClick={() => set_show_quickreports(false)}></div> : <></>}
@@ -69,11 +90,13 @@ export default function Navbar({ uploading_report, location_services_enabled, sh
           <button className={'navbar-report-button '+(location_services_enabled && !uploading_report ? 'navbar-report-button-shown' : 'navbar-report-button-hidden')} onClick={!show_quickreports ? () => set_show_quickreports(true) : () => handle_show_detailed_report_menu()}>
             <section className='navbar-report-button-inner'>
                 {show_quickreports ?
-                <img className='navbar-report-icon arrow-icon' src={arrow}></img>
+                (
+                  arrow_img ? <img className='navbar-report-icon arrow-icon' alt='Open detailed menu' src={arrow_img.src}></img> : <Loader size={50}></Loader>
+                )
                 // <h2>More</h2>
                 :
                 // <h2>SOS</h2>
-                (uploading_report ? <Loader size={40}></Loader> : <img className='navbar-report-icon' src={sos} style={{marginTop: `-7px`}}></img>)
+                (uploading_report ? <Loader size={40}></Loader> : (sos_img ? <img className='navbar-report-icon' alt='Report Alert' src={sos_img.src} style={{marginTop: `-7px`}}></img> : <Loader size={50}></Loader>))
                 }
             </section>
           </button>

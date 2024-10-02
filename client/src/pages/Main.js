@@ -81,13 +81,9 @@ export default function Main( { set_user } ) {
   const navigate = useNavigate();
 
   const handle_signout = () => {
-    console.log("test a");
-    // set_user(null);
-    console.log("test b");
-    // localStorage.removeItem('user');
-    console.log("test c");
+    set_user(null);
+    localStorage.removeItem('user');
     navigate('/');
-    console.log("test d");
   }
 
   /*
@@ -102,7 +98,9 @@ export default function Main( { set_user } ) {
   */  
   const get_user_profile = () => {
     if (!studentNumber) {
-      handle_signout();
+      // handle_signout();
+      navigate('/');
+
     }
 
     const fetchProfile = async () => {
@@ -169,11 +167,9 @@ export default function Main( { set_user } ) {
 
     eventSource_alerts.onmessage = async (event) => {
       const data = JSON.parse(event.data);
-      // console.log(data);
       //const message = JSON.parse(data.message);
       // if (!hasNotified) {
 
-        console.log(data.message);
         // Trigger the notification using react-push-notification
         const type = data.message.type;
         const lng = data.message.lng;
@@ -198,11 +194,9 @@ export default function Main( { set_user } ) {
 
     eventSource_incidents.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      // console.log(data);
       //const message = JSON.parse(data.message);
       // if (!hasNotified) {
 
-        console.log(data.message);
         // Trigger the notification using react-push-notification
         const type = data.message.type;
         const description = data.message.description;
@@ -233,10 +227,7 @@ export default function Main( { set_user } ) {
     const incident_reports = fetch_all_reports();
     incident_reports.then(
       (incident_reports) => {
-        console.log("retrieved reports:",incident_reports);
         if (incident_reports) {
-          // console.log("retrieved reports:")
-          // console.log(incident_reports)
           set_reports(incident_reports)
         } else {
           set_reports([]);
@@ -245,7 +236,6 @@ export default function Main( { set_user } ) {
       }
     )
     .catch(err => {
-      console.log("error retrieiving reports");
       // Handle error
       set_reports([]);
       set_error({

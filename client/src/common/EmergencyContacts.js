@@ -93,9 +93,9 @@ const external_contacts = [
     }
 ]
 
-const emergency_contacts = {
+const static_emergency_contacts = {
     wits_contacts: wits_contacts,
     external_contacts: external_contacts
 }
 
-export default emergency_contacts
+export default static_emergency_contacts

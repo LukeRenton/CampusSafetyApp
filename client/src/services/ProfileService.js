@@ -29,7 +29,7 @@ export async function get_profile(studentNumber) {
         // const response = await fetch(`/users/user-information/abc`).then((res) => res.json());
         
         const full_profile = response[0];
-        console.log(full_profile);
+        
         const profile = {
             first_names: full_profile.FirstNames,
             last_name: full_profile.LastNames,
@@ -51,7 +51,7 @@ export async function get_profile(studentNumber) {
                 work: full_profile.secondContactWorkNumber
             }
         }
-        console.log(profile);
+        
         return profile;
     } catch (error) {
         console.error('Error fetching profile:', error.message);
@@ -147,7 +147,6 @@ export function get_blank_profile() {
     Returns: N/A
 */
 export async function update_user_info(user_profile) {
-    console.log(user_profile);
 
     // firstnames, lastnames, student_number, gender, DOB, allergies
     try {
@@ -176,10 +175,14 @@ export async function update_user_info(user_profile) {
         }).then((res) => res.json());
 
         if (res.ok) {
-            console.log(res);
+            return {
+                success: "Success"
+            }
         }
     
     } catch (err) {
-        console.log(err);
+        return {
+            error: "Error updating user information"
+        }
     }
 }

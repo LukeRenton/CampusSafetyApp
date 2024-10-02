@@ -11,7 +11,6 @@ import React, { useEffect, useState } from 'react'
 import '../styles/MarkerPopup.css'
 import report_types from '../common/ReportTypes'
 import camera_icon from '../icons/camera.svg'
-import sample_photo from '../media/sample_report_photo.png'
 import Spinner from './Spinner'
 import status_icon from '../icons/tilted_bell.svg'
 import { update_alert_status } from '../services/AlertReportsService'
@@ -24,6 +23,17 @@ export default function MarkerPopup({ report, close }) {
   const [loading_image, set_loading_image] = useState(true);
   const [status, set_status] = useState(report.active === true ? "Active" : "Inactive");
 
+  /*
+    Function: submit_changes
+
+    Description:
+      Submits changes to "Active" status
+
+    Paramters:
+      e: event
+    
+      Returns: N/A
+  */
   const submit_changes = async (e) => {
     if (report.of_type === 'alert') {
       set_loading_change(true);
@@ -46,10 +56,20 @@ export default function MarkerPopup({ report, close }) {
     }
   }
 
+  /*
+    Function: change_status
+
+    Description:
+      Changes the status from input
+
+    Parameters:
+      e: event sender
+
+    Returns: N/A
+  */
   const change_status = (e) => {
     // e.stopPropagation();
     set_status(e.target.value);
-    console.log(e.target)
   }
 
   // Fetch image dynamically
@@ -75,7 +95,7 @@ export default function MarkerPopup({ report, close }) {
                     <div className='marker-popup-empty-div'></div>
                 </section>
                 <section className='marker-popup-main-info'>
-                    <img className='marker-popup-main-icon' src={report_types[report.type].marker}></img>
+                    <img className='marker-popup-main-icon' alt="marker icon" src={report_types[report.type].marker}></img>
                     <h1 className='marker-popup-main-header'>Marker Information</h1>
                 </section>
                 <p className='marker-popup-description'>{report.description}</p>
@@ -83,7 +103,7 @@ export default function MarkerPopup({ report, close }) {
                 <section className='marker-popup-photo'>
                   <section className='marker-popup-photo-header'>
                     <div className='marker-popup-photo-icon-container'>
-                      <img className='marker-popup-photo-icon' src={camera_icon}></img>
+                      <img className='marker-popup-photo-icon' alt="Upload Photo" src={camera_icon}></img>
                     </div>
                     <h1 className='marker-popup-main-header'>Photo</h1>
                   </section>
@@ -101,7 +121,7 @@ export default function MarkerPopup({ report, close }) {
                 <section className='marker-popup-status'>
                   <section className='marker-popup-status-header'>
                     <div className='marker-popup-status-icon-container'>
-                        <img className='marker-popup-status-icon' src={status_icon}></img>
+                        <img className='marker-popup-status-icon' alt="status icon" src={status_icon}></img>
                     </div>
                     <h1 className='marker-popup-main-header'>Status</h1>
                   </section>

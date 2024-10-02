@@ -14,7 +14,7 @@ export default function FirstAidOption({ icon, header, icon_size, click }) {
   return (
     <div className='first-aid-option-root' onClick={click}>
         <div className='first-aid-option-inner'>
-            <img className='first-aid-option-icon' src={icon} style={{width: `${icon_size}px`, height: `${icon_size}`}}></img>
+            <img className='first-aid-option-icon' alt="first aid icon" src={icon} style={{width: `${icon_size}px`, height: `${icon_size}`}}></img>
             <h2 className='first-aid-option-header'>{header}</h2>
         </div>
     </div>

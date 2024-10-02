@@ -106,7 +106,7 @@ export default function SafetyResourcesMenu( { set_error, close_menu } ) {
       <section className='safety-resources-menu-container'>
         <section className='safety-resources-menu-subcountainer'>
             <section className='safety-resources-menu-search-container'>
-                <img className='safety-resources-menu-search-icon' src={search_icon}></img>
+                <img className='safety-resources-menu-search-icon' alt="search icon" src={search_icon}></img>
                 <input className='safety-resources-menu-search' placeholder='Search for a safety resource' value={search} onChange={(e) => set_search(e.target.value)}></input>
             </section>
         </section>

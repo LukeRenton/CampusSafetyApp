@@ -10,7 +10,6 @@ import React, { useState } from 'react'
 import Menu from './Menu'
 import '../styles/MedicalProfileMenu.css'
 import clipboard from '../icons/clipboard.svg'
-import sample_student_pic from '../media/sample_student_pic.png'
 import EditMedicalProfile from './EditMedicalProfile'
 import { string_to_date, years_between } from '../services/DateTimeService'
 import account_icon from '../icons/account.svg'
@@ -25,7 +24,7 @@ export default function MedicalProfileMenu( { studentNumber, close_menu, profile
             {!show_edit_medical_profile ?
             <section className='medical-profile-menu-content'>
                 <section className='medical-profile-menu-screen-on'>
-                    <img className='medical-profile-menu-screen-on-icon' src={clipboard}></img>
+                    <img className='medical-profile-menu-screen-on-icon' alt="clipboard icon" src={clipboard}></img>
                     <h4 className='medical-profile-menu-screen-on-text'>This profile will keep the screen on for emergency reasons</h4>
                 </section>
                 <article className='medical-profile-menu-box'>

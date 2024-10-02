@@ -11,8 +11,6 @@
 import React, { useState } from 'react'
 import '../styles/EditMedicalProfile.css'
 import { update_user_info } from '../services/ProfileService';
-import { date_to_dashed_string, string_to_date } from '../services/DateTimeService';
-import Spinner from './Spinner';
 import Loader from './Loader';
 
 export default function EditMedicalProfile( { user_profile, close_edit_menu, get_user_profile } ) {
@@ -56,7 +54,6 @@ export default function EditMedicalProfile( { user_profile, close_edit_menu, get
       ...profile,
       [name]: value
     });
-    console.log(profile);
   };
 
   /*
@@ -93,7 +90,6 @@ export default function EditMedicalProfile( { user_profile, close_edit_menu, get
   */
   const handleSubmit = () => {
     // You can send this profile data to your endpoint
-    console.log('Submitted Profile:', profile);
     set_uploading_info(true);
     update_user_info(profile).then(() => {
       set_uploading_info(false);

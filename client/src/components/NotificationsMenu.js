@@ -9,7 +9,6 @@
 import React from 'react'
 import '../styles/NotificationsMenu.css'
 import Menu from './Menu'
-import ReportItem from './ReportItem'
 import { render_notification_items } from '../services/NotificationsService'
 
 export default function NotificationsMenu( props ) {

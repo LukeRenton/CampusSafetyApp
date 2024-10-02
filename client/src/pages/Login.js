@@ -13,7 +13,7 @@ const SignInPage = ( { set_user } ) => {
   //state to manage the password
   const [password, setPassword] = useState('');
   //state to manage the visibility of the login form
-  const [show_login, set_show_login] = useState(true);
+  const [show_login, set_show_login] = useState(false);
 
   const { setStudentNumber } = useContext(UserContext);
 
@@ -46,7 +46,6 @@ const SignInPage = ( { set_user } ) => {
       });
 
       if (response.status === 200) {
-        console.log('Login successful!');
         setStudentNumber(uname);
         set_user(uname);
         set_loading(false);
@@ -61,21 +60,18 @@ const SignInPage = ( { set_user } ) => {
         // Redirect to the next page
         navigate('/main');
       } else if (response.status === 401) {
-        console.log('Invalid credentials');
         set_user(null);
         set_error("Invalid credentials");
         set_loading(false);
 
       } else {
-        console.log('Unexpected error');
         set_user(null);
         set_error("Unexpected error. Please try again");
         set_loading(false);
 
       }
     } catch (error) {
-      console.error('Error during login:', error);
-      set_error("Erorr during login. Please try again");
+      set_error("Erorr during login. Please make sure you are connected to the internet and try again");
       set_user(null);
       set_loading(false);
 
@@ -83,7 +79,6 @@ const SignInPage = ( { set_user } ) => {
   };
 
   const try_get_remembered_user = async () => {
-    console.log('h');
     const user = localStorage.getItem('user');
     if (user) {
       const info = JSON.parse(user);
@@ -91,15 +86,11 @@ const SignInPage = ( { set_user } ) => {
       setPassword(info.password);
       handleLogin(info.username, info.password);
     }
-    console.log('i');
   }
 
   useEffect(() => {
-    // console.log("test e");
-    // set_show_login(true);
-    // console.log("test f");
-    // try_get_remembered_user();
-    // console.log("test g");
+    set_show_login(true);
+    try_get_remembered_user();
   }, []);
 
   
@@ -112,55 +103,60 @@ const SignInPage = ( { set_user } ) => {
       </div>
 
       <div className={`formContainer ${show_login ? 'formContainer-show': '' }`}>
-        <h2 className="title">Welcome to Campus Safety App</h2>
-        <p className="subtitle">
-          To login, use your Wits student number and your student password
-        </p>
+        <div className={`formSubContainer`}>
 
-        <input
-          type="text"
-          placeholder="Student Number"
-          className="inputField"
-          value={studentNumber}
-          onChange={(e) => setLocalStudentNumber(e.target.value)}
-        />
-        <div className="passwordContainer">
+          <h2 className="title">Welcome to Campus Safety App</h2>
+          <p className="subtitle">
+            To login, use your Wits student number and your student password
+          </p>
+
           <input
-            type={showPassword ? 'text' : 'password'}
-            placeholder="Password"
+            type="text"
+            placeholder="Student Number"
             className="inputField"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={studentNumber}
+            onChange={(e) => setLocalStudentNumber(e.target.value)}
           />
-          <span onClick={togglePasswordVisibility} className="eyeIcon">
-            {showPassword ? '🙈' : '👁️'}
-          </span>
-        </div>
+          <div className="passwordContainer">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Password"
+              className="inputField"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <span onClick={togglePasswordVisibility} className="eyeIcon">
+              {showPassword ? '🙈' : '👁️'}
+            </span>
+          </div>
 
-        <div className="optionsContainer">
-          <label>
-            <input type="checkbox" onChange={(e) => set_remember_me(!remember_me)}/>
-            Remember me?
-          </label>
-        </div>
+          <div className="optionsContainer">
+            <label>
+              <input type="checkbox" onChange={(e) => set_remember_me(!remember_me)}/>
+              Remember me?
+            </label>
+          </div>
 
-        {
-        error?
-        <div className='login-errorContainer'>
-          <h3 className='login-error-message'>{`An error has occurred: ${error}`}</h3>
-        </div>
-        :
-        <></>
-        }
-
-        <button className="signInButton" onClick={() => handleLogin(studentNumber, password)}>
           {
-          loading ?
-          <Loader size={40}></Loader>
+          error?
+          <div className='login-errorContainer'>
+            <h3 className='login-error-message'>{`An error has occurred: ${error}`}</h3>
+          </div>
           :
-          'Sign In'
+          <></>
           }
-        </button>
+
+          <button className="signInButton" onClick={() => handleLogin(studentNumber, password)}>
+            {
+            loading ?
+            <Loader size={40}></Loader>
+            :
+            'Sign In'
+            }
+          </button>
+
+          <div className='login-scroll-base'> .</div>
+        </div>
       </div>
     </div>
   );

@@ -12,7 +12,6 @@ import React, { useRef, useEffect, useState } from 'react';
 import '../styles/Map.css'
 import handle_marker_click, { add_new_report_area, create_map, render_report_areas, set_user_coords } from '../services/MapService';
 import MarkerPopup from './MarkerPopup';
-import { render_incident_report_items } from '../services/IncidentReportsService';
 import Notification from './Notification';
 import create_new_report_from_notification from '../services/PushNotificationService';
 
@@ -65,13 +64,7 @@ export default function Map( { set_location_services_enabled, set_error, inciden
         try {
             // Ensure only 1 map is generated
             if (!map.current) {
-                console.log(incident_reports);
                 const result = create_map(map, map_container, handle_movement, handle_marker_popup, incident_reports);
-                console.log(result);
-
-            // render_report_areas(handle_marker_popup, incident_reports);
-
-                
             }
 
             // Watch user's position
@@ -84,14 +77,25 @@ export default function Map( { set_location_services_enabled, set_error, inciden
             (res) => {
                 set_user_coords(res.coords.longitude, res.coords.latitude)
                 set_location_services_enabled(true);
+                options.timeout = 10000; // longer timeouts while updating location
             },
             (err) => {
-                console.log(err)
+
+                if (err.PERMISSION_DENIED) {
+                    set_error({
+                        message: "Please enable your location to make reports."
+                    })
+                } else if (err.POSITION_UNAVAILABLE) {
+                    set_error({
+                        message: "Location error: Could not find your position"
+                    })
+                }
+
                 set_location_services_enabled(false);
+                options.timeout = 1000; // shorten timeout to find location ASAP
             }, options)
             
         } catch (err) {
-            console.log(err);
             set_error({
                 message: "Error loading map"
             })
@@ -106,6 +110,7 @@ export default function Map( { set_location_services_enabled, set_error, inciden
     useEffect(() => {
         // If a new notification has arrived, create 
         if (new_notification) {
+            console.log(new_notification);
             const new_alert = create_new_report_from_notification(new_notification);
             set_show_notification(new_alert);
             add_new_report_area(handle_marker_popup, new_alert);

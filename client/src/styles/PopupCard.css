@@ -11,7 +11,7 @@
     align-items: flex-end; /* Align to the bottom of the screen */
     color: white;
     overflow: hidden; /* Prevent the background from scrolling */
-    z-index: 1000; /* Ensure the overlay is on top of other content */
+    z-index: 3; /* Ensure the overlay is on top of other content */
   }
   
   /* Popup Content */

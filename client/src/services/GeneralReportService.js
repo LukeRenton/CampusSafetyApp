@@ -65,7 +65,6 @@ export async function fetch_all_reports() {
       }
     }).then((res) => res.json())
     .then((report_list) => {
-      console.log(report_list)
       
 
       report_list.forEach((report) => {
@@ -91,7 +90,6 @@ export async function fetch_all_reports() {
     
     
     return incident_reports;
-    // console.log(res);
     // return res;
 
     // if (res.ok) {
@@ -102,7 +100,9 @@ export async function fetch_all_reports() {
     // }
   } catch (err) {
     // Error handling!
-    console.log(err);
+    return {
+      error: "Error fetching reports"
+    }
   }
 }
 

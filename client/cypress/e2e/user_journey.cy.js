@@ -1,18 +1,38 @@
-// All our commands are found in the commands.js file. We can now use these commands in our tests.
+//Code below is from here: https://stackoverflow.com/a/65897739 --no clue how it fixed it after all the other attemps but nice
 
-describe('Full User Journey', () => {
+export const setFakePosition = position => {
+  console.debug(`cypress::setGeolocationOverride with position ${JSON.stringify(position)}`);
+  cy.log("**setGeolocationOverride**").then(() =>
+      Cypress.automation("remote:debugger:protocol", {
+          command: "Emulation.setGeolocationOverride",
+          params: {
+              latitude: position.latitude,
+              longitude: position.longitude,
+              accuracy: 50
+          }
+      })
+  );
+};
+
+
+describe('Full User Journey with Geolocation Override', () => {
   it('should allow a user to log in and interact with various features', () => {
-      // **Login Test**
-      cy.login('2540440', '123');
-  
+      // Set fake geolocation before visiting the site
+      setFakePosition({ latitude: -26.191, longitude: 28.0302 });
+
+      // ** Test Login **
+      cy.visit('/');
+      cy.login('2540440', '123'); 
+
       // **Test Each Report**
-      // We can update the test case by just adding the different report types to the array
       const reportTypes = ['medical', 'fire', 'natural', 'security', 'weather'];
       cy.report(reportTypes);
 
-
       // **Test Each Incident**
       cy.incident();
+
+      // **Actually send alert**
+      cy.reportSingleIncident();
 
       // **Test tabs in nav**
       cy.checkTabs();
@@ -28,6 +48,5 @@ describe('Full User Journey', () => {
 
       // **Test logout**
       cy.logout();
-      
-    });
+  });
 });

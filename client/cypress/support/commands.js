@@ -24,6 +24,8 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+import 'cypress-file-upload';
+
 
 // Command to login with given user details
 Cypress.Commands.add('login', (student_number, password) => {
@@ -55,7 +57,6 @@ Cypress.Commands.add('report', (reportTypes) => {
 
 // Command to report each type of incident
 Cypress.Commands.add('incident', () => {
-    // cy.intercept('POST', '/incidents/report-incidents').as('postIncidents');
     cy.get('.navbar-report-button').click();
     cy.get(`.navbar-report-button`).click();
     cy.get('.detailed-report-type-item').each(($el) => {
@@ -64,8 +65,30 @@ Cypress.Commands.add('incident', () => {
     });
     cy.get('.detailed-report-close').click();
     cy.wait(1000);
-    // cy.wait('@postIncidents').its('response.statusCode').should('eq', 200);
 });
+
+// Command to report a single incident
+Cypress.Commands.add('reportSingleIncident', () => {
+    const filePath = 'image.png';
+    cy.intercept('POST', '/incidents/report-incidents').as('postIncidents');
+    cy.get('.navbar-report-button').click();
+    cy.wait(250);
+    cy.get(`.navbar-report-button`).click();
+    cy.get('.detailed-report-type-item').eq(0).click();
+    cy.wait(500);
+    cy.get('.make-detailed-report-upload-picture-input').attachFile(filePath);
+    cy.wait(250);
+    cy.get('#report-description-input').type("Test Description");
+    cy.wait(250);
+    cy.get('.make-detailed-report-button-submit').click();
+    cy.wait('@postIncidents').its('response.statusCode').should('eq', 200);
+    cy.get('.notification-close').click();
+    cy.wait(250);
+    cy.get('.marker-popup-content').should('be.visible');
+    cy.get('.marker-popup-back').click({force: true});
+    cy.wait(250);
+});
+
 
 // Command to check each tab in the navigation bar
 Cypress.Commands.add('checkTabs', () => {
@@ -115,7 +138,7 @@ Cypress.Commands.add('walkHomeAssistSchedule', () => {
     cy.contains('button', 'Schedule').click();
     cy.get('.time-picker').clear().type('12:00').should('have.value', '12:00');
     cy.get('.scheduleride-button').click();
-    cy.get('.selectres-dropdown').select('Ernest Oppenheimer Hall').should('have.value', 'residence2');
+    cy.get('.selectres-dropdown').select('Ernest Oppenheimer Hall').should('have.value', 'Ernest Oppenheimer Hall');
     cy.get('.selectres-button').click();
     cy.get('.ride-now-confirmation-content').should('be.visible');
     cy.get('.ride-now-confirmation-content h1').should('have.text', "You're all set!");

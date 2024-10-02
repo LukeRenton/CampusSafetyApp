@@ -3,14 +3,14 @@
   "name": "Wits Campus Safety",
   "icons": [
     {
-      "src": "app_icon.ico",
+      "src": "safety_app_icon.ico",
       "sizes": "32x32",
       "type": "image/x-icon"
     },
     {
-      "src": "app_icon_mobile.png",
+      "src": "safety_app_icon.png",
       "type": "image/png",
-      "sizes": "300x300"
+      "sizes": "32x32"
     }
   ],
   "start_url": ".",

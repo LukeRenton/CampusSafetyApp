@@ -19,7 +19,7 @@ import report_types from "../common/ReportTypes";
 
     Returns: Valid report object for frontend
 */
-export default function create_new_report_from_notification(report) {
+export function create_new_report_from_notification(report) {
     return {
         of_type: report.of_type,
         id: report.id,

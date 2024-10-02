@@ -9,7 +9,7 @@
     width: 100%;
 
     
-    height: 50px;
+    height: 70px;
     background-color: white;
     border-top-right-radius: 40px;
     border-top-left-radius: 40px;
@@ -17,12 +17,6 @@
     box-shadow: 0px -2px 10px 10px rgba(0, 0, 0, 0.2);
 }
 
-@media only screen and (min-width: 801px) {
-    .navbar-root {
-        max-width: 800px;
-        left: calc(50% - 400px);
-    }
-}
 
 
 .navbar-report-buttons {
@@ -39,36 +33,36 @@
     padding: 0;
 
     left: calc(50% - 25px);
-    bottom: 45px;
+    bottom: 65px;
     transition: 0.3s;
 }
 
 .shown-navbar-button-medical {
-    bottom: 130px;
+    bottom: 150px;
     transition: 0.3s;
 }
 
 .shown-navbar-button-fire {
     left: calc(50% + 40px);
-    bottom: 105px;
+    bottom: 125px;
     transition: 0.3s;
 }
 
 .shown-navbar-button-weather {
     left: calc(50% - 25px - 65px);
-    bottom: 105px;
+    bottom: 125px;
     transition: 0.3s;
 }
 
 .shown-navbar-button-natural {
     left: calc(50% - 25px - 100px);
-    bottom: 50px;
+    bottom: 70px;
     transition: 0.3s;
 }
 
 .shown-navbar-button-security {
     left: calc(50% + 80px);
-    bottom: 50px;
+    bottom: 70px;
     transition: 0.3s;
 }
 
@@ -77,7 +71,7 @@
     left: calc(50% - var(--report-button-size)/2);
     width: var(--report-button-size);
     height: var(--report-button-size);
-    bottom: 20px;
+    bottom: 35px;
 
     display: flex;
     flex-direction: column;
@@ -163,6 +157,7 @@
 .navbar-detailed-menu-indicator-text {
     margin: 0;
     padding: 0;
+    margin-bottom: 20px;
 
     color: var(--subtext);
 
@@ -193,6 +188,7 @@
 
     padding-left: 10px;
     padding-right: 10px;
+    margin-bottom: 20px;
     text-align: center;
 
     color: var(--subtext);
@@ -200,4 +196,57 @@
     font-size: 18px;
     font-weight: 400;
     font-style: normal;
+}
+
+
+@media only screen and (min-width: 801px) {
+    .navbar-root {
+        max-width: 800px;
+        left: calc(50% - 400px);
+        height: 50px;
+    }
+        
+    .navbar-report-button-item {
+        bottom: 35px;
+    }
+
+    .navbar-report-button {
+        bottom: 15px;
+    }
+    
+    .shown-navbar-button-medical {
+        bottom: 130px;
+        transition: 0.3s;
+    }
+    
+    .shown-navbar-button-fire {
+        bottom: 105px;
+        transition: 0.3s;
+    }
+    
+    .shown-navbar-button-weather {
+        bottom: 105px;
+        transition: 0.3s;
+    }
+    
+    .shown-navbar-button-natural {
+        bottom: 50px;
+        transition: 0.3s;
+    }
+    
+    .shown-navbar-button-security {
+        bottom: 50px;
+        transition: 0.3s;
+    }
+    
+    .navbar-detailed-menu-indicator-text {
+        margin: 0;
+        margin-bottom: 0;
+    }
+    
+    
+    .navbar-disabled-location-text {
+        margin: 0;
+        margin-bottom: 0px;
+    }
 }

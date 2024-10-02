@@ -10,6 +10,8 @@ const UserContactsRoutes = require('./routes/UserContactsRoutes');
 const EmergencyContactsRoutes= require('./routes/EmergencyContactsRoutes');
 const UserInformationRoutes = require('./routes/UserInformationRoutes');
 const EmailRoutes = require('./routes/EmailRoutes');
+// const PushNotificationRoutes = require('./routes/PushNotificationRoutes');
+
 app.use(express.json());
 // API route
 app.get('/api', (req, res) => {
@@ -27,6 +29,8 @@ app.use('/contacts',UserContactsRoutes);
 app.use('/emergencycontacts',EmergencyContactsRoutes);
 app.use('/users',UserInformationRoutes);
 app.use('/email', EmailRoutes); //email - route
+// app.use('/notifications', PushNotificationRoutes);
+
 
 // Handle requests to main react page
 // NOTE: THIS ALL THE CODE BELOW HAS TO BE AT THE END OF THE FILE

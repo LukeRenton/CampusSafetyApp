@@ -96,42 +96,41 @@ export default function Main( { set_user } ) {
 
     Returns: N/A
   */  
-  const get_user_profile = () => {
+  const get_user_profile = async () => {
     if (!studentNumber) {
       // handle_signout();
       navigate('/');
-
+      return;
     }
 
-    const fetchProfile = async () => {
-      try {
-        const fetched_profile = await get_profile(studentNumber);
-        
-        if (fetched_profile.error) {
-          set_error({
-            message: fetched_profile.error
-          })
-          set_user_profile(get_blank_profile());
-          set_valid_profile(false);
-          set_user(null);
-
-        } else {
-          set_valid_profile(true);
-          set_user_profile(fetched_profile);
-          set_user(studentNumber);
-        }
-
-      } catch (error) {
-        console.error('Error fetching profile:', error.message);
+    try {
+      const fetched_profile = await get_profile(studentNumber);
+      
+      if (fetched_profile.error) {
+        set_error({
+          message: fetched_profile.error
+        })
         set_user_profile(get_blank_profile());
         set_valid_profile(false);
-        set_error({
-          message: "Error fetching user profile."
-        })
         set_user(null);
+
+      } else {
+        set_valid_profile(true);
+        set_user_profile(fetched_profile);
+        set_user(studentNumber);
       }
-    };
-    fetchProfile();
+
+    } catch (error) {
+      console.error('Error fetching profile:', error.message);
+      set_user_profile(get_blank_profile());
+      set_valid_profile(false);
+      set_error({
+        message: "Error fetching user profile."
+      })
+      set_user(null);
+    }
+    console.log("test here");
+    // fetchProfile();
   }
 
   const handle_fetch_reports = async () => {
@@ -174,18 +173,30 @@ export default function Main( { set_user } ) {
         const type = data.message.type;
         const lng = data.message.lng;
         const lat = data.message.lat;
-        addNotification({
-          title: 'Campus Safety',
-          message: report_types[type].header,
-          duration: 5000,
-          icon: report_types[type].icon,
-          native: true,
-        });
+
+        // addNotification({
+        //   title: 'Campus Safety',
+        //   message: report_types[type].header,
+        //   duration: 5000,
+        //   icon: report_types[type].icon,
+        //   native: true,
+        //   header: report_types[type].header,
+        //   report: data.message
+        // });
 
         // setHasNotified(true);
         // setHasNotified(false);
 
         set_new_notification(data.message);
+        navigator.serviceWorker.ready.then((registration) => {
+          registration.showNotification(report_types[type].header, {
+            body: report_types[type].header + " Alert",
+            icon: report_types[type].icon,
+            data: {
+              url: '/'
+            }
+          });
+        })
 
         handle_fetch_reports();
         
@@ -200,15 +211,27 @@ export default function Main( { set_user } ) {
         // Trigger the notification using react-push-notification
         const type = data.message.type;
         const description = data.message.description;
-        addNotification({
-          title: 'Campus Safety',
-          message: report_types[type].header + ": " + description,
-          duration: 5000,
-          icon: report_types[type].icon,
-          native: true,
-        });
+
+        // addNotification({
+        //   title: 'Campus Safety',
+        //   message: report_types[type].header + ": " + description,
+        //   duration: 5000,
+        //   icon: report_types[type].icon,
+        //   native: true,
+        //   header: report_types[type].header,
+        //   report: data.message
+        // });
 
         set_new_notification(data.message);
+        navigator.serviceWorker.ready.then((registration) => {
+          registration.showNotification(report_types[type].header, {
+            body: description,
+            icon: report_types[type].icon,
+            data: {
+              url: '/'
+            }
+          });
+        })
 
         handle_fetch_reports();
       // }
@@ -217,6 +240,7 @@ export default function Main( { set_user } ) {
     // Cleanup on unmount
     return () => {
       eventSource_alerts.close();
+      eventSource_incidents.close()
     };
   }, [hasNotified]);
 

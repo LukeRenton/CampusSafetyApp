@@ -2,14 +2,14 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/app_icon.ico" />
+    <link rel="icon" href="%PUBLIC_URL%/safety_app_icon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
       content="Web site created using create-react-app"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/app_icon_mobile.png" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/safety_app_icon.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -40,15 +40,22 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
     <script>
-      if ('serviceWorker' in navigator) {
-          window.addEventListener('load', () => {
-              navigator.serviceWorker.register('./serviceWorker.js').then((reg) => {
-                  console.log("Worker Registered");
-              }).catch((err) => {
-                  console.log("Error in service worker", err)
-              })
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+          navigator.serviceWorker.register('serviceWorker.js').then((reg) => {
+              console.log("Worker Registered");
+              reg.active.postMessage('hello?')
+          }).catch((err) => {
+              console.log("Error in service worker", err)
           })
-      }
+
+          navigator.serviceWorker.ready.then(registration => {
+            registration.active.postMessage("test")
+          })
+      })
+    } else {
+      console.log("sad")
+    }
   </script>
   </body>
 </html>

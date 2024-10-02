@@ -65,6 +65,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  pointer-events: all;
+  opacity: 1;
+  transition: 0.2s;
+}
+
+.formSubContainer-hidden {
+  pointer-events: none;
+  opacity: 0.8;
+  transition: 0.2s;
 }
 
 .title {

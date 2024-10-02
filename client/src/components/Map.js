@@ -13,7 +13,7 @@ import '../styles/Map.css'
 import handle_marker_click, { add_new_report_area, create_map, render_report_areas, set_user_coords } from '../services/MapService';
 import MarkerPopup from './MarkerPopup';
 import Notification from './Notification';
-import create_new_report_from_notification from '../services/PushNotificationService';
+import { create_new_report_from_notification } from '../services/PushNotificationService';
 
 
 

@@ -12,7 +12,7 @@ const multer = require('multer');
 const { initializeApp } = require("firebase/app");
 const { getStorage, ref, getDownloadURL, uploadBytesResumable }  = require("firebase/storage");
 const { firebaseConfig } = require("../firebase");
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 const storage = getStorage();
 const upload = multer({ storage: multer.memoryStorage() });
 

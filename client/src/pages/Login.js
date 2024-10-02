@@ -4,6 +4,10 @@ import { UserContext } from '../contexts/UserContext';
 import '../styles/LoginPage.css';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
+import addNotification from 'react-push-notification';
+import test_logo from '../icons/Logo.svg'
+import report_types from '../common/ReportTypes';
+import { request_user_token } from '../services/PushNotificationService';
 
 const SignInPage = ( { set_user } ) => {
   //state to manage the visibility of the password
@@ -89,8 +93,32 @@ const SignInPage = ( { set_user } ) => {
   }
 
   useEffect(() => {
+
+    // navigator.serviceWorker.register("service-worker.js");
+    
+    
     set_show_login(true);
     try_get_remembered_user();
+
+    // addNotification({
+    //   title: 'test',
+    //   message: 'report_types[type].header' + ": " + 'description',
+    //   duration: 5000,
+    //   icon: report_types['medical'].icon,//'report_types[type].icon',
+    //   native: true,
+    //   header: 'report_types[type].header',
+    //   report: {
+    //     of_type: 'Alert',
+    //     id: 1,
+    //     type: 'medical',
+    //     description: 'test report here'
+    //   }
+    // });
+
+    // request_user_token();
+    // registration.showNotification(title, options)
+    
+
   }, []);
 
   
@@ -103,7 +131,7 @@ const SignInPage = ( { set_user } ) => {
       </div>
 
       <div className={`formContainer ${show_login ? 'formContainer-show': '' }`}>
-        <div className={`formSubContainer`}>
+        <div className={`formSubContainer `+(loading ? 'formSubContainer-hidden' : '')}>
 
           <h2 className="title">Welcome to Campus Safety App</h2>
           <p className="subtitle">

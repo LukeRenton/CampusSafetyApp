@@ -27,14 +27,12 @@ jobs:
           cd ./client
           npm install --force
           cd ..
+          npm start &
 
       - name: Cypress run
-        uses: cypress-io/github-action@v6
-        with:
-          start: npm start
-          working-directory: ./client
-          wait-on: 'http://localhost:5000'
-          wait-on-timeout: 60
+        run: |
+          cd ./client
+          npx cypress run
 
 
       - name: Zip artifact for deployment

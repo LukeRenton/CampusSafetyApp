@@ -1,110 +1,99 @@
-const { getAllIncidents, UpdateSafetyIncidents, ReportSafetyIncidents } = require('../../../controllers/IncidentController');
-const pool = require('../../../db');
+const request = require('supertest');
+const express = require('express');
+const incidentRoutes = require('../../../routes/IncidentsRoutes');
+const app = express();
 
-// Mock the pool.query method
-jest.mock('../../../db');
+app.use(express.json());
+app.use('/incidents', incidentRoutes);
 
-describe('IncidentController', () => {
-    let consoleErrorSpy;
+jest.mock('../../../controllers/IncidentController');
+const IncidentController = require('../../../controllers/IncidentController');
 
-    beforeAll(() => {
-        // Suppress console.error globally in all tests
-        consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    });
-
-    afterAll(() => {
-        // Restore console.error after all tests
-        consoleErrorSpy.mockRestore();
-    });
-
+describe('Incident Routes', () => {
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
     });
 
-    test('getAllIncidents should retrieve and format all incidents', async () => {
+    test('GET /all-incidents should return all incidents', async () => {
         // Arrange
-        const mockIncidents = [
-            { id: 1, type: 'Medical Service', description: 'Fire', active: 1, date: '2024-09-13T00:00:00Z' },
-            { id: 2, type: 'Weather Service', description: 'Flood', active: 0, date: '2024-09-13T00:00:00Z' },
-        ];
-        pool.query.mockResolvedValue([mockIncidents]);
-    
-        // Act
-        const result = await getAllIncidents();
-    
-        // Assert
-        expect(result).toEqual(mockIncidents.map(incident => ({
-            ...incident,
-            date: {
-                day: 13,
-                month: 9,
-                year: 2024,
-                time: {
-                    hour: 0,
-                    minute: 0
-                }
-            }
-        })));
-        expect(pool.query).toHaveBeenCalledWith('SELECT * FROM incidents'); // Remove trailing space
-    });        
-
-    test('getAllIncidents should handle errors', async () => {
-        // Arrange
-        const errorMessage = 'Database error';
-        pool.query.mockRejectedValue(new Error(errorMessage));
-
-        // Act & Assert
-        await expect(getAllIncidents()).rejects.toThrow(`Server error : ${errorMessage}`);
-    });
-
-    test('UpdateSafetyIncidents should update and retrieve incident status', async () => {
-        // Arrange
-        const id = 1;
-        const newStatus = 0;
-        const mockUpdatedIncident = [{ id, active: newStatus }];
-        pool.query.mockResolvedValueOnce(undefined); // For the update query
-        pool.query.mockResolvedValueOnce([mockUpdatedIncident]); // For the select query
+        const mockIncidents = [{ id: 1, description: 'Fire' }];
+        IncidentController.getAllIncidents.mockResolvedValue(mockIncidents);
 
         // Act
-        const result = await UpdateSafetyIncidents(id, newStatus);
+        const response = await request(app).get('/incidents/all-incidents');
 
         // Assert
-        expect(result).toEqual(mockUpdatedIncident);
-        expect(pool.query).toHaveBeenCalledWith('UPDATE incidents SET active = ? WHERE id = ?', [newStatus, id]);
-        expect(pool.query).toHaveBeenCalledWith('SELECT id, active FROM incidents WHERE id = ?', [id]);
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(mockIncidents);
+        expect(IncidentController.getAllIncidents).toHaveBeenCalled();
     });
 
-    test('UpdateSafetyIncidents should handle errors', async () => {
+    test('PATCH /:id/status should update incident status', async () => {
         // Arrange
-        const errorMessage = 'Database error';
-        pool.query.mockRejectedValue(new Error(errorMessage));
+        const id = "1";
+        const mockUpdatedStatus = [{ id, active: 0 }];
+        IncidentController.UpdateSafetyIncidents.mockResolvedValue(mockUpdatedStatus);
+        
+        // Act
+        const response = await request(app).patch(`/incidents/${id}/status`).send({ active: 0 });
 
-        // Act & Assert
-        await expect(UpdateSafetyIncidents(1, 0)).rejects.toThrow(`Server error : ${errorMessage}`);
+        // Assert
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(mockUpdatedStatus);
+        expect(IncidentController.UpdateSafetyIncidents).toHaveBeenCalledWith(id, 0);
     });
 
-    test('ReportSafetyIncidents should insert a new incident', async () => {
+    test('POST /report-incidents should report a new incident', async () => {
         // Arrange
-        const mockResponse = "Data Inserted";
-        pool.query.mockResolvedValue(undefined); // For the insert query
+        const mockResponse = "\"Inserted with id = 1\"";
+        IncidentController.ReportSafetyIncidents.mockResolvedValue(1);
+        
+        const mockIncidentData = {
+            description: 'Fire',
+            latitude: 40.7128,
+            longitude: -74.0060,
+            type: 'fire',
+            building_name: 'Wits Flower Hall'
+        };
 
         // Act
-        const result = await ReportSafetyIncidents('Fire', 'photo.jpg', 40.7128, -74.0060, 'Medical Service');
+        const response = await request(app)
+            .post('/incidents/report-incidents')
+            .send(mockIncidentData);
 
         // Assert
-        expect(result).toBe(mockResponse);
-        expect(pool.query).toHaveBeenCalledWith(
-            'INSERT INTO incidents(description, photo, latitude, longitude, type, date) VALUES(?, ?, ?, ?, ?, NOW())',
-            ['Fire', 'photo.jpg', 40.7128, -74.0060, 'Medical Service']
+        expect(response.status).toBe(200);
+        expect(response.text).toBe(mockResponse);
+        expect(IncidentController.ReportSafetyIncidents).toHaveBeenCalledWith(
+            mockIncidentData.description,
+            expect.any(String), // since the photo upload is handled
+            mockIncidentData.latitude,
+            mockIncidentData.longitude,
+            mockIncidentData.type,
+            mockIncidentData.building_name
         );
     });
 
-    test('ReportSafetyIncidents should handle errors', async () => {
+    test('DELETE /all-incidents should delete all incidents', async () => {
         // Arrange
-        const errorMessage = 'Database error';
-        pool.query.mockRejectedValue(new Error(errorMessage));
+        const mockResponse = 'All incidents deleted';
+        IncidentController.deleteAllIncidents.mockResolvedValue(mockResponse);
 
-        // Act & Assert
-        await expect(ReportSafetyIncidents('Fire', 'photo.jpg', 40.7128, -74.0060, 'Medical Service')).rejects.toThrow(`Server error : ${errorMessage}`);
+        // Act
+        const response = await request(app).delete('/incidents/all-incidents');
+
+        // Assert
+        expect(response.status).toBe(200);
+        expect(response.body).toBe(mockResponse);
+        expect(IncidentController.deleteAllIncidents).toHaveBeenCalled();
     });
+
+    // test('GET /pushalerts should handle server-sent events', async () => {
+    //     // Act
+    //     const response = await request(app).get('/incidents/pushalerts');
+    
+    //     // Assert
+    //     expect(response.status).toBe(200);
+    // }, 25000);
+    
 });

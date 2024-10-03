@@ -21,18 +21,26 @@ jobs:
         with:
           node-version: '18.x'
 
-      - name: npm install
+      - name: npm install, run jest testing and start the app (for cypress)
         run: |
           npm install
           cd ./client
           npm install --force
           cd ..
+          npm test
           npm start &
 
       - name: Cypress run
         run: |
           cd ./client
           npx cypress run
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: LukeRenton/CampusSafetyApp
+          verbose: true
 
 
       - name: Zip artifact for deployment

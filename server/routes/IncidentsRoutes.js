@@ -1,5 +1,5 @@
 /*
-    File : IncidentSRoutes
+    File : IncidentsRoutes
     Type : Routes
     Description : API routes for Incidents Page
     Base route : /incidents

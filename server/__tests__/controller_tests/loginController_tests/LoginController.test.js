@@ -1,53 +1,48 @@
-const request = require('supertest');
-const express = require('express');
-const loginController = require('../../../controllers/LoginController');
-const loginRoutes = require('../../../routes/LoginRoutes');
 
-// Create a mock Express app for testing
-const app = express();
-app.use(express.json());
-app.use('/users', loginRoutes);
+const { validateUserLogin } = require('../../../controllers/LoginController');
+const pool = require('../../../db');
 
-// Mock the loginController's validateUserLogin function
-jest.mock('../../../controllers/LoginController', () => ({
-    validateUserLogin: jest.fn(),
+jest.mock('../../../db', () => ({
+    query: jest.fn(),
 }));
 
-describe('POST /users/login', () => {
-
-    it('should return 200 and a success message when credentials are valid', async () => {
-        // Mock validateUserLogin to return true for valid credentials
-        loginController.validateUserLogin.mockResolvedValueOnce(true);
-
-        const res = await request(app)
-            .post('/users/login')
-            .send({ username: 'validUser', password: 'validPass' });
-
-        expect(res.statusCode).toBe(200);
-        expect(res.body).toEqual({ message: 'Login successful' });
+describe('LoginController', () => {
+    afterEach(() => {
+        jest.clearAllMocks();
     });
 
-    it('should return 401 and an error message when credentials are invalid', async () => {
-        // Mock validateUserLogin to return false for invalid credentials
-        loginController.validateUserLogin.mockResolvedValueOnce(false);
+    describe('validateUserLogin', () => {
+        it('should return true if the user exists with correct credentials', async () => {
+            const mockRows = [{ id: 1, username: 'testuser', password: 'password123' }];
+            pool.query.mockResolvedValue([mockRows]);
 
-        const res = await request(app)
-            .post('/users/login')
-            .send({ username: 'invalidUser', password: 'invalidPass' });
+            const username = 'testuser';
+            const password = 'password123';
 
-        expect(res.statusCode).toBe(401);
-        expect(res.body).toEqual({ message: 'Invalid credentials' });
-    });
+            const result = await validateUserLogin(username, password);
+            expect(result).toBe(true);
+            expect(pool.query).toHaveBeenCalledWith(
+                'SELECT * FROM users WHERE username = ? AND password = ?;',
+                [username, password]
+            );
+            expect(pool.query).toHaveBeenCalledTimes(1);
+        });
 
-    it('should return 500 and a server error message when an error occurs', async () => {
-        // Mock validateUserLogin to throw an error
-        loginController.validateUserLogin.mockRejectedValueOnce(new Error('Database error'));
+        it('should return false if the user does not exist with provided credentials', async () => {
+            const mockRows = [];
+            pool.query.mockResolvedValue([mockRows]);
 
-        const res = await request(app)
-            .post('/users/login')
-            .send({ username: 'user', password: 'pass' });
+            const username = 'invaliduser';
+            const password = 'wrongpassword';
 
-        expect(res.statusCode).toBe(500);
-        expect(res.body).toEqual({ error: 'Server error: Database error' });
+            const result = await validateUserLogin(username, password);
+
+            expect(result).toBe(false);
+            expect(pool.query).toHaveBeenCalledWith(
+                'SELECT * FROM users WHERE username = ? AND password = ?;',
+                [username, password]
+            );
+            expect(pool.query).toHaveBeenCalledTimes(1);
+        });        
     });
 });

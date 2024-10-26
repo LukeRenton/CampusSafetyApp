@@ -1,4 +1,6 @@
 #!/bin/bash
+#? File name: setup.sh
+
 # Get all repo changes
 echo -e "\n[INFO] Fetching all repo changes..."
 git pull

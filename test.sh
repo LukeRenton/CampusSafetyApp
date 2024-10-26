@@ -1,4 +1,6 @@
 #!/bin/bash
+#? File name: test.sh
+
 # Build static js files
 echo -e "\n[INFO] Building..."
 cd ./client/

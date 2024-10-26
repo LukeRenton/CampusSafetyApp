@@ -40,8 +40,6 @@ async function insertAlert(type, status, longitude, latitude, timestamp) {
 
         const inserted_id = result[0].insertId;
         return inserted_id;
-        console.log('Row inserted:', result);
-        console.log("----------------");
     } catch (error) {
         console.error('Error inserting alert:', error);
     }
@@ -120,7 +118,7 @@ function formatDate(isoString) {
     const date = new Date(isoString);
     return {
     day: date.getUTCDate(),
-    month: date.getUTCMonth() + 1, // Months are zero-based, so add 1
+    month: date.getUTCMonth() + 1, 
     year: date.getUTCFullYear(),
     time: {
         hour: date.getUTCHours(),

@@ -8,7 +8,7 @@ let residenceData = '';
 
 router.post('/store-time', (req, res) => {
   const { time } = req.body;
-  timeData = time; // Store the time
+  timeData = time; 
   console.log('Time received:', time);
   res.status(200).json({ message: 'Time stored successfully' });
 });

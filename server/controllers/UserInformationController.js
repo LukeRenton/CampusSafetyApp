@@ -31,8 +31,6 @@ async function getUserInfo(studentNumber) {
             WHERE ui.StudentNumber = ?`, 
             [studentNumber]
         );
-        console.log("FETCHED USER INFO");
-        console.log(rows);
         return rows;
     } catch (err) {
         console.error(err);
@@ -46,8 +44,6 @@ async function getAllUserInfo(student_num) {
             `SELECT * FROM userinformation ui WHERE ui.StudentNumber = ?`, 
             [student_num]
         );
-        console.log("FETCHED ALL USER INFO");
-        console.log(rows);
         return rows;
     } catch (err) {
         console.error(err);

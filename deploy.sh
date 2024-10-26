@@ -1,4 +1,6 @@
 #!/bin/bash
+#? File name: deploy.sh
+
 # Build the client
 echo "[INFO] Building the client..."
 cd ./client/

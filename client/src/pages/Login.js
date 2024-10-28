@@ -8,6 +8,7 @@ import addNotification from 'react-push-notification';
 import test_logo from '../icons/Logo.svg'
 import report_types from '../common/ReportTypes';
 import { request_user_token } from '../services/PushNotificationService';
+import { login_user } from '../services/LoginService';
 
 const SignInPage = ( { set_user } ) => {
   //state to manage the visibility of the password
@@ -38,16 +39,7 @@ const SignInPage = ( { set_user } ) => {
     // API request to the backend
     set_loading(true);
     try {
-      const response = await fetch('/users/login', { //add this onece we have merged with the backend
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: uname,
-          password: pass,
-        }),
-      });
+      const response = await login_user(uname, pass);
 
       if (response.status === 200) {
         setStudentNumber(uname);

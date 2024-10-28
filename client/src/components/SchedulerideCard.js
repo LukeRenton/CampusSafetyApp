@@ -10,6 +10,7 @@
 import React, { useState } from 'react';
 import '../styles/SchedulerideCard.css';
 import Loader from './Loader';
+import { ride_scheduler_select_time } from '../services/EmailService';
 
 const SchedulerideCard = ({ set_error, isOpen, onClose, onSchedule }) => {
   const [time, setTime] = useState('10:00'); // Default time
@@ -28,16 +29,19 @@ const SchedulerideCard = ({ set_error, isOpen, onClose, onSchedule }) => {
   const handleSchedule = async () => {
     try {
       set_loading(true);
-      await fetch('/email/store-time', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ time }),
-      });
-      onSchedule(time); // Trigger the next step in the flow
-      onClose();
-      set_loading(false);
+      await ride_scheduler_select_time(time)
+      .then((res) => {
+        onSchedule(time); // Trigger the next step in the flow
+        onClose();
+        set_loading(false);
+      })
+      .catch((err) => {
+        set_loading(false);
+        set_error({
+          message: "Error allocating time slot. Please try again."
+        });
+      })
+      
     } catch (error) {
       console.error('Error storing time:', error);
       set_error({

@@ -34,7 +34,7 @@ const report_types = {
         icon: medical,
         icon_size: 45,
         marker: medical_marker,
-        report_causes: ["Emergency services to be notified", "People in the area to be notified", "Your profile to be displayed for emergency reasons"],
+        report_causes: ["Emergency services to be notified", "People in the area to be notified"],
         radius: 0.01,
         spinner: spinner_blue
     },

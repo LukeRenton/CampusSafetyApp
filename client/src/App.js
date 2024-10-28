@@ -7,6 +7,16 @@ import LoginPage from './pages/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react';
 
+/**
+ * Thank you to the following sites and providers for their icons and animations:
+ * 
+ * CC links
+ *  LordIcon : https://lordicon.com/ (for SVG icons and Lottie animations)
+ *  SVGRepo: https://www.svgrepo.com/ (for SVG icons)
+ *  SVGator: https://app.svgator.com/ (for SVG editing platform)
+ * 
+ */
+
 const App = () => {
 
   const [user, set_user] = useState(null);

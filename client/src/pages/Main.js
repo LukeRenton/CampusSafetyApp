@@ -22,15 +22,11 @@ import DetailedReport from '../components/DetailedReport';
 import report_types from '../common/ReportTypes';
 import ReportConfirmation from '../components/ReportConfirmation';
 import PopupCard from '../components/PopupCard';
-import Notification from '../components/Notification';
 import SafetyResourcesMenu from '../components/SafetyResourcesMenu';
 import MakeDetailedReport from '../components/MakeDetailedReport';
-import { fetch_all_reports, get_all_reports } from '../services/GeneralReportService';
-import addNotification from 'react-push-notification';
+import { fetch_all_reports } from '../services/GeneralReportService';
 import { UserContext } from '../contexts/UserContext';
 
-import logo from '../icons/call.svg'
-import create_new_alert_from_notification from '../services/PushNotificationService';
 import UploadingReport from '../components/UploadingReport';
 import ErrorCard from '../components/ErrorCard';
 import { useNavigate } from 'react-router-dom';

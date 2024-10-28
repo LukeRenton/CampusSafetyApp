@@ -13,6 +13,7 @@ import '../styles/SelectRes.css'; // Use updated SelectRes CSS
 import ConfirmationCard from './ConfirmationCard.js'; // Import the confirmation card
 import RideNowConfirmation from './RideNowConfirmation.js';
 import Loader from './Loader.js'
+import { ride_scheduler_select_res } from '../services/EmailService.js';
 
 const SelectRes = ({ set_error, isOpen, onClose }) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -49,24 +50,25 @@ const SelectRes = ({ set_error, isOpen, onClose }) => {
   
     try {
       set_loading(true);
-      await fetch('/email/store-residence', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ residence: selectedResidence }), // Use selectedResidence here
-      });
-      set_loading(false);
-      setShowConfirmation(true); // Show confirmation after sending the email
-      setTimeout(() => {
-        setShowConfirmation(false);
-        onClose();
-      }, 5000);
+      await ride_scheduler_select_res(selectedResidence)
+      .then((res) => {
+        set_loading(false);
+        setShowConfirmation(true); // Show confirmation after sending the email
+        setTimeout(() => {
+          setShowConfirmation(false);
+          onClose();
+        }, 5000);
+      })
+      .catch((err) => {
+        set_loading(false);
+        set_error({
+          message: "Error submitting your residence. Please try again"
+        })
+      })
     } catch (error) {
-      console.error('Error storing residence or sending email:', error);
       set_loading(false);
       set_error({
-        message: "Error submitting requested ride. Please try again"
+        message: "Error submitting your residence. Please try again"
       })
     }
   };

@@ -125,7 +125,7 @@ export default function Map( { set_location_services_enabled, set_error, inciden
   return (
     <>
         {show_notification ? <Notification go_to={go_to} close_notification={close_notification} report={show_notification}></Notification> : <></>}
-        {show_marker_popup === null ? <></> : <MarkerPopup report={show_marker_popup} close={() => set_show_marker_popup(null)} />}
+        {show_marker_popup === null ? <></> : <MarkerPopup set_error={set_error} report={show_marker_popup} close={() => set_show_marker_popup(null)} />}
         <section className='map-root'>
             <section ref={map_container} className="map-container" />
         </section>

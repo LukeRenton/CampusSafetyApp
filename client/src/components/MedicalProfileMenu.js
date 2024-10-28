@@ -6,7 +6,7 @@
  * Description:
  *  Menu component showing medical profile of individual
  */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Menu from './Menu'
 import '../styles/MedicalProfileMenu.css'
 import clipboard from '../icons/clipboard.svg'
@@ -17,10 +17,69 @@ import account_icon from '../icons/account.svg'
 export default function MedicalProfileMenu( { studentNumber, close_menu, profile, get_user_profile } ) {
 
     const [show_edit_medical_profile, set_show_edit_medical_profile] = useState(false);
+    const [screen_lock, set_screen_lock] = useState(null);
+    
+    /*
+        Function: get_screen_lock
+
+        Description:
+            Locks the screen so that the screen stays on when medical profile is being displayed
+
+        Parameters: N/A
+
+        Returns: N/A
+    */
+    const get_screen_lock = async () => {
+        let screen_lock_temp;
+        
+        try {
+            screen_lock_temp = await navigator.wakeLock.request('screen');
+            set_screen_lock(screen_lock_temp);
+        } catch (err) {
+            set_screen_lock(null);
+        }
+    }
+
+    /*
+        Function: release_screen_lock
+
+        Description:
+            Releases the screen lock so the screen can dim for power saving
+
+        Parameters: N/A
+
+        Returns: N/A
+    */
+    const release_screen_lock = async () => {
+        if (screen_lock) {
+            await screen_lock.release();
+        }
+    }
+
+    /*
+        Function: handle_close_menu
+
+        Description:
+            Closes the medical profile menu
+
+        Parameters: N/A
+
+        Returns: N/A
+    */
+    const handle_close_menu = () => {
+        release_screen_lock();
+        close_menu();
+    }
+
+    // When component is loaded, lock the screen so it does not turn off
+    // -- this ensures that the medical profile is displayed at all times
+    useEffect(() => {
+        get_screen_lock();
+    },[])
 
   return (
     <>
-        <Menu menu_header={"Medical Profile"} close={close_menu}>
+        <Menu menu_header={"Medical Profile"} close={handle_close_menu}>
             {!show_edit_medical_profile ?
             <section className='medical-profile-menu-content'>
                 <section className='medical-profile-menu-screen-on'>

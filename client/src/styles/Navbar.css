@@ -242,6 +242,7 @@
     .navbar-detailed-menu-indicator-text {
         margin: 0;
         margin-bottom: 0;
+        color: var(--mainorange);
     }
     
     

@@ -17,7 +17,7 @@ import { update_alert_status } from '../services/AlertReportsService'
 import Loader from './Loader'
 import { update_incident_status } from '../services/IncidentReportsService'
 
-export default function MarkerPopup({ report, close }) {
+export default function MarkerPopup({ set_error, report, close }) {
 
   const [loading_change, set_loading_change] = useState(false);
   const [loading_image, set_loading_image] = useState(true);
@@ -38,10 +38,30 @@ export default function MarkerPopup({ report, close }) {
     if (report.of_type === 'alert') {
       set_loading_change(true);
       await update_alert_status(report.id, (status === "Active")).then((res) => {
-        report.active = (status === "Active");
-        set_loading_change(false);
+        if (res.error) {
+          set_error({
+            message: "Status change error: Could not update status"
+          })
+          if (status === "Active") {
+            set_status("Inactive");
+          } else {
+            set_status("Active");
+          }
+          set_loading_change(false);
+        } else {
+          report.active = (status === "Active");
+          set_loading_change(false);
+        }
       }).catch(err => {
         // HANDLE ERROR
+        set_error({
+          message: "Status change error: Could not update status"
+        })
+        if (status === "Active") {
+          set_status("Inactive");
+        } else {
+          set_status("Active");
+        }
         set_loading_change(false);
       })
     } else if (report.of_type === 'incident') {
@@ -51,6 +71,14 @@ export default function MarkerPopup({ report, close }) {
         set_loading_change(false);
       }).catch(err => {
         // HANDLE ERROR
+        set_error({
+          message: "Status change error: Could not update status"
+        })
+        if (status === "Active") {
+          set_status("Inactive");
+        } else {
+          set_status("Active");
+        }
         set_loading_change(false);
       })
     }

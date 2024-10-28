@@ -68,7 +68,7 @@
 }
 
 .first-aid-guide-content {
-    height: 100%;
+    height: calc(100% - 120px);
     width: calc(100% - 40px);
     
     max-width: 500px;
@@ -80,6 +80,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    gap: 5px;
 }
 
 
@@ -126,8 +127,8 @@
 }
 
 .first-aid-guide-inner {
-    height: calc(100% - 40px);
-    width: calc(100% - 20px);
+    height: 100%;
+    width: 100%;
     padding-top: 20px;   
     padding-bottom: 20px;
     padding-left: 10px;

@@ -27,8 +27,6 @@ self.addEventListener("install", (event) => {
     )
     console.log("finishing install");
 })
-console.log("what is going on :-(");
-
 // self.addEventListener("fetch", (event) => {
 //     console.log("starting fetch")
 //     event.respondWith(
@@ -40,7 +38,7 @@ console.log("what is going on :-(");
 // })
 
 self.addEventListener("message", (event) => {
-    console.log('here!');
+    // console.log('here!');
     // console.log(event);
     // if (event.data && event.data.type === 'SHOW_NOTIFICATION') {
     //     this.registration.showNotification("I AM A TESTER");

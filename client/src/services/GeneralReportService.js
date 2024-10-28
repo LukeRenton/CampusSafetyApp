@@ -46,7 +46,7 @@ export async function fetch_all_reports() {
             type: report.type,
             description: report.description,
             active: report.active === 1,
-            date: new Date(report.date.year,report.date.month,report.date.day,report.date.time.hour,report.date.time.minute,0,0),
+            date: new Date(report.date.year,report.date.month+1,report.date.day,report.date.time.hour,report.date.time.minute,0,0),
             location: {
               lng: parseFloat(report.longitude),
               lat: parseFloat(report.latitude)
@@ -76,7 +76,7 @@ export async function fetch_all_reports() {
             type: report.type,
             description: report_types[report.type].header + " Alert",
             active: report.active === 1,
-            date: new Date(report.date.year,report.date.month,report.date.day,report.date.time.hour,report.date.time.minute,0,0),
+            date: new Date(report.date.year,report.date.month+1,report.date.day,report.date.time.hour,report.date.time.minute,0,0),
             location: {
               lng: parseFloat(report.longitude),
               lat: parseFloat(report.latitude)

@@ -1,7 +1,7 @@
 /**
  * File: Notification.js
  * 
- * Author: Mitchell
+ * Author: Mitchell and Anist
  * 
  * Description:
  *  Displays notification of report at top of screen

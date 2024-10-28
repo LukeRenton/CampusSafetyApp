@@ -17,7 +17,7 @@ import { create_new_report_from_notification } from '../services/PushNotificatio
 
 
 
-export default function Map( { set_location_services_enabled, set_error, incident_reports, new_notification, set_new_notification } ) {
+export default function Map( { add_new_report, set_location_services_enabled, set_error, incident_reports, new_notification, set_new_notification } ) {
     
     const map_container = useRef(null);
     const map = useRef(null);
@@ -112,6 +112,7 @@ export default function Map( { set_location_services_enabled, set_error, inciden
         if (new_notification) {
             console.log(new_notification);
             const new_alert = create_new_report_from_notification(new_notification);
+            add_new_report(new_alert);
             set_show_notification(new_alert);
             add_new_report_area(handle_marker_popup, new_alert);
         }

@@ -4,13 +4,13 @@
   "icons": [
     {
       "src": "safety_app_icon.ico",
-      "sizes": "32x32",
+      "sizes": "256x256",
       "type": "image/x-icon"
     },
     {
       "src": "safety_app_icon.png",
       "type": "image/png",
-      "sizes": "32x32"
+      "sizes": "256x256"
     }
   ],
   "start_url": ".",

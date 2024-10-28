@@ -1,7 +1,7 @@
 /**
  * File: ContactCard.js
  * 
- * Author: Mitchell
+ * Author: Mitchell and Martin
  * 
  * Description:
  *  Contact Card component to host a contact name, phone number and the call button

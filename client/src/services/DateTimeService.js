@@ -132,7 +132,10 @@ export function get_date_string(date_object) {
 */
 function is_today(date_object) {
     const date_string = get_date_string(date_object);
-    const today = get_date_string(get_year_month_day(new Date()));
+    const today_date = new Date();
+    const today_date_formatted = new Date(today_date.getFullYear(), today_date.getMonth()+1, today_date.getDate())
+    const today = get_date_string(get_year_month_day(today_date_formatted));
+    
     
     return (date_string === today);
 }
@@ -151,7 +154,9 @@ function is_today(date_object) {
         False otherwise
 */
 function is_yesterday(date_object) {
-    const today = get_year_month_day(new Date());
+    const today_date = new Date();
+    const today_date_formatted = new Date(today_date.getFullYear(), today_date.getMonth()+1, today_date.getDate())
+    const today = get_year_month_day(today_date_formatted);
 
     return ((date_object.year === today.year) && (date_object.month === today.month) && (date_object.day === (today.day - 1)));
 }

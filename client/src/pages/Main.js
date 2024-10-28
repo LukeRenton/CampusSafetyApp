@@ -31,6 +31,7 @@ import UploadingReport from '../components/UploadingReport';
 import ErrorCard from '../components/ErrorCard';
 import { useNavigate } from 'react-router-dom';
 import FindingLocation from '../components/FindingLocation';
+import addNotification from 'react-push-notification';
 
 export default function Main( { set_user } ) {
 
@@ -125,7 +126,6 @@ export default function Main( { set_user } ) {
       })
       set_user(null);
     }
-    console.log("test here");
     // fetchProfile();
   }
 
@@ -170,29 +170,29 @@ export default function Main( { set_user } ) {
         const lng = data.message.lng;
         const lat = data.message.lat;
 
-        // addNotification({
-        //   title: 'Campus Safety',
-        //   message: report_types[type].header,
-        //   duration: 5000,
-        //   icon: report_types[type].icon,
-        //   native: true,
-        //   header: report_types[type].header,
-        //   report: data.message
-        // });
+        addNotification({
+          title: 'Campus Safety',
+          message: report_types[type].header,
+          duration: 5000,
+          icon: report_types[type].icon,
+          native: true,
+          header: report_types[type].header,
+          report: data.message
+        });
 
         // setHasNotified(true);
         // setHasNotified(false);
 
         set_new_notification(data.message);
-        navigator.serviceWorker.ready.then((registration) => {
-          registration.showNotification(report_types[type].header, {
-            body: report_types[type].header + " Alert",
-            icon: report_types[type].icon,
-            data: {
-              url: '/'
-            }
-          });
-        })
+        // navigator.serviceWorker.ready.then((registration) => {
+        //   registration.showNotification(report_types[type].header, {
+        //     body: report_types[type].header + " Alert",
+        //     icon: report_types[type].icon,
+        //     data: {
+        //       url: '/'
+        //     }
+        //   });
+        // })
 
         handle_fetch_reports();
         
@@ -208,26 +208,26 @@ export default function Main( { set_user } ) {
         const type = data.message.type;
         const description = data.message.description;
 
-        // addNotification({
-        //   title: 'Campus Safety',
-        //   message: report_types[type].header + ": " + description,
-        //   duration: 5000,
-        //   icon: report_types[type].icon,
-        //   native: true,
-        //   header: report_types[type].header,
-        //   report: data.message
-        // });
+        addNotification({
+          title: 'Campus Safety',
+          message: report_types[type].header + ": " + description,
+          duration: 5000,
+          icon: report_types[type].icon,
+          native: true,
+          header: report_types[type].header,
+          report: data.message
+        });
 
         set_new_notification(data.message);
-        navigator.serviceWorker.ready.then((registration) => {
-          registration.showNotification(report_types[type].header, {
-            body: description,
-            icon: report_types[type].icon,
-            data: {
-              url: '/'
-            }
-          });
-        })
+        // navigator.serviceWorker.ready.then((registration) => {
+        //   registration.showNotification(report_types[type].header, {
+        //     body: description,
+        //     icon: report_types[type].icon,
+        //     data: {
+        //       url: '/'
+        //     }
+        //   });
+        // })
 
         handle_fetch_reports();
       // }
@@ -241,6 +241,12 @@ export default function Main( { set_user } ) {
   }, [hasNotified]);
 
 
+
+  const add_new_report = (report) => {
+    const curr_reports = reports;
+    curr_reports.push(report);
+    set_reports(curr_reports);
+  }
 
   useEffect(() => {
     get_user_profile();
@@ -420,7 +426,7 @@ export default function Main( { set_user } ) {
       {current_menu === "none" ? <></> : render_menu()}
       <Navbar uploading_report={uploading_report} location_services_enabled={location_services_enabled} show_quickreports={show_quickreports} set_show_quickreports={set_show_quickreports} report_types_data={report_types_data} open_detailed_report_menu={() => set_current_menu("detailed_report")} set_confirmation_menu={update_confirmation_menu} />
       <Topbar set_show_side_menu={set_show_side_menu} />
-      {reports_loaded ? <Map set_location_services_enabled={set_location_services_enabled} set_error={set_error} new_notification={new_notification} set_new_notification={set_new_notification} incident_reports={reports} /> : <></>}
+      {reports_loaded ? <Map add_new_report={add_new_report} set_location_services_enabled={set_location_services_enabled} set_error={set_error} new_notification={new_notification} set_new_notification={set_new_notification} incident_reports={reports} /> : <></>}
       <SideMenu handle_signout={handle_signout} valid_profile={valid_profile} show_side_menu={show_side_menu} set_current_menu={set_current_menu} profile={user_profile} />
       {show_side_menu ? <div className='main-dark-back' onClick={close_all_menus}></div> : <></>}
     </main>

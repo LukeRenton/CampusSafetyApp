@@ -1,7 +1,7 @@
 /**
  * File: DetailedReport.js
  * 
- * Author: Mitchell
+ * Author: Mitchell and Vin
  * 
  * Description:
  *  Detailed Report menu hosting components for user to better understand reporting
